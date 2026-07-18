@@ -122,6 +122,13 @@ def atom_field(atom_text: str, field: str) -> str:
     return match.group(1) if match else ""
 
 
+def record_operations(writes: str) -> list[tuple[str, str, str]]:
+    return re.findall(
+        r"\b(append|upsert)\s+([a-z]+)\s+record\s+\{([^}]*)\}",
+        writes,
+    )
+
+
 class ValueSkillReviewContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -359,7 +366,7 @@ class ValueSkillPackageTests(unittest.TestCase):
             "Atom IDs must be unique across modules: " + "; ".join(duplicates),
         )
 
-    def test_each_atom_asks_exactly_one_question(self) -> None:
+    def test_each_atom_asks_contains_one_question_mark(self) -> None:
         for module_name in MODULE_FILES:
             module_text = (REFERENCES_DIR / module_name).read_text(encoding="utf-8")
             for atom_text in split_atoms(module_text):
@@ -371,7 +378,7 @@ class ValueSkillPackageTests(unittest.TestCase):
                     f"{atom_id} must contain exactly one question mark in asks: {asks!r}",
                 )
 
-    def test_atom_record_appends_include_closed_schema_fields(self) -> None:
+    def test_atom_record_writes_use_exact_closed_schema_fields(self) -> None:
         schema = json.loads(
             (ASSETS_DIR / "session.schema.json").read_text(encoding="utf-8")
         )
@@ -389,29 +396,40 @@ class ValueSkillPackageTests(unittest.TestCase):
             for atom_text in split_atoms(module_text):
                 atom_id = ATOM_ID_RE.search(atom_text).group(1)
                 writes = atom_field(atom_text, "writes")
-                self.assertIn(
-                    "append answers record",
+                operations = record_operations(writes)
+                declared_operations = re.findall(
+                    r"\b(?:append|upsert)\s+([a-z]+)\s+record\b",
                     writes,
-                    f"{atom_id} must append a complete answers record",
+                )
+                self.assertEqual(
+                    len(operations),
+                    len(declared_operations),
+                    f"{atom_id} record writes must use a braced record block",
+                )
+                answer_writes = [
+                    block
+                    for operation, collection, block in operations
+                    if operation == "append" and collection == "answers"
+                ]
+                self.assertEqual(
+                    len(answer_writes),
+                    1,
+                    f"{atom_id} must append exactly one complete answers record",
                 )
 
-                for clause in writes.split(";"):
-                    if "append" not in clause and "upsert" not in clause:
-                        continue
-                    for collection, definition in record_defs.items():
-                        operations = (
-                            f"append {collection} record",
-                            f"upsert {collection} record",
-                        )
-                        if not any(operation in clause for operation in operations):
-                            continue
-                        required = schema["$defs"][definition]["required"]
-                        missing = [field for field in required if field not in clause]
-                        self.assertEqual(
-                            missing,
-                            [],
-                            f"{atom_id} {collection} write misses {missing}: {clause!r}",
-                        )
+                for _, collection, block in operations:
+                    definition = record_defs[collection]
+                    field_tokens = set(
+                        re.findall(r"(?:^|,\s*)([a-z_]+)(?=\s)", block)
+                    )
+                    required = schema["$defs"][definition]["required"]
+                    missing = [field for field in required if field not in field_tokens]
+                    self.assertEqual(
+                        missing,
+                        [],
+                        f"{atom_id} {collection} write misses exact fields "
+                        f"{missing}: {block!r}",
+                    )
 
                 for position_field in ("position.module", "position.atom_id", "position.status"):
                     self.assertIn(
@@ -432,10 +450,26 @@ class ValueSkillPackageTests(unittest.TestCase):
         b06 = next(
             atom for atom in split_atoms(module_text) if "(id B06)" in atom
         )
-        self.assertIn("constraint unknown", atom_field(b06, "accepts"))
+        accepts = atom_field(b06, "accepts")
+        self.assertIn("blocking unknown", accepts)
+        self.assertIn("keeps B06 active", accepts)
         writes = atom_field(b06, "writes")
         self.assertIn("append unknowns record", writes)
         self.assertIn("blocking true", writes)
+        self.assertIn(
+            "when constraint is unknown keep position.module business-model, "
+            "position.atom_id B06, position.status in_progress",
+            writes,
+        )
+        self.assertIn(
+            "when constraint is accepted set position.module business-model, "
+            "position.atom_id B07, position.status in_progress",
+            writes,
+        )
+        self.assertEqual(
+            atom_field(b06, "unlocks"),
+            "when constraint is unknown keep B06; when constraint is accepted unlock B07",
+        )
 
     def test_test_and_learning_cards_keep_atomic_asks(self) -> None:
         module_text = (REFERENCES_DIR / "experiments.md").read_text(
@@ -454,6 +488,67 @@ class ValueSkillPackageTests(unittest.TestCase):
         )
         self.assertIn("waits until a test result exists", atom_field(atoms["E08"], "teaches"))
         self.assertIn("blocking unknown", atom_field(atoms["E08"], "teaches"))
+        e08_writes = atom_field(atoms["E08"], "writes")
+        self.assertIn(
+            "when result is absent keep position.module experiments, "
+            "position.atom_id E08, position.status in_progress",
+            e08_writes,
+        )
+        self.assertIn(
+            "when result is accepted set position.module experiments, "
+            "position.atom_id E09, position.status in_progress",
+            e08_writes,
+        )
+        self.assertEqual(
+            atom_field(atoms["E08"], "unlocks"),
+            "when result is absent keep E08; when result is accepted unlock E09",
+        )
+
+    def test_assumption_records_wait_for_accepted_criticality(self) -> None:
+        module_text = (REFERENCES_DIR / "experiments.md").read_text(
+            encoding="utf-8"
+        )
+        atoms = {
+            ATOM_ID_RE.search(atom).group(1): atom for atom in split_atoms(module_text)
+        }
+        e01_writes = atom_field(atoms["E01"], "writes")
+        self.assertNotIn("append assumptions record", e01_writes)
+        self.assertNotIn("medium default", e01_writes)
+        self.assertIn("append assumptions record", atom_field(atoms["E02"], "writes"))
+
+        e09_writes = atom_field(atoms["E09"], "writes")
+        self.assertIn(
+            "when criticality is accepted append assumptions record",
+            e09_writes,
+        )
+        self.assertIn(
+            "otherwise append unknowns record",
+            e09_writes,
+        )
+        self.assertIn(
+            "position.atom_id E10, position.status in_progress",
+            e09_writes,
+        )
+
+    def test_boundary_answers_preserve_supported_kind(self) -> None:
+        atom_locations = (
+            ("profile.md", "P01"),
+            ("value-map.md", "V01"),
+        )
+        for module_name, atom_id in atom_locations:
+            module_text = (REFERENCES_DIR / module_name).read_text(encoding="utf-8")
+            atom = next(
+                candidate
+                for candidate in split_atoms(module_text)
+                if f"(id {atom_id})" in candidate
+            )
+            writes = atom_field(atom, "writes")
+            self.assertIn(
+                "kind decision for an explicit scope choice or the accepted supported kind",
+                writes,
+            )
+            self.assertNotIn("kind fact or unknown", writes)
+            self.assertIn("append decisions record", writes)
 
     def test_session_schema_parses_as_json(self) -> None:
         schema_path = ASSETS_DIR / "session.schema.json"

@@ -6,10 +6,10 @@
   (atom
     (id P01)
     (name "segment boundary")
-    (teaches "A useful profile describes one recognizable customer segment, not everybody who might benefit. This boundary comes first because later jobs and evidence must belong to the same people.")
+    (teaches "A useful profile describes one recognizable customer segment, not everybody who might benefit. Choosing that scope is a decision; a user-supported observation keeps its original evidence kind rather than being upgraded to fact.")
     (asks "Which specific customer segment are we profiling?")
-    (accepts "Names a segment using observable role or context and states at least one exclusion; accepts unknown for a boundary not yet established.")
-    (writes "append answers record {atom_id P01, answer accepted text, kind fact or unknown, accepted_at current RFC 3339 timestamp}; when unresolved append unknowns record {question segment boundary not established, blocking false}; set project.updated_at to accepted_at; set position.module profile, position.atom_id P02, position.status in_progress")
+    (accepts "Names a segment using observable role or context and states at least one exclusion; labels an explicit scope choice decision and preserves another user-supported kind, while an unresolved boundary remains unknown.")
+    (writes "append answers record {atom_id P01, answer accepted text, kind decision for an explicit scope choice or the accepted supported kind, accepted_at current RFC 3339 timestamp}; when scope is chosen append decisions record {decision accepted segment boundary, reason accepted scope reason, source_atom P01, resulting_module profile, resulting_atom P02, resulting_status in_progress}; when unresolved append unknowns record {question segment boundary not established, blocking false}; set project.updated_at to accepted_at; set position.module profile, position.atom_id P02, position.status in_progress")
     (unlocks P02))
 
   (atom

@@ -53,9 +53,9 @@
     (name "scale constraints")
     (teaches "Scale depends on where demand increases scarce labor, capital, inventory, support, or partner capacity. Examining constraints after activities and costs shows what grows linearly and what can be reused.")
     (asks "What becomes the first binding constraint as demand grows?")
-    (accepts "Names a likely constraint and its growth behavior with a labeled basis, or records the constraint unknown without invention; any scalability score is reasoned evidence-backed discussion, otherwise unknown.")
-    (writes "append answers record {atom_id B06, answer accepted text, kind accepted fact, hypothesis, or unknown label, accepted_at current RFC 3339 timestamp}; when observed append evidence record {claim accepted scale constraint, kind fact, source accepted source, strength accepted strength}; when projected append assumptions record {claim proposed scale constraint, criticality high, evidence_status unknown, source_atom B06}; when constraint unknown append unknowns record {question first binding scale constraint not established, blocking true}; set project.updated_at to accepted_at; set position.module business-model, position.atom_id B07 and position.status in_progress when a constraint is accepted, otherwise position.atom_id B06 and position.status in_progress")
-    (unlocks B07))
+    (accepts "Advances only when a likely constraint, its growth behavior, and a labeled basis are supplied; an unknown records a blocking unknown and keeps B06 active without invention. Any scalability score is reasoned evidence-backed discussion, otherwise unknown.")
+    (writes "append answers record {atom_id B06, answer accepted text, kind accepted fact, hypothesis, or unknown label, accepted_at current RFC 3339 timestamp}; when observed append evidence record {claim accepted scale constraint, kind fact, source accepted source, strength accepted strength}; when projected append assumptions record {claim proposed scale constraint, criticality high, evidence_status unknown, source_atom B06}; when constraint is unknown append unknowns record {question first binding scale constraint not established, blocking true}; set project.updated_at to accepted_at; when constraint is unknown keep position.module business-model, position.atom_id B06, position.status in_progress; when constraint is accepted set position.module business-model, position.atom_id B07, position.status in_progress")
+    (unlocks "when constraint is unknown keep B06; when constraint is accepted unlock B07"))
 
   (atom
     (id B07)
