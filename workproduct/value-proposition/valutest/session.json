@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "slug": "valutest",
+    "name": "Valuetest",
+    "created_at": "2026-07-18T19:47:45Z",
+    "updated_at": "2026-07-18T19:56:42Z"
+  },
+  "position": {
+    "module": "value-map",
+    "atom_id": "V01",
+    "status": "in_progress"
+  },
+  "answers": [
+    {
+      "atom_id": "P01",
+      "answer": "Independent cleaners in metro areas; exclude enterprise franchises.",
+      "kind": "decision",
+      "accepted_at": "2026-07-18T19:49:33Z"
+    },
+    {
+      "atom_id": "P02",
+      "answer": "Skip remaining profile atoms; bypass profile gate.",
+      "kind": "decision",
+      "accepted_at": "2026-07-18T19:56:42Z"
+    }
+  ],
+  "evidence": [],
+  "assumptions": [],
+  "decisions": [
+    {
+      "decision": "bypass profile gate",
+      "reason": "User requested skip of remaining profile atoms to advance to value-map.",
+      "resulting_module": "value-map",
+      "resulting_atom": "V01",
+      "resulting_status": "in_progress",
+      "source_atom": "P02"
+    }
+  ],
+  "unknowns": [],
+  "artifacts": [],
+  "ledger": {
+    "phase": "Design",
+    "active_module": "value-map",
+    "completion_pct": 32,
+    "validation_milestone": "Problem-Solution Fit",
+    "unvalidated_bombs": []
+  }
+}

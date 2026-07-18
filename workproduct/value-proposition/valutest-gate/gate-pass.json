@@ -1,0 +1,11 @@
+{
+  "decisions": [
+    {
+      "decision": "pass profile gate",
+      "reason": "Live check: segment, jobs, pains, gains, alternatives explicit",
+      "resulting_module": "profile",
+      "resulting_atom": "P12",
+      "resulting_status": "gate_pending"
+    }
+  ]
+}

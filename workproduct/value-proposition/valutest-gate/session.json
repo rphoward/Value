@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "slug": "valutest-gate",
+    "name": "Valutest Gate",
+    "created_at": "2026-07-18T20:01:27Z",
+    "updated_at": "2026-07-18T20:01:42Z"
+  },
+  "position": {
+    "module": "profile",
+    "atom_id": "P12",
+    "status": "completed"
+  },
+  "answers": [
+    {
+      "atom_id": "P12",
+      "answer": "Pass \u2014 profile is ready for value-map work.",
+      "kind": "decision",
+      "accepted_at": "2026-07-18T20:01:42Z"
+    }
+  ],
+  "evidence": [],
+  "assumptions": [],
+  "decisions": [
+    {
+      "decision": "pass profile gate",
+      "reason": "Live check: segment, jobs, pains, gains, alternatives explicit",
+      "resulting_module": "profile",
+      "resulting_atom": "P12",
+      "resulting_status": "gate_pending",
+      "source_atom": "P12"
+    }
+  ],
+  "unknowns": [],
+  "artifacts": [
+    {
+      "path": "customer-profile.md",
+      "status": "final"
+    }
+  ],
+  "ledger": {
+    "phase": "Canvas",
+    "active_module": "profile",
+    "completion_pct": 3,
+    "validation_milestone": "Problem-Solution Fit",
+    "unvalidated_bombs": []
+  }
+}

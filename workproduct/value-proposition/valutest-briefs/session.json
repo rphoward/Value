@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "slug": "valutest-briefs",
+    "name": "Valutest Briefs",
+    "created_at": "2026-07-18T20:01:59Z",
+    "updated_at": "2026-07-18T20:02:01Z"
+  },
+  "position": {
+    "module": "experiments",
+    "atom_id": "E01",
+    "status": "in_progress"
+  },
+  "answers": [
+    {
+      "atom_id": "P01",
+      "answer": "Recorded bypass profile gate.",
+      "kind": "decision",
+      "accepted_at": "2026-07-18T20:02:00Z"
+    },
+    {
+      "atom_id": "V01",
+      "answer": "Recorded bypass value-map gate.",
+      "kind": "decision",
+      "accepted_at": "2026-07-18T20:02:00Z"
+    },
+    {
+      "atom_id": "B01",
+      "answer": "Recorded bypass business-model gate.",
+      "kind": "decision",
+      "accepted_at": "2026-07-18T20:02:00Z"
+    },
+    {
+      "atom_id": "E01",
+      "answer": "Recorded bypass experiments gate.",
+      "kind": "decision",
+      "accepted_at": "2026-07-18T20:02:00Z"
+    }
+  ],
+  "evidence": [],
+  "assumptions": [],
+  "decisions": [
+    {
+      "decision": "bypass profile gate",
+      "reason": "Live check bypass",
+      "resulting_module": "value-map",
+      "resulting_atom": "V01",
+      "resulting_status": "in_progress",
+      "source_atom": "P01"
+    },
+    {
+      "decision": "bypass value-map gate",
+      "reason": "Live check bypass",
+      "resulting_module": "business-model",
+      "resulting_atom": "B01",
+      "resulting_status": "in_progress",
+      "source_atom": "V01"
+    },
+    {
+      "decision": "bypass business-model gate",
+      "reason": "Live check bypass",
+      "resulting_module": "experiments",
+      "resulting_atom": "E01",
+      "resulting_status": "in_progress",
+      "source_atom": "B01"
+    },
+    {
+      "decision": "bypass experiments gate",
+      "reason": "Live check bypass",
+      "resulting_module": "experiments",
+      "resulting_atom": "E01",
+      "resulting_status": "in_progress",
+      "source_atom": "E01"
+    }
+  ],
+  "unknowns": [],
+  "artifacts": [
+    {
+      "path": "product-design-brief.md",
+      "status": "final"
+    },
+    {
+      "path": "ux-brief.md",
+      "status": "final"
+    },
+    {
+      "path": "app-design-brief.md",
+      "status": "final"
+    }
+  ],
+  "ledger": {
+    "phase": "Complete",
+    "active_module": "none",
+    "completion_pct": 100,
+    "validation_milestone": "Validation Complete",
+    "unvalidated_bombs": []
+  }
+}

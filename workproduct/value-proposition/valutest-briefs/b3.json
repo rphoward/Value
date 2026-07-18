@@ -1,0 +1,11 @@
+{
+  "decisions": [
+    {
+      "decision": "bypass business-model gate",
+      "reason": "Live check bypass",
+      "resulting_module": "experiments",
+      "resulting_atom": "E01",
+      "resulting_status": "in_progress"
+    }
+  ]
+}

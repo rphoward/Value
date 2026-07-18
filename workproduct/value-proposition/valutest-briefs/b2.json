@@ -1,0 +1,11 @@
+{
+  "decisions": [
+    {
+      "decision": "bypass value-map gate",
+      "reason": "Live check bypass",
+      "resulting_module": "business-model",
+      "resulting_atom": "B01",
+      "resulting_status": "in_progress"
+    }
+  ]
+}
