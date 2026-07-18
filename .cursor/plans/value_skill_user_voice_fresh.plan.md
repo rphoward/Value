@@ -4,19 +4,19 @@ overview: Separate operator telemetry from user-facing coach voice. Scripts stay
 todos:
   - id: scripts-quiet
     content: "Add status.py --brief and --operator; default brief for agents. Trim next_question JSON to agent-only fields (drop embedded ledger duplication if redundant)."
-    status: pending
+    status: completed
   - id: slug-silent
     content: "Missing-session asks name only; derive slug in init_session or orchestrator before init_session.py --slug ..."
-    status: pending
+    status: completed
   - id: skill-voice
     content: "Rewrite SKILL.md protocol-1/3/6 and central_idea — scripts run silently; forbid quoting stdout; voice recipe known→edge→question"
-    status: pending
+    status: completed
   - id: contract-voice
     content: "Update session-contract.md missing-session + surface rules; optional voice-hint in profile.md for P01-P03 as pilot"
-    status: pending
+    status: completed
   - id: tests-mirror
     content: "Update smoke tests for --brief/--operator; sync .cursor/skills/value and skills/value; push Value + Values"
-    status: pending
+    status: completed
 isProject: false
 ---
 
