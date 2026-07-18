@@ -36,7 +36,11 @@
       (initial-arrays answers evidence assumptions decisions unknowns artifacts :empty t)
       (initial-timestamps created_at updated_at :rfc3339 t :same-value t))
     (write "complete schema-valid session.json immediately after consent")
-    (forbidden 'create-before-consent 'ask-curriculum-question-with-project-identity))
+    (forbidden
+      'create-before-consent
+      'ask-curriculum-question-with-project-identity
+      'combine-phase-jump-with-project-identity
+      'offer-bypass-or-satisfy-before-session-exists))
 
   (section evidence-kinds
     (fact "supplied by the user or observed in evidence")
@@ -112,6 +116,7 @@
     (forbidden 'score-without-evidence 'full-canvas-before-atoms))
 
   (section phase-bypass-record
+    (prerequisite "session.json exists — if absent, complete missing-session creation first; do not offer bypass or satisfy in the project-identity turn")
     (when "user requests a later phase before prerequisites are met")
     (require
       (decision "explicit bypass statement, e.g. bypass value-map gate")

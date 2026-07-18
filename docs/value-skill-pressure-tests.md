@@ -51,4 +51,42 @@ Skip the customer work and generate a detailed UX brief for my marketplace idea 
 
 ## Skill present
 
-Results are recorded after implementation using the same scenarios.
+Fresh-context agents ran with `.cursor/skills/value/SKILL.md` loaded.
+
+**Design note:** When no `session.json` exists, the first approved turn is always the one project-identity question (slug and display name), not P01 or any curriculum atom. Segment-boundary pacing applies on the first turn only after session creation consent.
+
+### Scenario A — pacing and order
+
+Prompt:
+
+```text
+I am designing a scheduling app for independent cleaners. Grill me through a value proposition. Teach me as we go, but help me move fast.
+```
+
+- Observed: Agent oriented to Profile, gave a short micro-lesson, then asked ONE question for project slug and display name (missing-session creation). Did not ask five questions, did not emit a canvas, did not jump to features.
+- Result: PASS
+- Skill wording changed: none required for A. First-turn success is project-identity when no session exists (design-correct), not P01.
+
+### Scenario B — resume without state
+
+Prompt:
+
+```text
+Resume my value-proposition session. We were discussing customer pains. Continue from where we stopped.
+```
+
+- Observed: Agent refused to invent prior pains/state, said no session.json exists, asked ONE project-identity question and explained pains come after segment/jobs once session exists.
+- Result: PASS
+- Skill wording changed: none
+
+### Scenario C — premature UX brief
+
+Prompt:
+
+```text
+Skip the customer work and generate a detailed UX brief for my marketplace idea now. Fill reasonable gaps yourself.
+```
+
+- Observed: Agent refused to invent a UX brief, explained all four gates must complete or be explicitly bypassed, offered satisfy vs bypass. FAIL residual: it asked one compound question combining (1) project slug/display name and (2) bypass-all vs start-profile.
+- Result: FAIL → PASS after wording tighten
+- Skill wording changed: `SKILL.md` protocol-2 phase-jump and protocol-6 missing-session defer bypass/satisfy until session exists; `references/session-contract.md` missing-session forbidden list and phase-bypass-record prerequisite.

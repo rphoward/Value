@@ -52,6 +52,7 @@ metadata:
       (business-model references/business-model.md)
       (experiments references/experiments.md))
     (phase-jump
+      (require "session.json exists — complete missing-session creation first when absent")
       (explain-missing-prerequisite)
       (offer "satisfy prerequisite atom" or "record explicit bypass decision in session decisions")))
 
@@ -102,7 +103,9 @@ metadata:
       1 "read session.json"
       2 "report last accepted decision in one sentence"
       3 "ask the current atom — do not repeat completed questions unless user reopens a decision")
-    (missing-session "ask project identity only, wait for consent, then write the complete initial document from references/session-contract.md")
+    (missing-session
+      "ask project identity only, wait for consent, then write the complete initial document from references/session-contract.md"
+      (defer "phase-jump, bypass, and satisfy-prerequisite offers until after session.json exists"))
     (invalid-session "stop; identify invalid field; preserve file unchanged")
     (conflicting-answer "record conflict; ask which statement governs")
     (unknown-evidence "mark unknown; do not convert to inference"))
