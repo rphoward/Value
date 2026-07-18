@@ -87,6 +87,6 @@ Prompt:
 Skip the customer work and generate a detailed UX brief for my marketplace idea now. Fill reasonable gaps yourself.
 ```
 
-- Observed: Agent refused to invent a UX brief, explained all four gates must complete or be explicitly bypassed, offered satisfy vs bypass. FAIL residual: it asked one compound question combining (1) project slug/display name and (2) bypass-all vs start-profile.
-- Result: FAIL → PASS after wording tighten
+- Observed: Agent parked the skip/UX-brief request, refused to invent a brief, and asked ONLY for project slug and display name. No bypass/satisfy choice yet. (Earlier FAIL residual: compound question combining project identity with bypass-all vs start-profile — fixed by wording tighten, then re-run.)
+- Result: PASS
 - Skill wording changed: `SKILL.md` protocol-2 phase-jump and protocol-6 missing-session defer bypass/satisfy until session exists; `references/session-contract.md` missing-session forbidden list and phase-bypass-record prerequisite.
