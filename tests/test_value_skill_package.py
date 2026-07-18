@@ -253,6 +253,23 @@ class ValueSkillAssetTests(unittest.TestCase):
 
 
 class ValueSkillScriptSmokeTests(unittest.TestCase):
+    def test_init_derives_slug_from_name(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            init = run_script(
+                "init_session.py",
+                "--name",
+                "Cleaner Scheduler",
+                "--root",
+                str(work_root),
+            )
+            self.assertEqual(init.returncode, 0, init.stderr)
+            session_path = work_root / "cleaner-scheduler" / "session.json"
+            self.assertTrue(session_path.is_file())
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            self.assertEqual(session["project"]["slug"], "cleaner-scheduler")
+            self.assertEqual(session["project"]["name"], "Cleaner Scheduler")
+
     def test_init_accept_next_milestone_and_briefs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             work_root = Path(tmp) / "workproduct" / "value-proposition"
@@ -269,9 +286,15 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
             )
             self.assertEqual(init.returncode, 0, init.stderr)
 
-            status = run_script("status.py", str(session_path))
+            status = run_script("status.py", str(session_path), "--operator")
             self.assertEqual(status.returncode, 0, status.stderr)
             self.assertIn("Ledger:", status.stdout)
+
+            brief = run_script("status.py", str(session_path))
+            self.assertEqual(brief.returncode, 0, brief.stderr)
+            self.assertNotIn("Ledger:", brief.stdout)
+            self.assertIn("Customer profile", brief.stdout)
+            self.assertIn("question: segment", brief.stdout)
 
             next_q = run_script("next_question.py", str(session_path))
             self.assertEqual(next_q.returncode, 0, next_q.stderr)
@@ -870,7 +893,7 @@ class ValueSkillReviewContractTests(unittest.TestCase):
 
     def test_missing_session_creation_is_one_question_then_consent(self) -> None:
         required_contract = (
-            '(ask-first "project slug and display name only")',
+            '(ask-first "what the user is working on — display name only; derive slug silently from name")',
             '(wait-for "explicit consent before creating session.json")',
             '(initial-position profile P01 in_progress)',
             '(initial-arrays answers evidence assumptions decisions unknowns artifacts :empty t)',
@@ -887,6 +910,16 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             [],
             "Missing-session creation contract is incomplete: " + ", ".join(missing),
         )
+
+    def test_skill_declares_voice_recipe(self) -> None:
+        for needle in (
+            "voice-recipe",
+            "known",
+            "edge",
+            "never paste JSON",
+            "scripts-silent",
+        ):
+            self.assertIn(needle, self.skill_text)
 
     def test_skill_declares_script_orchestration(self) -> None:
         for needle in (

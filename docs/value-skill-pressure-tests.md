@@ -53,7 +53,7 @@ Skip the customer work and generate a detailed UX brief for my marketplace idea 
 
 Fresh-context agents ran with `.cursor/skills/value/SKILL.md` loaded.
 
-**Design note:** When no `session.json` exists, the first approved turn is always the one project-identity question (slug and display name), not P01 or any curriculum atom. Segment-boundary pacing applies on the first turn only after session creation consent.
+**Design note:** When no `session.json` exists, the first approved turn asks what the user is working on (display name only; slug derived silently), not P01 or any curriculum atom. User-facing turns use connected prose (known → edge → question) — no ledger line, atom IDs, or script stdout quoted to the user. Segment-boundary pacing applies on the first turn only after session creation consent.
 
 ### Scenario A — pacing and order
 
@@ -64,8 +64,9 @@ I am designing a scheduling app for independent cleaners. Grill me through a val
 ```
 
 - Observed: Agent oriented to Profile, gave a short micro-lesson, then asked ONE question for project slug and display name (missing-session creation). Did not ask five questions, did not emit a canvas, did not jump to features.
-- Result: PASS
-- Skill wording changed: none required for A. First-turn success is project-identity when no session exists (design-correct), not P01.
+- User-voice expectation (post-pass): one connected paragraph with known→edge→question; no `Ledger:` line, atom IDs, or pasted script JSON; first missing-session turn asks display name only (slug derived silently).
+- Result: PASS (pacing); user-voice pass tracked separately in `.cursor/plans/value_skill_user_voice_fresh.plan.md`
+- Skill wording changed: none required for A pacing. First-turn success is project name when no session exists (design-correct), not P01.
 
 ### Scenario B — resume without state
 
@@ -124,7 +125,7 @@ The prompt-only scenarios above do not prove filesystem writes or valid-state re
 
 - [x] Live — session creation write. Success: `init_session.py` on `workproduct/value-proposition/valutest-live-create/session.json` created schema-valid state at profile/P01/in_progress (2026-07-18); duplicate init exit 1.
 - [x] Live — accepted-answer persistence. Success: `accept_answer.py` on `workproduct/value-proposition/valutest/session.json` appended one P01 answers record (append-only; `created_at` unchanged), set `project.updated_at` to `accepted_at` (`2026-07-18T19:49:33Z`), advanced position to profile/P02/in_progress, ledger completion 3%; duplicate P01 without `--reopen` exit 1; `next_question.py` returns P02.
-- [x] Live — resume from valid state. Success: `status.py` + `next_question.py` on `workproduct/value-proposition/valutest/session.json` returned ledger at value-map/V01/in_progress and next atom V01 only (no P01 repeat); last decision `bypass profile gate` (2026-07-18).
+- [x] Live — resume from valid state. Success: `status.py --operator` + `next_question.py` on `workproduct/value-proposition/valutest/session.json` returned ledger at value-map/V01/in_progress and next atom V01 only (no P01 repeat); last decision `bypass profile gate` (2026-07-18).
 - [x] Live — post-session bypass. Success: `valutest/session.json` records `bypass profile gate` with `resulting_module` value-map, `resulting_atom` V01, `resulting_status` in_progress; position matches (2026-07-18).
 - [x] Live — gate artifact write. Success: `write_milestone.py --module profile` on `workproduct/value-proposition/valutest-gate/session.json` wrote `customer-profile.md` and set artifact status `final` after `pass profile gate` (2026-07-18).
 - [x] Live — product, UX, and app brief generation. Success: four bypass decisions on `workproduct/value-proposition/valutest-briefs/session.json` then `write_design_briefs.py` (no `--force`) wrote `product-design-brief.md`, `ux-brief.md`, and `app-design-brief.md` (2026-07-18).
