@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/value-skill/session.schema.json",
+  "title": "Value Proposition Session",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "position",
+    "answers",
+    "evidence",
+    "assumptions",
+    "decisions",
+    "unknowns",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "project": {
+      "$ref": "#/$defs/project"
+    },
+    "position": {
+      "$ref": "#/$defs/position"
+    },
+    "answers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/answerRecord"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceRecord"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/assumptionRecord"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/decisionRecord"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unknownRecord"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifactRecord"
+      }
+    }
+  },
+  "$defs": {
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slug", "name", "created_at", "updated_at"],
+      "properties": {
+        "slug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module", "atom_id", "status"],
+      "properties": {
+        "module": {
+          "type": "string",
+          "enum": ["profile", "value-map", "business-model", "experiments"]
+        },
+        "atom_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": ["in_progress", "gate_pending", "completed", "bypassed"]
+        }
+      }
+    },
+    "answerRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["atom_id", "answer", "kind", "accepted_at"],
+      "properties": {
+        "atom_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "answer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["fact", "inference", "hypothesis", "decision", "unknown"]
+        },
+        "accepted_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "evidenceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim", "kind", "source", "strength"],
+      "properties": {
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["fact", "inference", "hypothesis", "decision", "unknown"]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "strength": {
+          "type": "string",
+          "enum": ["strong", "moderate", "weak", "unknown"]
+        }
+      }
+    },
+    "assumptionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim", "criticality", "evidence_status"],
+      "properties": {
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criticality": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        },
+        "evidence_status": {
+          "type": "string",
+          "enum": ["supported", "partial", "unsupported", "unknown"]
+        }
+      }
+    },
+    "decisionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "reason", "source_atom"],
+      "properties": {
+        "decision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_atom": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "unknownRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "blocking"],
+      "properties": {
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocking": {
+          "type": "boolean"
+        }
+      }
+    },
+    "artifactRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "status"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "draft", "final"]
+        }
+      }
+    }
+  }
+}
