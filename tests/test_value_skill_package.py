@@ -117,6 +117,11 @@ def split_atoms(text: str) -> list[str]:
     return atoms
 
 
+def atom_field(atom_text: str, field: str) -> str:
+    match = re.search(rf'\({field}\s+"([^"]*)"\)', atom_text)
+    return match.group(1) if match else ""
+
+
 class ValueSkillReviewContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -353,6 +358,102 @@ class ValueSkillPackageTests(unittest.TestCase):
             [],
             "Atom IDs must be unique across modules: " + "; ".join(duplicates),
         )
+
+    def test_each_atom_asks_exactly_one_question(self) -> None:
+        for module_name in MODULE_FILES:
+            module_text = (REFERENCES_DIR / module_name).read_text(encoding="utf-8")
+            for atom_text in split_atoms(module_text):
+                atom_id = ATOM_ID_RE.search(atom_text).group(1)
+                asks = atom_field(atom_text, "asks")
+                self.assertEqual(
+                    asks.count("?"),
+                    1,
+                    f"{atom_id} must contain exactly one question mark in asks: {asks!r}",
+                )
+
+    def test_atom_record_appends_include_closed_schema_fields(self) -> None:
+        schema = json.loads(
+            (ASSETS_DIR / "session.schema.json").read_text(encoding="utf-8")
+        )
+        record_defs = {
+            "answers": "answerRecord",
+            "evidence": "evidenceRecord",
+            "assumptions": "assumptionRecord",
+            "decisions": "decisionRecord",
+            "unknowns": "unknownRecord",
+            "artifacts": "artifactRecord",
+        }
+
+        for module_name in MODULE_FILES:
+            module_text = (REFERENCES_DIR / module_name).read_text(encoding="utf-8")
+            for atom_text in split_atoms(module_text):
+                atom_id = ATOM_ID_RE.search(atom_text).group(1)
+                writes = atom_field(atom_text, "writes")
+                self.assertIn(
+                    "append answers record",
+                    writes,
+                    f"{atom_id} must append a complete answers record",
+                )
+
+                for clause in writes.split(";"):
+                    if "append" not in clause and "upsert" not in clause:
+                        continue
+                    for collection, definition in record_defs.items():
+                        operations = (
+                            f"append {collection} record",
+                            f"upsert {collection} record",
+                        )
+                        if not any(operation in clause for operation in operations):
+                            continue
+                        required = schema["$defs"][definition]["required"]
+                        missing = [field for field in required if field not in clause]
+                        self.assertEqual(
+                            missing,
+                            [],
+                            f"{atom_id} {collection} write misses {missing}: {clause!r}",
+                        )
+
+                for position_field in ("position.module", "position.atom_id", "position.status"):
+                    self.assertIn(
+                        position_field,
+                        writes,
+                        f"{atom_id} write must set {position_field}",
+                    )
+                self.assertIn(
+                    "project.updated_at to accepted_at",
+                    writes,
+                    f"{atom_id} write must refresh project.updated_at",
+                )
+
+    def test_scale_constraint_can_remain_blocking_unknown(self) -> None:
+        module_text = (REFERENCES_DIR / "business-model.md").read_text(
+            encoding="utf-8"
+        )
+        b06 = next(
+            atom for atom in split_atoms(module_text) if "(id B06)" in atom
+        )
+        self.assertIn("constraint unknown", atom_field(b06, "accepts"))
+        writes = atom_field(b06, "writes")
+        self.assertIn("append unknowns record", writes)
+        self.assertIn("blocking true", writes)
+
+    def test_test_and_learning_cards_keep_atomic_asks(self) -> None:
+        module_text = (REFERENCES_DIR / "experiments.md").read_text(
+            encoding="utf-8"
+        )
+        atoms = {
+            ATOM_ID_RE.search(atom).group(1): atom for atom in split_atoms(module_text)
+        }
+        self.assertEqual(
+            atom_field(atoms["E07"], "asks"),
+            "Do you accept the assembled test card as written?",
+        )
+        self.assertEqual(
+            atom_field(atoms["E08"], "asks"),
+            "What observable result did the test produce?",
+        )
+        self.assertIn("waits until a test result exists", atom_field(atoms["E08"], "teaches"))
+        self.assertIn("blocking unknown", atom_field(atoms["E08"], "teaches"))
 
     def test_session_schema_parses_as_json(self) -> None:
         schema_path = ASSETS_DIR / "session.schema.json"
