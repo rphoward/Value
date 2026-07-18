@@ -20,6 +20,7 @@ venv/
 htmlcov/
 .idea/
 *.swp
+.worktrees/
 
 # OS
 .DS_Store
