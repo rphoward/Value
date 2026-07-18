@@ -79,11 +79,13 @@
         },
         "created_at": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])-([0-2]\\d|3[01])T([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]([01]\\d|2[0-3]):[0-5]\\d)$"
         },
         "updated_at": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])-([0-2]\\d|3[01])T([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]([01]\\d|2[0-3]):[0-5]\\d)$"
         }
       }
     },
@@ -125,7 +127,8 @@
         },
         "accepted_at": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])-([0-2]\\d|3[01])T([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]([01]\\d|2[0-3]):[0-5]\\d)$"
         }
       }
     },
@@ -155,7 +158,7 @@
     "assumptionRecord": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["claim", "criticality", "evidence_status"],
+      "required": ["claim", "criticality", "evidence_status", "source_atom"],
       "properties": {
         "claim": {
           "type": "string",
@@ -168,13 +171,24 @@
         "evidence_status": {
           "type": "string",
           "enum": ["supported", "partial", "unsupported", "unknown"]
+        },
+        "source_atom": {
+          "type": "string",
+          "minLength": 1
         }
       }
     },
     "decisionRecord": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["decision", "reason", "source_atom"],
+      "required": [
+        "decision",
+        "reason",
+        "source_atom",
+        "resulting_module",
+        "resulting_atom",
+        "resulting_status"
+      ],
       "properties": {
         "decision": {
           "type": "string",
@@ -187,6 +201,18 @@
         "source_atom": {
           "type": "string",
           "minLength": 1
+        },
+        "resulting_module": {
+          "type": "string",
+          "enum": ["profile", "value-map", "business-model", "experiments"]
+        },
+        "resulting_atom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resulting_status": {
+          "type": "string",
+          "enum": ["in_progress", "gate_pending", "completed", "bypassed"]
         }
       }
     },

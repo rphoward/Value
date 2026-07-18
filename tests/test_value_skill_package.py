@@ -117,6 +117,99 @@ def split_atoms(text: str) -> list[str]:
     return atoms
 
 
+class ValueSkillReviewContractTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.skill_text = read_skill_md()
+        cls.frontmatter = parse_frontmatter(cls.skill_text)
+        cls.contract_text = (
+            REFERENCES_DIR / "session-contract.md"
+        ).read_text(encoding="utf-8")
+        cls.schema = json.loads(
+            (ASSETS_DIR / "session.schema.json").read_text(encoding="utf-8")
+        )
+
+    def test_intent_skill_is_discoverable_repo_wide(self) -> None:
+        self.assertIsNone(
+            re.search(r"^paths\s*:", self.frontmatter, re.MULTILINE),
+            "Intent-discovered value skill must omit paths so fresh prompts can load it",
+        )
+
+    def test_missing_session_creation_is_one_question_then_consent(self) -> None:
+        required_contract = (
+            '(ask-first "project slug and display name only")',
+            '(wait-for "explicit consent before creating session.json")',
+            '(initial-position profile P01 in_progress)',
+            '(initial-arrays answers evidence assumptions decisions unknowns artifacts :empty t)',
+            '(initial-timestamps created_at updated_at :rfc3339 t :same-value t)',
+            '(write "complete schema-valid session.json immediately after consent")',
+        )
+        missing = [
+            statement
+            for statement in required_contract
+            if statement not in self.contract_text
+        ]
+        self.assertEqual(
+            missing,
+            [],
+            "Missing-session creation contract is incomplete: " + ", ".join(missing),
+        )
+
+    def test_briefs_require_every_module_gate_outcome(self) -> None:
+        self.assertIn(
+            '(gate-prerequisite "profile, value-map, business-model, and experiments '
+            'must each be completed or explicitly bypassed")',
+            self.skill_text,
+        )
+
+    def test_bypass_records_exact_resulting_position(self) -> None:
+        decision = self.schema["$defs"]["decisionRecord"]
+        resulting_fields = {
+            "resulting_module",
+            "resulting_atom",
+            "resulting_status",
+        }
+        self.assertTrue(resulting_fields.issubset(decision["properties"]))
+        self.assertTrue(resulting_fields.issubset(decision["required"]))
+        self.assertIn(
+            "(resulting-position resulting_module resulting_atom resulting_status)",
+            self.contract_text,
+        )
+
+    def test_schema_timestamp_patterns_enforce_rfc3339(self) -> None:
+        timestamp_schemas = (
+            self.schema["$defs"]["project"]["properties"]["created_at"],
+            self.schema["$defs"]["project"]["properties"]["updated_at"],
+            self.schema["$defs"]["answerRecord"]["properties"]["accepted_at"],
+        )
+        for timestamp_schema in timestamp_schemas:
+            pattern = timestamp_schema.get("pattern")
+            self.assertTrue(pattern, "RFC 3339 timestamp fields must define a pattern")
+            self.assertRegex("2026-07-18T12:34:56Z", pattern)
+            self.assertNotRegex("2026-07-18T12:34:56", pattern)
+
+    def test_conflicts_and_assumptions_have_schema_valid_sources(self) -> None:
+        assumption = self.schema["$defs"]["assumptionRecord"]
+        self.assertIn("source_atom", assumption["properties"])
+        self.assertIn("source_atom", assumption["required"])
+        self.assertIn(
+            '(on-conflict "append a blocking unknown with the conflicting statements; '
+            'preserve both accepted answers")',
+            self.contract_text,
+        )
+        self.assertIn(
+            '(resolution "append a decision naming the governing statement, reason, '
+            'source_atom, and resulting position; remove the blocking unknown")',
+            self.contract_text,
+        )
+
+    def test_accepted_answer_refreshes_project_updated_at(self) -> None:
+        self.assertIn(
+            '(refresh "project.updated_at to the accepted_at RFC 3339 timestamp")',
+            self.skill_text,
+        )
+
+
 class ValueSkillPackageTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

@@ -20,6 +20,24 @@
     (module-enum profile value-map business-model experiments)
     (status-enum in_progress gate_pending completed bypassed))
 
+  (section missing-session-creation
+    (ask-first "project slug and display name only")
+    (wait "for the user's project identity answer")
+    (ask-consent "one primary question: create workproduct/value-proposition/<project-slug>/session.json?")
+    (wait-for "explicit consent before creating session.json")
+    (initial-document
+      (schema_version "1.0")
+      (project
+        (slug "confirmed project slug")
+        (name "confirmed display name")
+        (created_at "current RFC 3339 timestamp")
+        (updated_at "same timestamp as created_at"))
+      (initial-position profile P01 in_progress)
+      (initial-arrays answers evidence assumptions decisions unknowns artifacts :empty t)
+      (initial-timestamps created_at updated_at :rfc3339 t :same-value t))
+    (write "complete schema-valid session.json immediately after consent")
+    (forbidden 'create-before-consent 'ask-curriculum-question-with-project-identity))
+
   (section evidence-kinds
     (fact "supplied by the user or observed in evidence")
     (inference "reasoned from facts; must be labeled as inference in answer or evidence")
@@ -32,7 +50,8 @@
       (atom_id "stable atom identifier from active module reference")
       (answer "accepted text for this atom")
       (kind "one of fact inference hypothesis decision unknown")
-      (accepted_at "ISO-8601 timestamp"))
+      (accepted_at "RFC 3339 timestamp"))
+    (project-write "set project.updated_at to accepted_at on every accepted answer")
     (append-only "new acceptance appends; reopening a decision adds a superseding record and notes conflict resolution"))
 
   (section position-shape
@@ -49,12 +68,13 @@
     (strength "behavioral commitment rank when applicable; spoken feedback remains weak evidence"))
 
   (section assumptions
-    (shape claim criticality evidence_status)
+    (shape claim criticality evidence_status source_atom)
     (criticality high medium low)
     (evidence_status supported partial unsupported unknown))
 
   (section decisions
-    (shape decision reason source_atom)
+    (shape decision reason source_atom resulting_module resulting_atom resulting_status)
+    (resulting-position resulting_module resulting_atom resulting_status)
     (use "bypass records, conflict resolutions, and explicit tradeoffs"))
 
   (section unknowns
@@ -73,8 +93,8 @@
       ux-brief.md))
 
   (section conflict-handling
-    (on-conflict "append conflict note; ask which statement governs")
-    (resolution "record governing decision with reason and source_atom")
+    (on-conflict "append a blocking unknown with the conflicting statements; preserve both accepted answers")
+    (resolution "append a decision naming the governing statement, reason, source_atom, and resulting position; remove the blocking unknown")
     (forbidden 'silent-overwrite 'advance-without-resolution))
 
   (section resume-behavior
@@ -86,6 +106,7 @@
   (section milestone-writes
     (trigger "module gate_pending after final atom accepted")
     (source "accepted answers and labeled evidence for that module only")
+    (brief-prerequisite "all four module gates are completed or explicitly bypassed")
     (product-brief "only from accepted facts, labeled inferences, decisions, unresolved assumptions")
     (ux-brief "only from accepted facts, labeled inferences, decisions, unresolved assumptions")
     (forbidden 'score-without-evidence 'full-canvas-before-atoms))
@@ -95,8 +116,11 @@
     (require
       (decision "explicit bypass statement, e.g. bypass value-map gate")
       (reason "why the prerequisite is waived")
-      (source_atom "atom id active when bypass was requested"))
-    (position-update "set module and status to bypassed or next allowed atom per orchestrator decision")
+      (source_atom "atom id active when bypass was requested")
+      (resulting_module "requested target phase")
+      (resulting_atom "first atom id in the target module")
+      (resulting_status in_progress))
+    (position-update "set position.module, position.atom_id, and position.status exactly to the decision's resulting_module, resulting_atom, and resulting_status")
     (forbidden 'silent-phase-jump))
 
   (section parking-lot

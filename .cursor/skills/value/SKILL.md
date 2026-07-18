@@ -1,7 +1,6 @@
 ---
 name: value
 description: Use when the user asks to be grilled on a value proposition, map a customer profile, test a product or business idea, or turn validated learning into a product, app, or UX brief.
-paths: .cursor/skills/value/**,workproduct/value-proposition/**
 metadata:
   activation: intent
   distribution: github
@@ -33,9 +32,9 @@ metadata:
 
   (protocol-1-activation
     (on-activation
-      1 "confirm project slug and display name; offer to resume an existing session or start a new one"
-      2 "read references/session-contract.md for field shapes, evidence kinds, and failure handling"
-      3 "validate session.json against assets/session.schema.json when present")
+      1 "read references/session-contract.md for field shapes, evidence kinds, creation, and failure handling"
+      2 "validate session.json against assets/session.schema.json when present"
+      3 "when absent, follow the missing-session creation sequence and ask only its one project-identity question")
     (session-root "workproduct/value-proposition/<project-slug>/")
     (canonical-state "session.json")
     (forbidden 'invent-prior-answers 'advance-without-accepted-answer 'full-canvas-before-atoms))
@@ -72,7 +71,8 @@ metadata:
     (on-accept
       1 "append answer record with atom_id, answer text, kind, accepted_at"
       2 "update position to the atom's (unlocks ...) target"
-      3 "write session.json immediately")
+      3 "refresh project.updated_at and write session.json immediately")
+    (refresh "project.updated_at to the accepted_at RFC 3339 timestamp")
     (module-gate
       (when "module final atom accepted")
       (write-artifact-from-template
@@ -81,6 +81,7 @@ metadata:
         (business-model assets/business-model.template.md → business-model.md)
         (experiments assets/experiment-plan.template.md → experiment-plan.md)))
     (completion-briefs
+      (gate-prerequisite "profile, value-map, business-model, and experiments must each be completed or explicitly bypassed")
       (inputs-only "accepted facts, labeled inferences, explicit decisions, unresolved assumptions")
       (product-design-brief assets/product-design-brief.template.md)
       (ux-brief assets/ux-brief.template.md)
@@ -92,7 +93,8 @@ metadata:
       (store "decisions or assumptions with source atom noted")
       (return "resume current profile atom or active atom after capture"))
     (bypass
-      (require "explicit decision record: decision, reason, source_atom")
+      (require "explicit decision record: decision, reason, source_atom, resulting_module, resulting_atom, resulting_status")
+      (result "move to the named resulting module and atom with the recorded status")
       (never "silent skip of a module gate")))
 
   (protocol-6-resume-and-failure
@@ -100,7 +102,7 @@ metadata:
       1 "read session.json"
       2 "report last accepted decision in one sentence"
       3 "ask the current atom — do not repeat completed questions unless user reopens a decision")
-    (missing-session "offer to create one; do not invent prior answers")
+    (missing-session "ask project identity only, wait for consent, then write the complete initial document from references/session-contract.md")
     (invalid-session "stop; identify invalid field; preserve file unchanged")
     (conflicting-answer "record conflict; ask which statement governs")
     (unknown-evidence "mark unknown; do not convert to inference"))
