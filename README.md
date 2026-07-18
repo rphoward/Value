@@ -2,29 +2,20 @@
 
 A teaching-first Cursor / agent skill for value-proposition design: one question at a time, durable session state, and product/UX brief artifacts.
 
-## Install
+## Install (recommended)
+
+Use the minimal skill-only repo:
 
 ```bash
-npx skills add rphoward/Value
+npx skills add rphoward/Values
 ```
 
-That installs the `value` skill into your agent skills directory. Useful variants:
+- **Local (one project):** `npx skills add rphoward/Values`
+- **Global (all projects):** `npx skills add rphoward/Values -g`
 
-```bash
-# List what the package contains
-npx skills add rphoward/Value -l
+Ship repo: https://github.com/rphoward/Values
 
-# Install globally (all projects)
-npx skills add rphoward/Value -g -y
-
-# Cursor only
-npx skills add rphoward/Value -a cursor -y
-
-# Pin a specific skill name (same package)
-npx skills add rphoward/Value -s value -y
-```
-
-After install, in Cursor ask something like: *“Grill me on a value proposition for my scheduling app.”*
+This monorepo (`rphoward/Value`) is for developing the skill plus optional spoke app. Prefer `Values` for distribution.
 
 ## Package layout
 
