@@ -8,7 +8,8 @@ Develop and distribute a Cursor agent skill from this GitHub repo. The layered s
 
 | Path | Role |
 |------|------|
-| `.cursor/skills/value/` | Skill package (`SKILL.md`, `references/`, `scripts/`, `assets/`) |
+| `skills/value/` | Ship package for `npx skills add rphoward/Value` |
+| `.cursor/skills/value/` | Same skill for Cursor while developing this repo |
 | `src/value/` | Layered spoke product (retargeted at init) |
 | `tests/` | Unittest / pytest suite |
 | `tools/` | Local scripts (`start-*.ps1`) |

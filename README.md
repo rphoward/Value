@@ -1,28 +1,44 @@
 # Value
 
-Cursor agent skill for GitHub distribution, with a layered spoke scaffold for local use.
+A teaching-first Cursor / agent skill for value-proposition design: one question at a time, durable session state, and product/UX brief artifacts.
 
-## Skill package
+## Install
+
+```bash
+npx skills add rphoward/Value
+```
+
+That installs the `value` skill into your agent skills directory. Useful variants:
+
+```bash
+# List what the package contains
+npx skills add rphoward/Value -l
+
+# Install globally (all projects)
+npx skills add rphoward/Value -g -y
+
+# Cursor only
+npx skills add rphoward/Value -a cursor -y
+
+# Pin a specific skill name (same package)
+npx skills add rphoward/Value -s value -y
+```
+
+After install, in Cursor ask something like: *“Grill me on a value proposition for my scheduling app.”*
+
+## Package layout
 
 ```
-.cursor/skills/value/
+skills/value/                 # ship surface for npx skills / skills.sh
   SKILL.md
   references/
-  scripts/
   assets/
+  scripts/
+
+.cursor/skills/value/         # same package for Cursor in this repo
 ```
 
-## Spoke app
-
-```
-src/<slug>/
-  core/
-  application/
-  infrastructure/
-  presentation/
-```
-
-## Setup
+## Develop in this repo
 
 ```powershell
 pip install -e .
