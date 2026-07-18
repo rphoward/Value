@@ -1,6 +1,10 @@
 ---
 name: value
-description: Use when the user asks to be grilled on a value proposition, map a customer profile, test a product or business idea, or turn validated learning into a product, app, or UX brief.
+description: >
+  Use when the user asks to be grilled on a value proposition, map a customer
+  profile, test a product or business idea, or turn validated learning into a
+  product, app, or UX brief. Not for generic product requirements,
+  implementation planning, or UX critique without a value-proposition session.
 metadata:
   activation: intent
   distribution: github
@@ -65,6 +69,7 @@ metadata:
   (batching "up to three tightly related questions only when the user explicitly requests batching")
   (follow-up "when answer is vague, inferred, or missing evidence: one focused follow-up; do not advance")
   (acceptance "advance only when the active atom's (accepts ...) criteria are met")
+  (blocking-unknown "retain the active atom when its reference marks an unresolved boundary or missing result blocking")
   (forbidden 'emit-full-canvas-matrix-or-scorecard-before-required-answers))
 
   (protocol-4-answer-and-state
@@ -76,6 +81,7 @@ metadata:
     (refresh "project.updated_at to the accepted_at RFC 3339 timestamp")
     (module-gate
       (when "module final atom accepted")
+      (outcome "derive completed from the gate decision plus final milestone artifact; position remains only the current active atom")
       (write-artifact-from-template
         (profile assets/customer-profile.template.md → customer-profile.md)
         (value-map assets/value-map.template.md → value-map.md)
@@ -94,7 +100,7 @@ metadata:
       (store "decisions or assumptions with source atom noted")
       (return "resume current profile atom or active atom after capture"))
     (bypass
-      (require "explicit decision record: decision, reason, source_atom, resulting_module, resulting_atom, resulting_status")
+      (require "one explicit decision record per waived module using decision bypass <module> gate, reason, source_atom, resulting_module, resulting_atom, resulting_status")
       (result "move to the named resulting module and atom with the recorded status")
       (never "silent skip of a module gate")))
 

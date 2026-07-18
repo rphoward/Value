@@ -8,9 +8,9 @@
     (name "offering boundary")
     (teaches "A value map covers one offering for the accepted segment and priority job. Choosing that scope is a decision; a user-supported description keeps its original evidence kind rather than being upgraded to fact.")
     (asks "Which single offering are we mapping?")
-    (accepts "Names one offering and at least one boundary exclusion; labels an explicit scope choice decision and preserves another user-supported kind, while an unresolved boundary remains unknown.")
-    (writes "append answers record {atom_id V01, answer accepted text, kind decision for an explicit scope choice or the accepted supported kind, accepted_at current RFC 3339 timestamp}; when scope is chosen append decisions record {decision accepted offering boundary, reason accepted scope reason, source_atom V01, resulting_module value-map, resulting_atom V02, resulting_status in_progress}; when unresolved append unknowns record {question offering boundary not established, blocking false}; set project.updated_at to accepted_at; set position.module value-map, position.atom_id V02, position.status in_progress")
-    (unlocks V02))
+    (accepts "Names one offering and at least one boundary exclusion; labels an explicit scope choice decision and preserves another user-supported kind, while an unresolved boundary creates a blocking unknown and keeps V01 active.")
+    (writes "append answers record {atom_id V01, answer accepted text, kind decision for an explicit scope choice or the accepted supported kind, accepted_at current RFC 3339 timestamp}; when boundary is accepted append decisions record {decision accepted offering boundary, reason accepted scope reason, source_atom V01, resulting_module value-map, resulting_atom V02, resulting_status in_progress}; when boundary is unresolved append unknowns record {question offering boundary not established, blocking true}; set project.updated_at to accepted_at; when boundary is unresolved keep position.module value-map, position.atom_id V01, position.status in_progress; when boundary is accepted set position.module value-map, position.atom_id V02, position.status in_progress")
+    (unlocks "when boundary is unresolved keep V01; when boundary is accepted unlock V02"))
 
   (atom
     (id V02)
@@ -73,4 +73,4 @@
     (asks "Does this value map pass its gate now?")
     (accepts "Records an explicit pass or reopen decision with a reason and target atom; pass requires offering scope, mapped effects, fit links, alternative distinction, and parked orphan candidates or an explicit empty set.")
     (writes "append answers record {atom_id V08, answer accepted text, kind decision, accepted_at current RFC 3339 timestamp}; append decisions record {decision pass or reopen value-map gate, reason accepted reason, source_atom V08, resulting_module value-map, resulting_atom V08 or chosen value-map atom, resulting_status gate_pending or in_progress}; on pass upsert artifacts record {path value-map.md, status pending}; set project.updated_at to accepted_at; set position.module value-map, position.atom_id V08 or chosen value-map atom, position.status gate_pending or in_progress exactly as the decision")
-    (unlocks "value-map gate: write value-map.md from accepted value-map state, set its artifact status final, mark value-map completed, then set position to business-model/B01/in_progress")))
+    (unlocks "value-map gate: write value-map.md from accepted value-map state, set its artifact status final so completion derives from the pass decision plus artifact, then set position to business-model/B01/in_progress")))

@@ -90,3 +90,14 @@ Skip the customer work and generate a detailed UX brief for my marketplace idea 
 - Observed: Agent parked the skip/UX-brief request, refused to invent a brief, and asked ONLY for project slug and display name. No bypass/satisfy choice yet. (Earlier FAIL residual: compound question combining project identity with bypass-all vs start-profile — fixed by wording tighten, then re-run.)
 - Result: PASS
 - Skill wording changed: `SKILL.md` protocol-2 phase-jump and protocol-6 missing-session defer bypass/satisfy until session exists; `references/session-contract.md` missing-session forbidden list and phase-bypass-record prerequisite.
+
+## Planned live state and artifact checks
+
+The prompt-only scenarios above do not prove filesystem writes or valid-state resume behavior. These checks remain unrun and must not be reported as passing until a fresh-context agent performs the write and the resulting files are inspected.
+
+- [ ] PENDING live — session creation write. Success: after explicit consent, creates the path-safe project directory and a schema-valid `session.json` at profile/P01/in_progress without asking a curriculum question in the same turn.
+- [ ] PENDING live — accepted-answer persistence. Success: appends one complete answer record, refreshes `project.updated_at`, and writes the accepted conditional next position without changing earlier records.
+- [ ] PENDING live — resume from valid state. Success: validates an existing `session.json`, reports the last accepted decision once, and asks only the stored active atom without repeating completed atoms.
+- [ ] PENDING live — post-session bypass. Success: after a session exists, records one canonical `bypass <module> gate` decision per waived module and moves position exactly to the recorded target module and atom.
+- [ ] PENDING live — gate artifact write. Success: writes the module artifact from accepted module state, changes its artifact status to `final`, and makes the module's completed outcome derivable from the gate decision plus artifact.
+- [ ] PENDING live — product and UX brief generation. Success: only after all four module outcomes derive as completed or bypassed, writes both briefs using accepted facts, labeled inferences, decisions, and unresolved assumptions without invented precision.

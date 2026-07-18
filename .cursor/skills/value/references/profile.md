@@ -8,9 +8,9 @@
     (name "segment boundary")
     (teaches "A useful profile describes one recognizable customer segment, not everybody who might benefit. Choosing that scope is a decision; a user-supported observation keeps its original evidence kind rather than being upgraded to fact.")
     (asks "Which specific customer segment are we profiling?")
-    (accepts "Names a segment using observable role or context and states at least one exclusion; labels an explicit scope choice decision and preserves another user-supported kind, while an unresolved boundary remains unknown.")
-    (writes "append answers record {atom_id P01, answer accepted text, kind decision for an explicit scope choice or the accepted supported kind, accepted_at current RFC 3339 timestamp}; when scope is chosen append decisions record {decision accepted segment boundary, reason accepted scope reason, source_atom P01, resulting_module profile, resulting_atom P02, resulting_status in_progress}; when unresolved append unknowns record {question segment boundary not established, blocking false}; set project.updated_at to accepted_at; set position.module profile, position.atom_id P02, position.status in_progress")
-    (unlocks P02))
+    (accepts "Names a segment using observable role or context and states at least one exclusion; labels an explicit scope choice decision and preserves another user-supported kind, while an unresolved boundary creates a blocking unknown and keeps P01 active.")
+    (writes "append answers record {atom_id P01, answer accepted text, kind decision for an explicit scope choice or the accepted supported kind, accepted_at current RFC 3339 timestamp}; when boundary is accepted append decisions record {decision accepted segment boundary, reason accepted scope reason, source_atom P01, resulting_module profile, resulting_atom P02, resulting_status in_progress}; when boundary is unresolved append unknowns record {question segment boundary not established, blocking true}; set project.updated_at to accepted_at; when boundary is unresolved keep position.module profile, position.atom_id P01, position.status in_progress; when boundary is accepted set position.module profile, position.atom_id P02, position.status in_progress")
+    (unlocks "when boundary is unresolved keep P01; when boundary is accepted unlock P02"))
 
   (atom
     (id P02)
@@ -111,4 +111,4 @@
     (asks "Does this customer profile pass its gate now?")
     (accepts "Records an explicit pass or reopen decision with a reason and target atom; pass requires a bounded segment, priority job, pains, gains, alternatives, and labeled evidence or explicit unknowns.")
     (writes "append answers record {atom_id P12, answer accepted text, kind decision, accepted_at current RFC 3339 timestamp}; append decisions record {decision pass or reopen profile gate, reason accepted reason, source_atom P12, resulting_module profile, resulting_atom P12 or chosen profile atom, resulting_status gate_pending or in_progress}; on pass upsert artifacts record {path customer-profile.md, status pending}; set project.updated_at to accepted_at; set position.module profile, position.atom_id P12 or chosen profile atom, position.status gate_pending or in_progress exactly as the decision")
-    (unlocks "profile gate: write customer-profile.md from accepted profile state, set its artifact status final, mark profile completed, then set position to value-map/V01/in_progress")))
+    (unlocks "profile gate: write customer-profile.md from accepted profile state, set its artifact status final so completion derives from the pass decision plus artifact, then set position to value-map/V01/in_progress")))

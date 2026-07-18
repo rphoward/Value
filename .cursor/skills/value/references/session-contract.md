@@ -16,9 +16,12 @@
       unknowns
       artifacts)
     (project-fields slug name created_at updated_at)
+    (slug-format "lowercase ASCII letters, digits, and single hyphens only; must match ^[a-z0-9]+(?:-[a-z0-9]+)*$")
     (position-fields module atom_id status)
     (module-enum profile value-map business-model experiments)
-    (status-enum in_progress gate_pending completed bypassed))
+    (status-enum in_progress gate_pending completed bypassed)
+    (atom-pairing "position.module and position.atom_id, plus decision resulting_module and resulting_atom, must be a known pair from the module references")
+    (record-atoms "answer atom_id and decision or assumption source_atom must be known atom identifiers"))
 
   (section missing-session-creation
     (ask-first "project slug and display name only")
@@ -59,6 +62,7 @@
     (append-only "new acceptance appends; reopening a decision adds a superseding record and notes conflict resolution"))
 
   (section position-shape
+    (position-only "position is only the current active atom; it is not module history")
     (module "current curriculum module enum")
     (atom_id "active atom id from the loaded module reference")
     (status
@@ -66,6 +70,14 @@
       (gate_pending "final atom accepted; milestone artifact write due")
       (completed "module gate artifact written")
       (bypassed "module skipped by explicit bypass decision")))
+
+  (section module-outcomes
+    (derive "read decisions and artifacts in session.json; do not add a second position")
+    (completed "latest gate decision for the module is pass and its milestone artifact status is final")
+    (bypassed "latest applicable decision uses decision bypass <module> gate and names the waived module")
+    (pending "neither completed nor bypassed by the durable records")
+    (precedence "latest applicable gate or bypass decision governs; reopening a module makes it pending until its gate passes and artifact returns to final")
+    (forbidden 'infer-completion-from-current-position 'store-parallel-position))
 
   (section evidence-records
     (shape claim kind source strength)
@@ -110,7 +122,7 @@
   (section milestone-writes
     (trigger "module gate_pending after final atom accepted")
     (source "accepted answers and labeled evidence for that module only")
-    (brief-prerequisite "all four module gates are completed or explicitly bypassed")
+    (brief-prerequisite "derive all four module outcomes from decisions and artifact statuses; each must be completed or bypassed")
     (product-brief "only from accepted facts, labeled inferences, decisions, unresolved assumptions")
     (ux-brief "only from accepted facts, labeled inferences, decisions, unresolved assumptions")
     (forbidden 'score-without-evidence 'full-canvas-before-atoms))
@@ -119,12 +131,13 @@
     (prerequisite "session.json exists — if absent, complete missing-session creation first; do not offer bypass or satisfy in the project-identity turn")
     (when "user requests a later phase before prerequisites are met")
     (require
-      (decision "explicit bypass statement, e.g. bypass value-map gate")
+      (decision "exact canonical statement bypass <module> gate naming the waived module")
       (reason "why the prerequisite is waived")
       (source_atom "atom id active when bypass was requested")
       (resulting_module "requested target phase")
       (resulting_atom "first atom id in the target module")
       (resulting_status in_progress))
+    (one-record-per-waived-module "record one decision for each skipped module so every bypass outcome is durable")
     (position-update "set position.module, position.atom_id, and position.status exactly to the decision's resulting_module, resulting_atom, and resulting_status")
     (forbidden 'silent-phase-jump))
 

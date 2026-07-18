@@ -40,6 +40,13 @@ MODULE_FILES = (
     "experiments.md",
 )
 
+MODULE_NAMES = {
+    "profile.md": "profile",
+    "value-map.md": "value-map",
+    "business-model.md": "business-model",
+    "experiments.md": "experiments",
+}
+
 TEMPLATE_FILES = (
     "customer-profile.template.md",
     "value-map.template.md",
@@ -127,6 +134,15 @@ def record_operations(writes: str) -> list[tuple[str, str, str]]:
         r"\b(append|upsert)\s+([a-z]+)\s+record\s+\{([^}]*)\}",
         writes,
     )
+
+
+def module_atom_ids() -> dict[str, list[str]]:
+    return {
+        MODULE_NAMES[module_name]: ATOM_ID_RE.findall(
+            (REFERENCES_DIR / module_name).read_text(encoding="utf-8")
+        )
+        for module_name in MODULE_FILES
+    }
 
 
 class ValueSkillReviewContractTests(unittest.TestCase):
@@ -254,6 +270,78 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             self.skill_text,
         )
 
+    def test_project_slug_is_path_safe(self) -> None:
+        slug_schema = self.schema["$defs"]["project"]["properties"]["slug"]
+        self.assertEqual(slug_schema.get("pattern"), r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+        pattern = slug_schema["pattern"]
+        for slug in ("value", "cleaner-scheduler", "v2"):
+            with self.subTest(slug=slug):
+                self.assertIsNotNone(re.fullmatch(pattern, slug))
+        for slug in ("../escape", "a/b", r"a\b", "/absolute", "Two Words", "-bad"):
+            with self.subTest(slug=slug):
+                self.assertIsNone(re.fullmatch(pattern, slug))
+        self.assertIn(
+            '(slug-format "lowercase ASCII letters, digits, and single hyphens only; '
+            'must match ^[a-z0-9]+(?:-[a-z0-9]+)*$")',
+            self.contract_text,
+        )
+
+    def test_schema_pairs_each_module_with_its_atoms(self) -> None:
+        expected = module_atom_ids()
+        position_pairs = {
+            branch["properties"]["module"]["const"]: set(
+                branch["properties"]["atom_id"]["enum"]
+            )
+            for branch in self.schema["$defs"]["position"]["oneOf"]
+        }
+        self.assertEqual(position_pairs, {key: set(value) for key, value in expected.items()})
+
+        decision = self.schema["$defs"]["decisionRecord"]
+        resulting_pairs = {
+            branch["properties"]["resulting_module"]["const"]: set(
+                branch["properties"]["resulting_atom"]["enum"]
+            )
+            for branch in decision["oneOf"]
+        }
+        self.assertEqual(resulting_pairs, {key: set(value) for key, value in expected.items()})
+
+        all_atoms = {atom for atoms in expected.values() for atom in atoms}
+        answer_atoms = set(
+            self.schema["$defs"]["answerRecord"]["properties"]["atom_id"]["enum"]
+        )
+        source_atoms = set(decision["properties"]["source_atom"]["enum"])
+        self.assertEqual(answer_atoms, all_atoms)
+        self.assertEqual(source_atoms, all_atoms)
+
+    def test_module_outcomes_are_derived_from_durable_records(self) -> None:
+        required_contract = (
+            '(position-only "position is only the current active atom; it is not module history")',
+            '(completed "latest gate decision for the module is pass and its milestone artifact status is final")',
+            '(bypassed "latest applicable decision uses decision bypass <module> gate and names the waived module")',
+            '(pending "neither completed nor bypassed by the durable records")',
+        )
+        for statement in required_contract:
+            self.assertIn(statement, self.contract_text)
+
+    def test_pressure_test_checklist_names_unrun_live_scenarios(self) -> None:
+        pressure_text = (ROOT / "docs" / "value-skill-pressure-tests.md").read_text(
+            encoding="utf-8"
+        )
+        scenarios = (
+            "session creation write",
+            "accepted-answer persistence",
+            "resume from valid state",
+            "post-session bypass",
+            "gate artifact write",
+            "product and UX brief generation",
+        )
+        for scenario in scenarios:
+            with self.subTest(scenario=scenario):
+                self.assertRegex(
+                    pressure_text,
+                    rf"PENDING live — {re.escape(scenario)}\. Success: [^\n]+",
+                )
+
 
 class ValueSkillPackageTests(unittest.TestCase):
     @classmethod
@@ -292,6 +380,8 @@ class ValueSkillPackageTests(unittest.TestCase):
             [],
             f"Description missing required phrases {missing}: {description!r}",
         )
+        self.assertIn("Not for", description)
+        self.assertIn("generic product requirements", description)
 
     def test_skill_links_all_reference_files(self) -> None:
         linked = set(extract_reference_links(self.skill_text))
@@ -549,6 +639,34 @@ class ValueSkillPackageTests(unittest.TestCase):
             )
             self.assertNotIn("kind fact or unknown", writes)
             self.assertIn("append decisions record", writes)
+            self.assertIn("blocking true", writes)
+            self.assertIn(
+                f"when boundary is unresolved keep position.module {MODULE_NAMES[module_name]}, "
+                f"position.atom_id {atom_id}, position.status in_progress",
+                writes,
+            )
+            self.assertIn(
+                f"when boundary is accepted set position.module {MODULE_NAMES[module_name]}, "
+                f"position.atom_id {atom_id[0]}02, position.status in_progress",
+                writes,
+            )
+            self.assertEqual(
+                atom_field(atom, "unlocks"),
+                f"when boundary is unresolved keep {atom_id}; "
+                f"when boundary is accepted unlock {atom_id[0]}02",
+            )
+
+    def test_experiment_gate_requires_the_result_that_e08_blocks_on(self) -> None:
+        module_text = (REFERENCES_DIR / "experiments.md").read_text(
+            encoding="utf-8"
+        )
+        atoms = {
+            ATOM_ID_RE.search(atom).group(1): atom for atom in split_atoms(module_text)
+        }
+        self.assertIn("keeps E08 active", atom_field(atoms["E08"], "accepts"))
+        e10_accepts = atom_field(atoms["E10"], "accepts")
+        self.assertIn("accepted observed result", e10_accepts)
+        self.assertNotIn("result or explicit unknown", e10_accepts)
 
     def test_session_schema_parses_as_json(self) -> None:
         schema_path = ASSETS_DIR / "session.schema.json"
