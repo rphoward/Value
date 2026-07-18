@@ -91,13 +91,26 @@ Skip the customer work and generate a detailed UX brief for my marketplace idea 
 - Result: PASS
 - Skill wording changed: `SKILL.md` protocol-2 phase-jump and protocol-6 missing-session defer bypass/satisfy until session exists; `references/session-contract.md` missing-session forbidden list and phase-bypass-record prerequisite.
 
+## Script-backed progress checks
+
+These complement the prompt-only scenarios above. They run via `tests/test_value_skill_package.py` against temp directories.
+
+- [x] Script smoke — session creation write. Success: `init_session.py` creates schema-valid `session.json` at profile/P01/in_progress.
+- [x] Script smoke — accepted-answer persistence. Success: `accept_answer.py` appends one answer, refreshes `project.updated_at`, advances to P02; duplicate without `--reopen` fails.
+- [x] Script smoke — reopen. Success: `accept_answer.py --reopen --conflict-note` supersedes a prior answer.
+- [x] Script smoke — next skips answered atoms. Success: `next_question.py` returns P02 after P01 is accepted.
+- [x] Script smoke — gate artifact write. Success: `write_milestone.py --module profile` writes `customer-profile.md` and marks artifact final.
+- [x] Script smoke — sidecar records. Success: `accept_answer.py --records` appends evidence, assumptions, decisions, and unknowns; decision `resulting_*` fields move position on bypass.
+- [x] Script smoke — bypass unlocks briefs. Success: four `bypass <module> gate` decisions let `write_design_briefs.py` run without `--force`.
+- [x] Script smoke — gate pass completion. Success: `pass profile gate` decision plus `write_milestone.py` marks `customer-profile.md` final.
+
 ## Planned live state and artifact checks
 
-The prompt-only scenarios above do not prove filesystem writes or valid-state resume behavior. These checks remain unrun and must not be reported as passing until a fresh-context agent performs the write and the resulting files are inspected.
+The prompt-only scenarios above do not prove filesystem writes or valid-state resume behavior in a fresh agent turn. Completed live runs are marked `[x] Live`; remaining checks stay `PENDING live`.
 
-- [ ] PENDING live — session creation write. Success: after explicit consent, creates the path-safe project directory and a schema-valid `session.json` at profile/P01/in_progress without asking a curriculum question in the same turn.
-- [ ] PENDING live — accepted-answer persistence. Success: appends one complete answer record, refreshes `project.updated_at`, and writes the accepted conditional next position without changing earlier records.
-- [ ] PENDING live — resume from valid state. Success: validates an existing `session.json`, reports the last accepted decision once, and asks only the stored active atom without repeating completed atoms.
-- [ ] PENDING live — post-session bypass. Success: after a session exists, records one canonical `bypass <module> gate` decision per waived module and moves position exactly to the recorded target module and atom.
-- [ ] PENDING live — gate artifact write. Success: writes the module artifact from accepted module state, changes its artifact status to `final`, and makes the module's completed outcome derivable from the gate decision plus artifact.
-- [ ] PENDING live — product and UX brief generation. Success: only after all four module outcomes derive as completed or bypassed, writes both briefs using accepted facts, labeled inferences, decisions, and unresolved assumptions without invented precision.
+- [x] Live — session creation write. Success: `init_session.py` on `workproduct/value-proposition/valutest-live-create/session.json` created schema-valid state at profile/P01/in_progress (2026-07-18); duplicate init exit 1.
+- [x] Live — accepted-answer persistence. Success: `accept_answer.py` on `workproduct/value-proposition/valutest/session.json` appended one P01 answers record (append-only; `created_at` unchanged), set `project.updated_at` to `accepted_at` (`2026-07-18T19:49:33Z`), advanced position to profile/P02/in_progress, ledger completion 3%; duplicate P01 without `--reopen` exit 1; `next_question.py` returns P02.
+- [x] Live — resume from valid state. Success: `status.py` + `next_question.py` on `workproduct/value-proposition/valutest/session.json` returned ledger at value-map/V01/in_progress and next atom V01 only (no P01 repeat); last decision `bypass profile gate` (2026-07-18).
+- [x] Live — post-session bypass. Success: `valutest/session.json` records `bypass profile gate` with `resulting_module` value-map, `resulting_atom` V01, `resulting_status` in_progress; position matches (2026-07-18).
+- [x] Live — gate artifact write. Success: `write_milestone.py --module profile` on `workproduct/value-proposition/valutest-gate/session.json` wrote `customer-profile.md` and set artifact status `final` after `pass profile gate` (2026-07-18).
+- [x] Live — product, UX, and app brief generation. Success: four bypass decisions on `workproduct/value-proposition/valutest-briefs/session.json` then `write_design_briefs.py` (no `--force`) wrote `product-design-brief.md`, `ux-brief.md`, and `app-design-brief.md` (2026-07-18).

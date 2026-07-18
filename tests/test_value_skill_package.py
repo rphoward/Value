@@ -1,9 +1,13 @@
-"""Package contract for .cursor/skills/value/."""
+"""Package contract for .cursor/skills/value/ and skills/value/."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -20,10 +24,12 @@ def repo_root() -> Path:
 
 
 ROOT = repo_root()
+CANONICAL_SKILL_ROOT = ROOT / "skills" / "value"
 SKILL_ROOT = ROOT / ".cursor" / "skills" / "value"
 SKILL_MD = SKILL_ROOT / "SKILL.md"
 REFERENCES_DIR = SKILL_ROOT / "references"
 ASSETS_DIR = SKILL_ROOT / "assets"
+SCRIPTS_DIR = SKILL_ROOT / "scripts"
 
 REFERENCE_FILES = (
     "profile.md",
@@ -54,12 +60,41 @@ TEMPLATE_FILES = (
     "experiment-plan.template.md",
     "product-design-brief.template.md",
     "ux-brief.template.md",
+    "app-design-brief.template.md",
+    "test-card.template.md",
+    "learning-card.template.md",
+)
+
+SYNC_IGNORE_NAMES = {".DS_Store", "Thumbs.db"}
+
+
+def iter_skill_files(root: Path) -> list[Path]:
+    return sorted(
+        path
+        for path in root.rglob("*")
+        if path.is_file()
+        and path.name not in SYNC_IGNORE_NAMES
+        and "__pycache__" not in path.parts
+        and path.suffix != ".pyc"
+    )
+
+REQUIRED_KB_KEYS = (
+    "visual_grounding_analogies",
+    "customer_profile_triggers",
+    "high_value_job_rubric",
+    "value_map_categories",
+    "osterwalder_7_bm_questions",
+    "experiment_library",
+    "data_traps",
+    "validation_funnel",
+    "phase_module_map",
 )
 
 REQUIRED_SCHEMA_PROPERTIES = (
     "schema_version",
     "project",
     "position",
+    "ledger",
     "answers",
     "evidence",
     "assumptions",
@@ -145,6 +180,408 @@ def module_atom_ids() -> dict[str, list[str]]:
     }
 
 
+def file_digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def run_script(script_name: str, *args: str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
+    script_path = SCRIPTS_DIR / script_name
+    return subprocess.run(
+        [sys.executable, str(script_path), *args],
+        cwd=cwd or ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+
+class ValueSkillMirrorTests(unittest.TestCase):
+    def test_canonical_and_cursor_trees_match(self) -> None:
+        mismatches: list[str] = []
+        canonical_files = iter_skill_files(CANONICAL_SKILL_ROOT)
+        mirror_files = iter_skill_files(SKILL_ROOT)
+
+        for canonical in canonical_files:
+            relative = canonical.relative_to(CANONICAL_SKILL_ROOT)
+            mirror = SKILL_ROOT / relative
+            if not mirror.is_file():
+                mismatches.append(f"missing mirror {relative.as_posix()}")
+                continue
+            if file_digest(canonical) != file_digest(mirror):
+                mismatches.append(f"digest mismatch {relative.as_posix()}")
+
+        canonical_relatives = {
+            path.relative_to(CANONICAL_SKILL_ROOT) for path in canonical_files
+        }
+        for mirror in mirror_files:
+            relative = mirror.relative_to(SKILL_ROOT)
+            if relative not in canonical_relatives:
+                mismatches.append(f"extra mirror {relative.as_posix()}")
+
+        self.assertEqual(mismatches, [], "\n".join(mismatches))
+
+
+class ValueSkillAssetTests(unittest.TestCase):
+    def test_knowledge_base_has_required_keys(self) -> None:
+        kb = json.loads((ASSETS_DIR / "knowledge-base.json").read_text(encoding="utf-8"))
+        missing = [key for key in REQUIRED_KB_KEYS if key not in kb]
+        self.assertEqual(missing, [])
+
+    def test_atoms_json_covers_every_module_atom_id(self) -> None:
+        expected = module_atom_ids()
+        all_expected = {atom for atoms in expected.values() for atom in atoms}
+        payload = json.loads((ASSETS_DIR / "atoms.json").read_text(encoding="utf-8"))
+        indexed = {atom["id"]: atom for atom in payload["atoms"]}
+        missing = sorted(all_expected - set(indexed))
+        self.assertEqual(missing, [])
+        for module_key, atom_ids in expected.items():
+            for atom_id in atom_ids:
+                self.assertEqual(indexed[atom_id]["module"], module_key)
+
+    def test_schema_defines_ledger(self) -> None:
+        schema = json.loads((ASSETS_DIR / "session.schema.json").read_text(encoding="utf-8"))
+        self.assertIn("ledger", schema["required"])
+        ledger = schema["$defs"]["ledger"]
+        for field in (
+            "phase",
+            "active_module",
+            "completion_pct",
+            "validation_milestone",
+            "unvalidated_bombs",
+        ):
+            self.assertIn(field, ledger["required"])
+
+
+class ValueSkillScriptSmokeTests(unittest.TestCase):
+    def test_init_accept_next_milestone_and_briefs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+
+            init = run_script(
+                "init_session.py",
+                "--slug",
+                "demo",
+                "--name",
+                "Demo",
+                "--root",
+                str(work_root),
+            )
+            self.assertEqual(init.returncode, 0, init.stderr)
+
+            status = run_script("status.py", str(session_path))
+            self.assertEqual(status.returncode, 0, status.stderr)
+            self.assertIn("Ledger:", status.stdout)
+
+            next_q = run_script("next_question.py", str(session_path))
+            self.assertEqual(next_q.returncode, 0, next_q.stderr)
+            payload = json.loads(next_q.stdout)
+            self.assertEqual(payload["atom_id"], "P01")
+
+            accept = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P01",
+                "--answer",
+                "Independent cleaners in metro areas; exclude enterprise franchises.",
+                "--kind",
+                "decision",
+            )
+            self.assertEqual(accept.returncode, 0, accept.stderr)
+
+            next_after = run_script("next_question.py", str(session_path))
+            self.assertEqual(next_after.returncode, 0, next_after.stderr)
+            self.assertEqual(json.loads(next_after.stdout)["atom_id"], "P02")
+
+            dup = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P01",
+                "--answer",
+                "duplicate",
+                "--kind",
+                "decision",
+            )
+            self.assertNotEqual(dup.returncode, 0)
+
+            reopen = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P01",
+                "--answer",
+                "Revised segment boundary.",
+                "--kind",
+                "decision",
+                "--reopen",
+                "--conflict-note",
+                "User narrowed segment.",
+            )
+            self.assertEqual(reopen.returncode, 0, reopen.stderr)
+
+            milestone = run_script(
+                "write_milestone.py",
+                str(session_path),
+                "--module",
+                "profile",
+            )
+            self.assertEqual(milestone.returncode, 0, milestone.stderr)
+            self.assertTrue((session_path.parent / "customer-profile.md").is_file())
+
+            briefs = run_script(
+                "write_design_briefs.py",
+                str(session_path),
+                "--force",
+            )
+            self.assertEqual(briefs.returncode, 0, briefs.stderr)
+            for name in (
+                "product-design-brief.md",
+                "ux-brief.md",
+                "app-design-brief.md",
+            ):
+                self.assertTrue((session_path.parent / name).is_file(), name)
+
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            self.assertIn("ledger", session)
+            self.assertIn("completion_pct", session["ledger"])
+
+    def test_accept_records_sidecar_appends_session_arrays(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            records_path = Path(tmp) / "records.json"
+
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+
+            records_path.write_text(
+                json.dumps(
+                    {
+                        "evidence": [
+                            {
+                                "claim": "Cleaner booked three clients manually last week",
+                                "kind": "fact",
+                                "source": "user interview",
+                                "strength": "moderate",
+                            }
+                        ],
+                        "assumptions": [
+                            {
+                                "claim": "Segment will pay for scheduling",
+                                "criticality": "high",
+                                "evidence_status": "unsupported",
+                            }
+                        ],
+                        "decisions": [
+                            {
+                                "decision": "accepted segment boundary",
+                                "reason": "Observable role with exclusion",
+                                "resulting_module": "profile",
+                                "resulting_atom": "P02",
+                                "resulting_status": "in_progress",
+                            }
+                        ],
+                        "unknowns": [
+                            {
+                                "question": "Budget evidence not established",
+                                "blocking": False,
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            accept = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P01",
+                "--answer",
+                "Independent cleaners in metro areas; exclude enterprise franchises.",
+                "--kind",
+                "decision",
+                "--records",
+                str(records_path),
+            )
+            self.assertEqual(accept.returncode, 0, accept.stderr)
+
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            self.assertEqual(len(session["evidence"]), 1)
+            self.assertEqual(len(session["assumptions"]), 1)
+            self.assertEqual(session["assumptions"][0]["source_atom"], "P01")
+            self.assertEqual(len(session["decisions"]), 1)
+            self.assertEqual(len(session["unknowns"]), 1)
+            self.assertEqual(session["position"]["atom_id"], "P02")
+
+    def test_bypassed_modules_unlock_briefs_without_force(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+
+            bypass_chain = (
+                (
+                    "P01",
+                    "profile",
+                    "bypass profile gate",
+                    "value-map",
+                    "V01",
+                ),
+                (
+                    "V01",
+                    "value-map",
+                    "bypass value-map gate",
+                    "business-model",
+                    "B01",
+                ),
+                (
+                    "B01",
+                    "business-model",
+                    "bypass business-model gate",
+                    "experiments",
+                    "E01",
+                ),
+                (
+                    "E01",
+                    "experiments",
+                    "bypass experiments gate",
+                    "experiments",
+                    "E01",
+                ),
+            )
+            for index, (atom_id, _module, decision_text, target_module, target_atom) in enumerate(
+                bypass_chain
+            ):
+                records_path = Path(tmp) / f"bypass-{index}.json"
+                records_path.write_text(
+                    json.dumps(
+                        {
+                            "decisions": [
+                                {
+                                    "decision": decision_text,
+                                    "reason": "pressure-test bypass",
+                                    "resulting_module": target_module,
+                                    "resulting_atom": target_atom,
+                                    "resulting_status": "in_progress",
+                                }
+                            ]
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                result = run_script(
+                    "accept_answer.py",
+                    str(session_path),
+                    "--atom-id",
+                    atom_id,
+                    "--answer",
+                    f"Recorded {decision_text}.",
+                    "--kind",
+                    "decision",
+                    "--records",
+                    str(records_path),
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+            briefs = run_script("write_design_briefs.py", str(session_path))
+            self.assertEqual(briefs.returncode, 0, briefs.stderr)
+            for name in (
+                "product-design-brief.md",
+                "ux-brief.md",
+                "app-design-brief.md",
+            ):
+                self.assertTrue((session_path.parent / name).is_file(), name)
+
+    def test_gate_pass_decision_enables_module_completion(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            records_path = Path(tmp) / "gate-pass.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+
+            records_path.write_text(
+                json.dumps(
+                    {
+                        "decisions": [
+                            {
+                                "decision": "pass profile gate",
+                                "reason": "Segment, jobs, pains, gains, alternatives explicit",
+                                "resulting_module": "profile",
+                                "resulting_atom": "P12",
+                                "resulting_status": "gate_pending",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            accept = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P12",
+                "--answer",
+                "Pass — profile is ready for value-map work.",
+                "--kind",
+                "decision",
+                "--gate-pending",
+                "--records",
+                str(records_path),
+            )
+            self.assertEqual(accept.returncode, 0, accept.stderr)
+
+            milestone = run_script(
+                "write_milestone.py",
+                str(session_path),
+                "--module",
+                "profile",
+            )
+            self.assertEqual(milestone.returncode, 0, milestone.stderr)
+
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            self.assertTrue(
+                any(
+                    item["path"] == "customer-profile.md" and item["status"] == "final"
+                    for item in session["artifacts"]
+                )
+            )
+
+
 class ValueSkillReviewContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -183,12 +620,24 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "Missing-session creation contract is incomplete: " + ", ".join(missing),
         )
 
+    def test_skill_declares_script_orchestration(self) -> None:
+        for needle in (
+            "scripts/status.py",
+            "scripts/next_question.py",
+            "scripts/accept_answer.py",
+            "scripts/write_design_briefs.py",
+            "assets/knowledge-base.json",
+            "assets/atoms.json",
+        ):
+            self.assertIn(needle, self.skill_text)
+
     def test_briefs_require_every_module_gate_outcome(self) -> None:
         self.assertIn(
             '(gate-prerequisite "profile, value-map, business-model, and experiments '
             'must each be completed or explicitly bypassed")',
             self.skill_text,
         )
+        self.assertIn("app-design-brief.md", self.skill_text)
 
     def test_bypass_records_exact_resulting_position(self) -> None:
         decision = self.schema["$defs"]["decisionRecord"]
@@ -323,7 +772,7 @@ class ValueSkillReviewContractTests(unittest.TestCase):
         for statement in required_contract:
             self.assertIn(statement, self.contract_text)
 
-    def test_pressure_test_checklist_names_unrun_live_scenarios(self) -> None:
+    def test_pressure_test_checklist_names_live_scenarios(self) -> None:
         pressure_text = (ROOT / "docs" / "value-skill-pressure-tests.md").read_text(
             encoding="utf-8"
         )
@@ -333,13 +782,13 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "resume from valid state",
             "post-session bypass",
             "gate artifact write",
-            "product and UX brief generation",
+            "product, UX, and app brief generation",
         )
         for scenario in scenarios:
             with self.subTest(scenario=scenario):
                 self.assertRegex(
                     pressure_text,
-                    rf"PENDING live — {re.escape(scenario)}\. Success: [^\n]+",
+                    rf"(?:PENDING live|Live) — {re.escape(scenario)}\. Success: [^\n]+",
                 )
 
 
