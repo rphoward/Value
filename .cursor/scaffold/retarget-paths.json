@@ -1,0 +1,34 @@
+{
+  "replace": [
+    ".cursor/rules/application-layer.mdc",
+    ".cursor/rules/core-domain.mdc",
+    ".cursor/rules/infrastructure-wiring.mdc",
+    ".cursor/rules/presentation-surface.mdc",
+    ".cursor/rules/thermonuclear.mdc",
+    ".cursor/rules/repo-layout.mdc",
+    ".cursor/skills/tool-ui-htmx/**",
+    ".cursor/skills/design-taste-frontend/**",
+    "tools/drafts/skills/tool-ui-htmx/**",
+    "tools/drafts/skills/design-taste-frontend/**",
+    "AGENTS.md",
+    "CONTEXT.md",
+    "README.md",
+    "docs/adr/*.md",
+    "src/**/*.py",
+    "tests/**/*.py",
+    "tools/start-*.ps1",
+    "pyproject.toml"
+  ],
+  "exclude": [
+    ".cursor/rules/domain-context.mdc",
+    ".cursor/rules/conduct.mdc",
+    ".cursor/rules/safety.mdc",
+    ".cursor/rules/mdc-authoring.mdc",
+    ".cursor/rules/skill-authoring.mdc",
+    ".cursor/rules/agent-authoring.mdc",
+    ".cursor/rules/hooks-authoring.mdc",
+    ".cursor/rules/handoff-authoring.mdc",
+    ".cursor/skills/grillwithdocs/**",
+    ".cursor/scaffold/**"
+  ]
+}

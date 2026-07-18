@@ -1,0 +1,58 @@
+---
+description: USE WHEN writing Python under eliotapp/, legacy src paths, tests/, or tools/; subtract complexity, halt rather than guess.
+alwaysApply: false
+globs: eliotapp/**,tests/**,tools/**/*.py,src/value/**,src/value_skills/**
+---
+
+(def-sop thermo-nuclear-implementation
+  (context
+    (target "autonomous-agent")
+    (optimization "maximum-determinism-temporal-alignment")
+    (apply-body-when
+      (or (paths-under 'repo-layout.mdc eliot_home)
+          (paths-under 'repo-layout.mdc product-home)
+          (paths-under 'repo-layout.mdc skills_home)
+          (paths-matching "tests/test_*.py")
+          (paths-matching "tools/**/*.py")))
+    (forbidden (apply-body-to 'docs '.cursor/plans 'mdc-rules 'handoff))
+    (note "Eliot Python = eliotapp/**. src/value/** and src/value_skills/** stay in globs only until evacuation finishes — legacy leftover coverage, not a second Eliot home.")
+    (note "All Python in this repo goes through this bar — including tools/**/*.py. Placement still follows repo-layout (eliot_home for shipped Eliot; tools/ for local scripts only).")
+    (note "Domain truth and data-shape discipline live in core-domain.mdc (eliotapp/core only)."))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Subtract complexity; halt rather than guess. Never build what exists or is unearned."))
+  </central_idea>
+
+  (phase-1-pre-flight
+    (guard (not (in-active-context? helper))
+           (execute-ide-search :targets '("/utils" "/models" "/shared")))
+    (guard (or (ambiguous? requirement) (ambiguous? data-shape) (ambiguous? boundary))
+           (progn (query-human :count 1 :propose-recommendation t) (halt-generation)))
+    (guard (request-plausibly-covered-by-simpler-or-existing? task)
+           (propose-simpler-alternative :recommendation t)))
+
+  (phase-2-mutation
+    (code-judo
+      (match task-type
+        (:feature (reframe-architecture :derive-from 'data-shapes :action 'delete-moving-parts :target-state 'inevitable-in-hindsight))
+        (:cosmetic-or-isolated-bug (execute-surgical-line-edits :surface-area 'minimum))))
+    (mechanism-ladder
+      (hierarchy 'do-not-build 'stdlib 'native-platform 'existing-dep 'minimum-code)
+      (prefer 'obvious-readable-solution 'clever-trick-when-both-small)
+      (forbidden 'unrequested-abstractions 'unrequested-dependencies 'unrequested-boilerplate 'new-file-or-module-unless-earned-split))
+    (bounded-growth
+      (guard (and (file-lines>? 1300) (not (is-bug-fix? task)))
+             (progn (execute-single-surgical-extraction) (reduce-surface-area)))
+      (forbidden 'arbitrary-expansion-of-compact-modules))
+    (anti-spaghetti
+      (assert (not (or (has-ad-hoc-boolean? diff) (has-special-case-branch? diff) (has-bare-conditional-validations? diff))))
+      (remedy (extract-to (or 'state-machine 'policy-object 'strategy-pattern)))
+      (enforce (encapsulate-validation-rules-regardless-of-scale)))
+    (tech-debt-tagging
+      (guard (shipped-shortcut-has-known-ceiling? diff)
+             (enforce (comment-tagged "ponytail:" :names-ceiling t :names-upgrade-path t)))))
+
+  (phase-3-harness
+    (enforce (terminal-calls-are 'non-interactive-one-liners) (use-shell 'posix-compliant-bash))
+    (forbidden 'raw-powershell-scripts 'unhandled-panics-crashing-host-process)))

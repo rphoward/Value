@@ -1,0 +1,56 @@
+---
+description: USE WHEN creating or editing skill packages, skill scripts, or Python modules that back skills under eliotapp/.
+alwaysApply: false
+globs: .cursor/skills/**,tools/drafts/skills/**,src/eliotwf_skills/**
+---
+
+(def-sop skills-repo
+  (context
+    (target "agent-editing-skill-packages-or-skill-support-python")
+    (optimization "skill-prose-separate-from-eliotapp-engine-layers"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Skill prose and thin scripts stay under .cursor/skills/. Importable Eliot engine Python that backs skills lives under eliotapp/ (core + infrastructure layers). src/eliotwf_skills/ is legacy evacuate-only — never a destination for new modules. src/eliotwf/ is not the Eliot HTTP product."))
+  </central_idea>
+
+  (protocol-0-homes
+    (skill-home ".cursor/skills/<name>/")
+    (modules-home "eliotapp/" :role "engine layers that back skills — core + infrastructure")
+    (eliot-data "workproduct/")
+    (legacy-modules-home "src/eliotwf_skills/" :role "evacuate-only until deleted")
+    (forbidden 'new-modules-under-src-eliotwf_skills)
+    (forbidden 'describing-src-eliotwf-as-eliot-http-product)
+    (forbidden 'engine-prose-in-src 'hillclimb-loop-in-presentation))
+
+  (protocol-1-skill-package-layout
+    (per-skill-tree
+      (SKILL.md "entry, triggers, workflow steps, links to references")
+      (references/ "engine text, output templates, rubrics, examples — progressive disclosure")
+      (scripts/ "thin CLI entrypoints; stdlib-only unless pyproject already lists the dep")
+      (assets/ "optional templates and static fixtures"))
+    (skill-body-authoring (follow 'skill-authoring.mdc))
+    (scripts-call-modules (import-from 'eliotapp) (forbidden 'fat-scripts-with-domain-logic)))
+
+  (protocol-2-modules-in-eliotapp
+    (import-package "eliotapp")
+    (note "Layer rules own eliotapp/** injection — do not glob-attach skills-repo to eliotapp/** (no-bleed).")
+    (organize
+      (core/ "pure shapes, progression, climb metrics — no Path")
+      (infrastructure/ "workproduct store, fixture I/O, adapters")
+      (application/ "inspect compose, hillclimb commands, wizard use cases")
+      (cli/ "operator/SDK hillclimb step entrypoints"))
+    (mirror-names "module areas match .cursor/skills/<name>/ when they pair")
+    (thermonuclear-applies (note "eliotapp/** is in thermonuclear.mdc globs")))
+
+  (protocol-3-agents-and-hooks
+    (agents ".cursor/agents/<name>.md" :role "fresh-context workers, e.g. cold drift audit")
+    (hooks ".cursor/hooks.json and .cursor/hooks/" :role "automation drivers for loop commands")
+    (drafts "tools/drafts/agents/ and tools/drafts/hooks/ before check-in")
+    (forbidden 'embedding-hook-scripts-in-skill-md 'subagent-logic-in-skill-packages))
+
+  (protocol-4-boundaries
+    (skill-script-may (parse-args 'call-eliotapp 'print-json 'exit-nonzero-on-fail))
+    (eliotapp-may (define-types 'parse-fixtures 'compare-scores 'run-loop-step))
+    (presentation-may (call-use-cases 'render-results 'serve-routes))
+    (forbidden 'presentation-imports-engine-directly-from-routes :route-through-application)))

@@ -1,0 +1,37 @@
+---
+description: USE WHEN editing use cases, commands, queries, or repository port interfaces.
+alwaysApply: false
+globs: eliotapp/application/**,src/value/application/**
+---
+
+(def-sop application-layer
+  (context
+    (target "agent-editing-application-use-cases-or-ports")
+    (optimization "orchestration-and-ports-only"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Application owns user-intent orchestration and inward port contracts. It coordinates core types; it does not speak HTTP, SQL, or wire formats."))
+  </central_idea>
+
+  (protocol-0-use-case-model
+    (organize (one-use-case-or-query-per-module :under application))
+    (ports (repository-interfaces-as-Protocol-or-ABC :colocated-with-feature-folder))
+    (forbidden 'fat-god-service-module))
+
+  (protocol-1-orchestration-only
+    (allow 'use-cases 'commands 'queries 'port-definitions 'application-dtos)
+    (forbidden 'http-handlers 'templates 'sqlalchemy 'raw-sql 'direct-filesystem-io))
+
+  (protocol-2-dependency-direction
+    (imports-allowed 'core-only-for-domain-types)
+    (forbidden 'imports-from 'presentation 'infrastructure 'starlette 'fastapi))
+
+  (protocol-3-anti-corruption
+    (core-receives-domain-types-and-invariants)
+    (infrastructure-implements-ports-defined-here)
+    (when (unclear? orchestration vs domain-rule)
+      (escalate-to thermonuclear :boundary-kind 'use-case-vs-domain)))
+
+  (protocol-4-failure-routing
+    (enforce (raise-typed-errors-at-use-case-boundary) (forbidden 'silent-null-on-failure))))

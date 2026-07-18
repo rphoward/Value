@@ -1,0 +1,63 @@
+---
+description: USE WHEN creating or editing .cursor/rules/*.mdc; frontmatter, globs syntax, injection modes.
+alwaysApply: false
+globs: .cursor/rules/**
+---
+
+(def-sop mdc-authoring
+  (context
+    (target "cursor-rule-authoring-agent")
+    (optimization "maximum-determinism-minimum-slop-consistent-rule-set"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Every .mdc is valid Cursor frontmatter plus a focused pseudo-Lisp SOP. Globs are literal Cursor path patterns — no placeholders; retarget globs at scaffold init. Keep each file small (aim 30-50 lines); halt on ambiguous purpose or scope."))
+  </central_idea>
+
+  (protocol-1-purpose-and-scope-grilling
+    (pre-flight-inventory
+      (execute-ide-search :targets '(".cursor/rules/*.mdc" "current rule set")))
+    (grill-interrogation
+      (if (or (ambiguous? purpose-of-rule-being-written)
+              (ambiguous? when-it-should-activate)
+              (ambiguous? boundary-of-its-responsibility))
+          (progn
+            (halt-generation)
+            (query-human :count 1 :propose-recommendation t)
+            (wait-for-resolution)))))
+
+  (protocol-2-frontmatter-and-injection
+    (valid-keys-only (description alwaysApply globs))
+    (every-file-must-declare (alwaysApply true-or-false))
+    (flat-store-only ".cursor/rules/*.mdc" (forbidden 'subfolders-under-rules))
+    (globs-field
+      (format "comma-separated literal paths; unquoted; no YAML lists")
+      (forbidden-in-globs 'curly-brace-variables 'dollar-variables 'angle-bracket-segments)
+      (example "src/**/*.ts,tests/**/*.py")
+      (anti-example "{product_home}/**,src/{pkg}/**,$ROOT/**"))
+    (forbidden 'alwaysApply-true-with-globs)
+    (injection-modes
+      (:global-baseline (alwaysApply true) (omit globs))
+      (:path-scoped (alwaysApply false) (globs required) (inject-when "matching file open or referenced"))
+      (:intent-scoped (alwaysApply false) (omit globs) (description "USE WHEN …" under-120-chars)))
+    (description (audience "model indexing and intent match") (forbidden "Always loaded" when alwaysApply-is-true))
+    (global-baseline-set (keep-small) (prefer path-scoped-or-intent-scoped for detail)))
+
+  (protocol-3-focused-rules-and-structural-subtraction
+    (prefer (multiple-small-focused-rules over 'one-giant-always-on-blob))
+    (if (rule-surface-exceeds-minimal-unit-for-its-purpose)
+        (progn (execute-single-surgical-extraction :into-new-mdc-file) (reduce-surface-area)))
+    (anti-ad-hoc-blob
+      (assert (not (or (has-unstructured-prose-blob? diff) (has-ad-hoc-sections? diff))))
+      (remedy (extract-to 'dedicated-focused-mdc))))
+
+  (protocol-4-set-wide-form-consistency
+    (enforce (all-rules-in-this-workspace-must-use
+               :valid-cursor-frontmatter
+               :established-pseudo-lisp-def-sop-form
+               :narrow-scope
+               :no-bleed-between-rules))
+    (assert (no-duplication-of-responsibility-with 'conduct 'safety 'thermonuclear 'core-domain 'handoff-authoring 'any-other-rule))
+    (note "Verification-at-completion is cursordoctrine, not conduct.")
+    (note "Handoff/** uses handoff-authoring.mdc — do not add handoff globs here; this rule owns .cursor/rules/*.mdc only.")
+    (forbidden 'embedding-coding-discipline 'embedding-safety-logic 'embedding-response-habits-into-authoring-rule 'handoff-content-authoring)))

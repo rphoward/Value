@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "stop": [
+      {
+        "command": "python .cursor/hooks/run_tests_on_stop.py",
+        "timeout": 120
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "python .cursor/hooks/validate_skills_module.py",
+        "matcher": "Write|StrReplace",
+        "timeout": 30
+      }
+    ]
+  }
+}

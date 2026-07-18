@@ -1,0 +1,69 @@
+---
+description: USE WHEN editing presentation edges, views, client adapters, or browser-facing assets.
+alwaysApply: false
+globs: eliotapp/presentation/**,src/value/presentation/**
+---
+
+(def-sop presentation-surface
+  (context
+    (target "agent-editing-presentation-edge-or-client-surface")
+    (optimization "adaptation-and-delivery-only-minimum-client-surface"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Presentation is the human-facing edge: translate domain outcomes into what users see and operate. It adapts and delivers; it does not decide domain truth, persist data, or reach external systems except through infrastructure."))
+  </central_idea>
+
+  (protocol-0-edge-model
+    (inbound-edges 'starlette-routes 'server-rendered-views 'cli-or-tui-output 'static-assets)
+    (organize (http-entrypoints-under presentation/routes/) (app-factory-in presentation/app.py))
+    (form-models-in presentation/schemas_html.py)
+    (templates-under presentation/templates/ (components-for-htmx-partials))
+    (match-existing-stack-before (adding-framework 'second-ui-paradigm 'parallel-template-system)))
+
+  (protocol-1-subtract-before-add
+    (enforce (extend-existing-handler-view-or-asset-pattern-before
+               'new-ui-framework 'duplicate-template-pipeline 'second-client-behavior-layer)))
+    (prefer (smallest-surface-that-fulfills-request) over (new-library 'new-spa-shell 'decorative-chrome)))
+
+  (protocol-2-adaptation-only
+    (allow 'view-models 'formatters 'templates 'routing 'request-response-mapping 'asset-pipeline)
+    (forbidden 'domain-policy 'domain-invariants 'business-formulas 'direct-external-io 'bypassing-infrastructure))
+
+  (protocol-3-anti-corruption
+    (domain-types-and-contracts-in-from-core-or-application-services)
+    (delivery-shapes-out-to-clients-stop-at-presentation-boundary)
+    (forbidden 'leaking-persistence-or-wire-dtos-into-templates-without-mapping)
+    (when (unclear? display-rule vs domain-rule)
+      (escalate-to thermonuclear :boundary-kind 'view-vs-domain)))
+
+  (protocol-4-layer-seams
+    (presentation-calls-application-use-cases-not-infrastructure-directly)
+    (routes-stay-thin 'parse-form 'call-use-case 'render-template)
+    (infrastructure-owns-outbound-system-access-and-implements-application-ports)
+    (core-owns-calculation-and-domain-exceptions)
+    (forbidden 'presentation-imports-infrastructure-from-routes)
+    (import-direction-enforced-by-project-architecture-gates))
+
+  (protocol-5-surface-discipline
+    (structure-before-decoration
+      (enforce (read-markup-or-view-composition-before-styles-or-tokens)
+               (single-source-for-repeated-ui-fragments)))
+    (client-behavior
+      (prefer (one-approved-client-behavior-layer) (extend-existing-before-new-script))
+      (forbidden 'scattered-inline-behavior 'duplicate-interaction-strings-across-views)))
+
+  (protocol-6-ux-invariants
+    (copy-and-labels (use-domain-language-from CONTEXT-and-core) (forbidden 'invented-domain-facts-in-ui))
+    (feedback (surface-errors-and-empty-states-explicitly) (forbidden 'silent-failure 'mystery-meat-controls))
+    (clarity (one-primary-action-per-view-when-possible) (progressive-disclosure-over-wall-of-controls))
+    (accessibility (semantic-structure-first) (preserve-focus-and-labels-when-adding-interaction) (note "Project picks WCAG level; do not trade structure for styling shortcuts.")))
+
+  (protocol-7-delivery-and-skills
+    (default-stack 'starlette 'jinja2 'htmx 'uvicorn)
+    (default-delivery 'python-server-templates 'jinja 'htmx 'tailwind-css)
+    (client-behavior-layer 'htmx :islands opt-in-only documented)
+    (tool-surfaces ".cursor/skills/tool-ui-htmx/")
+    (marketing-surfaces ".cursor/skills/design-taste-frontend/")
+    (domain-copy-from 'CONTEXT.md)
+    (forbidden 'embedding-skill-body-in-this-rule 'react-next-default-without-earned-island))

@@ -1,0 +1,1 @@
+"""Value product package (scaffold)."""

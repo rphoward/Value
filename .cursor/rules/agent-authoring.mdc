@@ -1,0 +1,56 @@
+---
+description: USE WHEN creating or editing custom subagents under .cursor/agents/ or drafting in tools/drafts/agents/.
+alwaysApply: false
+globs: .cursor/agents/**,tools/drafts/agents/**
+---
+
+(def-sop agent-authoring
+  (context
+    (target "cursor-subagent-authoring-agent")
+    (optimization "maximum-determinism-focused-delegation-minimum-generic-helpers")
+    (scan-reference "docs/cursor-customization-reference.md" :section "Custom subagents"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Subagents are markdown files with subagent frontmatter plus a concise specialist prompt — not .mdc rules. Each file is one delegatable role via the Task tool. Ship under .cursor/agents/<name>.md; keep flat; halt on ambiguous delegation purpose."))
+  </central_idea>
+
+  (protocol-1-purpose-and-delegation-grilling
+    (pre-flight-inventory
+      (execute-ide-search :targets '(".cursor/agents/*.md" "docs/cursor-customization-reference.md")))
+    (grill-interrogation
+      (if (or (ambiguous? delegation-purpose)
+              (ambiguous? when-parent-should-spawn-this-agent)
+              (ambiguous? boundary-vs-skills-vs-built-in-explore-bash-browser))
+          (progn
+            (halt-generation)
+            (query-human :count 1 :propose-recommendation t)
+            (wait-for-resolution))))
+    (prefer-subagent-over-skill-when '(context-isolation long-research parallel-workstreams independent-verification))
+    (prefer-skill-over-subagent-when '(single-shot-chore changelog-format no-separate-context-needed)))
+
+  (protocol-2-file-location-and-frontmatter
+    (canonical-store ".cursor/agents/<name>.md" (flat-store-only (forbidden 'subfolders-under-agents)))
+    (draft-only "tools/drafts/agents/**" (enforce (promote-to '.cursor/agents/ before-check-in) (forbidden 'leaving-shipped-subagents-only-in-tools 'drafts-outside-tools-drafts-agents)))
+    (valid-keys-only (name description model readonly is_background))
+    (forbidden-on-subagent-files 'alwaysApply 'globs 'paths 'disable-model-invocation 'tools-field-claude-code-syntax)
+    (defaults (model inherit) (readonly false) (is_background false))
+    (name-field (format "lowercase-hyphens") (must-match-filename stem))
+    (description-field
+      (audience "Task-tool routing and auto-delegation")
+      (require "concrete trigger phrases — use proactively / always use for when intended")
+      (forbidden "helps with coding" "general tasks"))
+    (model-field (values inherit-or-explicit-model-id) (note "inherit unless specialist needs different reasoning; verify plan and Max Mode locally"))
+    (readonly-true-when '(audit-only security-review verification-no-writes))
+    (is_background-true-when '(long-running-parallel-non-blocking)))
+
+  (protocol-3-prompt-body
+    (keep-concise (aim-lines 30-80) (forbidden '2000-word-rambling-prompts))
+    (structure (role-one-line) (when-invoked-numbered-steps) (output-format-explicit))
+    (forbidden 'duplicating-conduct-safety-thermonuclear 'reimplementing-built-in-explore-bash-browser))
+
+  (protocol-4-set-wide-form-consistency
+    (enforce (match-sibling-authoring-style 'mdc-authoring :shared-grilling :structural-subtraction))
+    (assert (no-duplication-of-responsibility-with 'mdc-authoring 'conduct 'safety 'any-other-rule))
+    (forbidden 'embedding-hooks-json 'embedding-skill-md-authoring-here)
+    (note "Built-in explore, bash, browser need no project files. Start with 2-3 focused agents, not dozens.")))

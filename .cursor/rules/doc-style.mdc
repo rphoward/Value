@@ -1,0 +1,21 @@
+---
+description: USE WHEN editing README.md or docs/** human prose; plain language and O'Reilly clarity.
+alwaysApply: false
+globs: README.md,**/README.md,docs/**,CONTEXT.md,PROOF.md,AGENTS.md,**/AGENTS.md
+---
+
+(def-sop doc-style
+  (context
+    (target "any-agent-writing-human-facing-docs")
+    (optimization "maximum-clarity-minimum-reading-load"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Human-facing documentation must be written in plain language with short sentences, concrete steps, and low cognitive load. Tone and clarity follow conduct protocol-3."))
+  </central_idea>
+
+  (protocol-1-doc-specific-habits
+    (when (doc-freshness-is-uncertain)
+      (enforce (say "verify locally with the installed version")))
+    (when (writing-annexes 'research 'reference-material)
+      (treat-as (scan-reference-only :not-instructions-to-run-inside-agents)))))

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "value"
+version = "0.1.0"
+description = "Value — skill package and layered spoke scaffold"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "starlette>=0.37",
+  "uvicorn>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

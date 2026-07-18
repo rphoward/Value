@@ -1,0 +1,72 @@
+---
+description: USE WHEN creating or editing .cursor/hooks.json, hook scripts under .cursor/hooks/, or drafting in tools/drafts/hooks/.
+alwaysApply: false
+globs: .cursor/hooks.json,.cursor/hooks/**,tools/drafts/hooks/**
+---
+
+(def-sop hooks-authoring
+  (context
+    (target "cursor-hooks-authoring-agent")
+    (optimization "maximum-determinism-runtime-gates-minimum-false-confidence")
+    (scan-reference "docs/cursor-customization-reference.md" :section "Hooks"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Hooks are hooks.json plus executable scripts — not .mdc rules, not git hooks. Ship config at .cursor/hooks.json and scripts under .cursor/hooks/; project commands run from repo root. Halt on ambiguous enforce-vs-observe intent."))
+  </central_idea>
+
+  (protocol-1-purpose-and-classification-grilling
+    (pre-flight-inventory
+      (execute-ide-search :targets (list ".cursor/hooks.json" ".cursor/hooks/*" "docs/cursor-customization-reference.md")))
+    (grill-interrogation
+      (if (or (ambiguous? hook-purpose)
+              (ambiguous? enforce-vs-observe-vs-advise)
+              (ambiguous? boundary-vs-rules-vs-permissions-json))
+          (progn
+            (halt-generation)
+            (query-human :count 1 :propose-recommendation t)
+            (wait-for-resolution))))
+    (classify-each-hook
+      (:enforce "block bad actions — deny, failClosed on security gates; design for deny reliability")
+      (:observe "audit logs metrics; exit 0; no permission JSON required")
+      (:advise "agent_message on deny only; do not rely on postToolUse additional_context reaching model — verify locally"))
+    (prefer-hooks-over-rules-when '(runtime-gate per-command-audit formatter-after-edit))
+    (prefer-rules-over-hooks-when '(persistent-guidance conventions the model should always see))
+    (forbidden 'git-pre-commit-pre-push-names 'intercepting-scm-ui-commits))
+
+  (protocol-2-hooks-json-and-paths
+    (canonical-store ".cursor/hooks.json" ".cursor/hooks/hook-script")
+    (draft-only "tools/drafts/hooks/**"
+      (enforce (promote-to '.cursor/hooks.json '.cursor/hooks/ before-check-in)
+               (forbidden 'leaving-shipped-hooks-only-in-tools 'drafts-outside-tools-drafts-hooks)))
+    (project-path-discipline
+      (command ".cursor/hooks/script.sh" :cwd "project root")
+      (forbidden 'relative-hooks-path-in-project-hooks-json)
+      (user-path-note "~/.cursor/hooks.json uses ./hooks/ from ~/.cursor/ — out of scope unless user asks"))
+    (hooks-json-shape
+      (require (version 1) (hooks object mapping event-name to array))
+      (valid-hook-object-keys (command type prompt timeout failClosed loop_limit matcher))
+      (forbidden 'mdc-frontmatter 'rule-alwaysApply-globs-on-hooks-json))
+    (security-defaults
+      (failClosed-true-on 'beforeMCPExecution 'beforeReadFile 'security-beforeShellExecution)
+      (build-json-with jq-not-heredoc-interpolation)
+      (exit-codes zero-means-success two-means-block other-means-fail-open-unless-failClosed)))
+
+  (protocol-3-events-and-matchers
+    (note "Event names are camelCase literals — sessionStart preToolUse postToolUse beforeShellExecution afterFileEdit stop etc.")
+    (matcher-is-regex-string
+      (preToolUse-postToolUse "Shell|Read|Write|Grep|Delete|Task|MCP:tool-name")
+      (beforeShellExecution "full command string")
+      (subagentStart-subagentStop "explore|shell|generalPurpose|etc"))
+    (blocking-events 'beforeShellExecution 'beforeMCPExecution 'beforeReadFile 'preToolUse 'subagentStart 'beforeSubmitPrompt)
+    (non-blocking-output 'afterFileEdit 'afterAgentResponse 'afterAgentThought)
+    (known-gaps-verify-locally
+      (postToolUse-additional_context "may log but not reach model")
+      (beforeShellExecution-ask-allow "deny only reliable; ask/allow may be ignored")
+      (sessionStart-additional_context "reliable for static doctrine injection")))
+
+  (protocol-4-set-wide-form-consistency
+    (enforce (match-sibling-authoring-style 'mdc-authoring 'agent-authoring 'skill-authoring :shared-grilling))
+    (assert (no-duplication-of-responsibility-with 'mdc-authoring 'agent-authoring 'skill-authoring 'conduct 'safety 'any-other-rule))
+    (forbidden 'embedding-rule-mdc-content 'embedding-skill-skill-md 'embedding-subagent-prompts)
+    (note "permissions.json and CLI cli-config are separate enforcement layers — do not reimplement here.")))

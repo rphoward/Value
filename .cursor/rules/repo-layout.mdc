@@ -1,0 +1,96 @@
+---
+description: USE WHEN creating, moving, or placing files; Eliot home is eliotapp/ + workproduct/; src/ has no Eliot.
+alwaysApply: true
+---
+
+(def-sop repo-layout
+  (context
+    (target "any-agent-working-in-this-workspace")
+    (optimization "one-named-eliot-home-plus-portable-scaffold-product-home"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Eliot code lives only under eliotapp/ (import eliotapp). Eliot data lives only under workproduct/. src/ stays clean of Eliot. Scaffold product_home src/<slug>/ is for non-Eliot products — not Eliot's home. The repo root is workspace shell plus supporting trees."))
+  </central_idea>
+
+  (protocol-0-write-path-gate
+    (note "Path-scoped rules inject on glob match; literal globs — retarget at scaffold init. Injection does not enforce placement.")
+    (note "Legacy src/value/ and src/value_skills/ are evacuate-only until deleted — not permanent Eliot homes.")
+    (before (Write StrReplace EditNotebook)
+      (resolve eliot_home from protocol-1c)
+      (resolve product_home from protocol-1)
+      (if (python-under-workproduct? target-path)
+          (progn (halt-generation) (forbidden 'python-under-workproduct)))
+      (if (and (new-eliot-implementation? target-path)
+               (under? target-path src/))
+          (progn (halt-generation) (forbidden 'eliot-implementation-under-src)))
+      (if (implementation-code-or-layer-tree? target-path)
+          (if (and (not (under? target-path eliot_home))
+                   (not (under? target-path tests/))
+                   (not (evacuate-only-legacy-src-path? target-path)))
+              (progn
+                (halt-generation)
+                (forbidden 'write-outside-eliot-or-allowed-homes)
+                (write-only-under eliot_home 'tests/ 'or evacuate-only-legacy-src)))))
+    (forbidden-root-level-dirs
+      'core 'application 'infrastructure 'presentation 'value 'app 'lib 'server 'api 'backend 'frontend)
+    (note "Do not add eliotapp to forbidden-root-level-dirs; layers live under eliotapp/.")
+    (forbidden 'parallel-package-tree-at-repo-root-without-skills_home-or-eliot_home-declaration)
+    (exception (declared eliot_home from protocol-1c)))
+
+  (protocol-1-product-home
+    (value
+      (product_home "src/value/")
+      (import_package "value")
+      (repo_folder "value")
+      (note "Scaffold default for a generic finished product under src/<slug>/. Not Eliot's home. After evacuation this tree is an empty husk — do not put Eliot under src/."))
+    (enforce (non-eliot-scaffold-product-under product-home :when scaffolded))
+    (forbidden (treating-product_home-as-eliot-permission))
+    (portable-default "repo-root/<project-slug>/ when slug-named folder is the product home in other repos"))
+
+  (protocol-1b-skills-modules-home
+    (value
+      (skills_home "src/value_skills/")
+      (import_package "eliotwf_skills")
+      (note "Legacy path — evacuate only. New skill-backing Python goes under eliotapp/ (see skills-repo.mdc)."))
+    (forbidden (new-modules-under skills_home))
+    (forbidden (skill-engine-python-as-second-eliot-home)))
+
+  (protocol-1c-eliot-home
+    (value
+      (eliot_home "eliotapp/")
+      (import_package "eliotapp")
+      (workproduct_root "workproduct/")
+      (workproduct_contains 'runs 'style-blocks 'catalog.json)
+      (note "Sole Eliot code home. Layer folders (core/application/infrastructure/presentation) plus cli/ are packaging for a workproduct engine + thin Starlette shell — not day-one Protocol/ports DDD."))
+    (enforce (all-eliot-python-under eliot_home))
+    (enforce (all-eliot-data-under workproduct_root))
+    (forbidden 'eliot-implementation-under-src)
+    (forbidden 'python-under-workproduct))
+
+  (protocol-2-root-staging-yard
+    (allow (user-drops-docs 'experiments 'temporary-junk-manually-into-root))
+    (forbidden (agent-creating-junk 'build-artifacts 'ship-output 'generated-files-in-root-without-explicit-permission)))
+
+  (protocol-3-supporting-trees
+    (enforce (supporting-material-in-named-subfolders-not-mixed-into-eliot-home))
+    (roles
+      (eliotapp/ "sole Eliot Python — engine + thin HTTP shell + cli/")
+      (workproduct/ "sole Eliot data — runs/, style-blocks/, catalog.json; no Python")
+      (docs/ "human-facing prose when present")
+      (CONTEXT.md "domain language at repo root")
+      (tests/ "verification at repo root; see pyproject for pythonpath")
+      (tools/ "local scripts (e.g. start-value.ps1); any tools/**/*.py still under thermonuclear.mdc; tools/drafts/ for promote-before-commit drafts")
+      (tools/drafts/agents/ "subagent drafts → ship to .cursor/agents/ before check-in")
+      (tools/drafts/skills/ "skill drafts → ship to .cursor/skills/ before check-in")
+      (tools/drafts/hooks/ "hook config/script drafts → ship to .cursor/hooks.json and .cursor/hooks/ before check-in")
+      (handoff/ "gate records and living state; see handoff-authoring.mdc")
+      (.cursor/ "agent rules, IDE config, .cursor/plans/, .cursor/agents/, .cursor/skills/, hooks")
+      (.cursor/agents/ "custom subagent .md files; see agent-authoring.mdc")
+      (.cursor/skills/ "project skills <name>/SKILL.md; see skill-authoring.mdc and skills-repo.mdc")
+      (.cursor/hooks.json ".cursor/hooks/ hook scripts; see hooks-authoring.mdc"))
+    (absent-here (Planner/ assets/ DocTools/ Docs/ — do not create without explicit user request)))
+
+  (protocol-4-explicit-permission-gate
+    (if (would-place-generated-or-ship-output-at-repo-root)
+        (progn (halt) (ask-user-explicit-permission) (wait-for-resolution)))))

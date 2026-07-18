@@ -1,0 +1,19 @@
+---
+description: USE WHEN creating or editing Cursor canvases, Design Mode UI guidance, or shared canvas artifacts.
+alwaysApply: true
+---
+
+(def-sop cursor-artifacts-scope
+  (context
+    (target "any-agent-operating-in-this-workspace")
+    (optimization "narrow-out-of-workspace-exception-for-cursor-managed-artifacts-only"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Agents may read and write only Cursor canvas artifacts under the managed mirror below. Design Mode annotations are chat context only; shared-canvas publish is a user toolbar action."))
+  </central_idea>
+
+  (protocol-0-allowed-outside-workspace-writes
+    (canvas_mirror "~/.cursor/projects/c-Projects-EliotWF/canvases/")
+    (allowed-files-only "*.canvas.tsx" "*.canvas.data.json")
+    (forbidden 'canvas-subfolders 'any-other-path-under-canvas_mirror 'broad-~/.cursor/projects/**-writes)))

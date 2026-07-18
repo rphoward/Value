@@ -1,0 +1,67 @@
+---
+description: Path-scoped handoff/** — gate/state records in (def-sop)/(def-ref); not .mdc rules or README prose.
+alwaysApply: false
+globs: handoff/**
+---
+
+(def-sop handoff-authoring
+  (context
+    (target "handoff-record-authoring-agent")
+    (optimization "maximum-determinism-gate-records-minimum-prose-slop")
+    (cursor-rule-type "Apply to Specific Files"
+      (alwaysApply false)
+      (globs "handoff/**" :matches "all files under handoff/ recursive")
+      (attach-when "matching path open or referenced in context")
+      (note "Cursor: alwaysApply false + globs = auto-attach. Not Always Apply, not Apply Intelligently (description-only), not Apply Manually."))
+    (form-reference ".cursor/rules/mdc-authoring.mdc" :established-pseudo-lisp-def-sop-form))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Handoff files are durable gate and state records under handoff/ — not .mdc rules, not human README prose. New and substantially edited records use (def-sop) / (def-ref); halt on ambiguous outcome or next-step ownership."))
+  </central_idea>
+
+  (protocol-1-purpose-and-scope-grilling
+    (pre-flight-inventory
+      (execute-ide-search :targets '("handoff/STATE.md" "handoff/README.md" "current handoff set")))
+    (grill-interrogation
+      (if (or (ambiguous? gate-or-record-purpose)
+              (ambiguous? pass-fail-skip-inconclusive-outcome)
+              (ambiguous? what-next-session-owns))
+          (progn
+            (halt-generation)
+            (query-human :count 1 :propose-recommendation t)
+            (wait-for-resolution))))
+    (prefer-handoff-over-plan-when '(durable-gate-outcome living-state architecture-decision-record))
+    (prefer-plan-over-handoff-when '(in-flight-implementation-checklist still-changing-steps)))
+
+  (protocol-2-location-and-kinds
+    (canonical-store "handoff/")
+    (kinds
+      (STATE.md "living snapshot")
+      (README.md "index only; keep short")
+      (*-PASSED.md *-FAILED.md *-SKIPPED.md "immutable once closed")
+      (*-SHIPPED.md "capability shipped")
+      (other "*.md maps — still def-sop or def-ref"))
+    (forbidden 'product-code-in-handoff))
+
+  (protocol-3-body-form
+    (body-form '(def-sop ...) "new gate and architecture records")
+    (reference-form '(def-ref ...) "maps linked from a def-sop")
+    (STATE.md-and-README.md
+      (allow 'short-tables-and-index-prose :when "living index")
+      (prefer (def-sop sections for durable claims)))
+    (closed-gate-must-name
+      (outcome 'PASS 'FAIL 'SKIP 'INCONCLUSIVE)
+      (evidence-path-or-command)
+      (next-or-none))
+    (forbidden 'unstructured-prose-blobs-as-new-gate-records
+               'rewriting-closed-PASSED-outcome-without-explicit-user))
+
+  (protocol-4-set-wide-form-consistency
+    (enforce (match-sibling-authoring-style 'mdc-authoring
+               :shared-grilling :structural-subtraction :pseudo-lisp-form))
+    (assert (no-duplication-of-responsibility-with
+              'mdc-authoring 'doc-style 'conduct 'thermonuclear))
+    (note "mdc-authoring owns .cursor/rules/*.mdc only — never add handoff/** to its globs.")
+    (forbidden 'embedding-rule-frontmatter-guidance
+               'embedding-OReilly-doc-style-as-handoff-default)))

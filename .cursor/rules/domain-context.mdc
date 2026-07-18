@@ -1,0 +1,34 @@
+---
+description: USE WHEN editing CONTEXT.md or docs/adr — domain glossary and ADR workflows.
+alwaysApply: false
+globs: CONTEXT.md,docs/adr/**
+---
+
+(def-sop domain-context
+  (context
+    (target "agent-editing-domain-glossary-or-adrs")
+    (optimization "shared-language-and-decisions-via-project-skills"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Substantive CONTEXT.md or ADR work in this repo uses the project grillwithdocs skill bundle, not user-global skills with the same names."))
+  </central_idea>
+
+  (protocol-1-skill-home
+    (project-bundle ".cursor/skills/grillwithdocs/")
+    (grill-with-docs ".cursor/skills/grillwithdocs/grill-with-docs/SKILL.md")
+    (domain-modeling ".cursor/skills/grillwithdocs/domain-modeling/SKILL.md")
+    (grilling ".cursor/skills/grillwithdocs/grilling/SKILL.md")
+    (forbidden 'defaulting-to-user-global-skills-with-same-name))
+
+  (protocol-2-when-to-grill
+    (substantive-edit
+      (adding-or-changing-glossary-terms)
+      (recording-or-revising-adrs)
+      (user-asks-to-grill-domain-or-plan-with-docs))
+    (read-and-follow 'grill-with-docs 'domain-modeling :from project-bundle)
+    (forbidden 'one-shot-grill-interrogation-as-substitute-for-vocabulary-session))
+
+  (protocol-3-lightweight-clarification
+    (note "Single clarifying question on ambiguity is conduct or thermonuclear — not a full grill-with-docs session.")
+    (when (trivial-typo-or-format-only? edit) (do-not-start-grill-session))))

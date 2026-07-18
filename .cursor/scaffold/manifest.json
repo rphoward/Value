@@ -1,0 +1,9 @@
+{
+  "product_slug": "value",
+  "import_package": "value",
+  "product_home": "src/value/",
+  "github_remote": "https://github.com/rphoward/Value.git",
+  "start_script": "tools/start-value.ps1",
+  "uvicorn_target": "value.presentation.app:app",
+  "profile": "full"
+}

@@ -1,0 +1,38 @@
+---
+description: USE WHEN editing core domain logic, calculation truth, types, or teaching subdomain.
+alwaysApply: false
+globs: eliotapp/core/**,src/value/core/**
+---
+
+(def-sop core-domain
+  (context
+    (target "agent-editing-core-domain-or-teaching-subdomain")
+    (optimization "domain-truth-and-data-shapes-first"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Core owns domain truth and calculation invariants. Behavior follows data structures; types express domain facts. No I/O, files, HTTP, or outer-layer imports."))
+  </central_idea>
+
+  (protocol-1-type-first
+    (assert (not (or (uses-any? diff) (uses-untyped-dict? diff) (uses-generic-wrapper? diff) (uses-raw-primitives-for-domain-logic? diff))))
+    (enforce (define-strict-distinct-schemas :inbound t :outbound t) (wrap-primitives-in-domain-value-objects))
+    (forbidden 'lazy-optionality-to-bypass-compiler))
+
+  (protocol-2-anti-magic
+    (assert (not (or (uses-dynamic-reflection-for-domain-logic? diff) (uses-hardcoded-string-mapping-for-state? diff))))
+    (remedy (delegate-unrolling-to-canonical-owner))
+    (forbidden 'obscuring-data-shapes-with-generic-runtime-mechanisms))
+
+  (protocol-3-failure-routing
+    (assert (not (or (swallows-error? diff) (returns-silent-null? diff))))
+    (enforce (fail-loudly-at-contract-boundary) (route-typed-domain-exceptions)))
+
+  (protocol-4-teaching-subdomain
+    (under core/teaching/ (framing-and-evidence-only))
+    (forbidden 'numeric-truth-in-teaching 'outer-layer-imports))
+
+  (protocol-5-boundary
+    (when (ambiguous? data-shape-or-domain-invariant)
+      (escalate-to thermonuclear :boundary-kind 'domain-grill))
+    (forbidden 'imports-from 'application 'infrastructure 'presentation 'importlib 'http)))

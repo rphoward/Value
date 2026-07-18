@@ -1,0 +1,47 @@
+---
+description: USE WHEN editing infrastructure spokes, persistence gateways, outbound connectors, or process-host wiring.
+alwaysApply: false
+globs: eliotapp/infrastructure/**,src/value/infrastructure/**
+---
+
+(def-sop infrastructure-wiring
+  (context
+    (target "agent-editing-infrastructure-spokes-or-wiring")
+    (optimization "integration-mechanisms-and-anti-corruption-only"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Infrastructure is the spokes layer: reach external systems and translate at boundaries. It connects; it does not decide domain outcomes or expose client-facing edge protocols."))
+  </central_idea>
+
+  (protocol-0-spokes-model
+    (inbound-spokes 'file-load 'sql-repository 'api-client 'message-consumer)
+    (outbound-spokes 'publisher 'indexer 'webhook 'export-batch)
+    (organize (one-spoke-folder-or-module-per-integration-style :under infrastructure)))
+
+  (protocol-1-subtract-before-add
+    (enforce (extend-existing-gateway-or-loader-pattern-before
+               'new-spoke-module 'duplicate-connector 'second-client-of-same-system)))
+
+  (protocol-2-mechanisms-only
+    (allow 'wiring 'connection-management 'mapping-at-boundary 'retries-auth-config)
+    (forbidden 'domain-policy 'domain-invariants 'business-formulas 'edge-protocol-handlers))
+
+  (protocol-3-anti-corruption
+    (external-shapes-stop-at-spoke-boundary)
+    (implement-application-ports-defined-in-application-layer)
+    (core-receives-domain-types-and-contracts)
+    (when (unclear? mapping-at-spoke vs domain-rule)
+      (escalate-to thermonuclear :boundary-kind 'spoke-vs-domain)))
+
+  (protocol-4-layer-seams
+    (infrastructure-reaches-outward-and-inward-stores)
+    (infrastructure-implements-application-repository-ports)
+    (presentation-owns-client-facing-edge-protocols)
+    (forbidden 'routes-call-infrastructure-repos-directly)
+    (wire-repos-and-use-cases-at-app-startup-not-in-route-handlers)
+    (import-direction-enforced-by-project-architecture-gates))
+
+  (protocol-5-external-truth
+    (shipped-integration-config-and-persisted-external-state-are-project-truth)
+    (test-fixtures-are-not-runtime-truth-unless-project-tests-say-so)))

@@ -1,0 +1,64 @@
+---
+description: USE WHEN writing or generating tests. DAMP structure, sociable boundaries, adversarial contract testing.
+alwaysApply: false
+globs: tests/**
+---
+
+(def-sop test-synthesis
+  (context
+    (target "test-suite-synthesis")
+    (optimization "maximum-resilience-and-structural-integrity")
+    (note "Path-scoped on tests/**. thermonuclear.mdc also globs tests/** for coding discipline; this rule owns the test quality bar only.")
+    (enforce (applies-to 'new-tests 'tests-touched-by-current-task))
+    (forbidden 'rewriting-unrelated-existing-tests-unless-user-requests)
+    (note "Harness run, verification gate, minimum diff: defer to conduct.mdc."))
+
+  (conventions
+    (enforce (match-existing-harness-in-repo :framework 'naming 'fixtures 'helpers))
+    (forbidden 'introducing-new-test-framework-unless-user-requests)
+    (note "Stack is incidental; derive scenarios from domain contracts and public boundaries in the active repo."))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Tests must be readable (DAMP), decoupled from internal wiring (Sociable), and designed to expose catastrophic failures (Adversarial). Never write brittle, pass-seeking tests."))
+  </central_idea>
+
+  (phase-1-structural-integrity
+    (readability
+      (enforce (damp-over-dry :rule "Tests read top-to-bottom. Duplicate setup locally rather than hiding it in deep inherited helpers."))
+      (prefer (one-logical-concept-per-test) (split-when-unrelated-outcomes)))
+    (boundaries
+      (enforce (test-state-not-interactions :rule "Assert public outputs. Mock ONLY at physical I/O boundaries (Network, DB, FileSystem)."))
+      (note "Painful setups or excessive mocks: escalate bad design rather than writing bad tests.")
+      (forbidden
+        'status-code-only-assertions
+        'mock-call-count-as-proof
+        'assertions-without-wrong-outcome-guard
+        'testing-internal-private-methods)))
+
+  (phase-2-baseline-and-invariants
+    (enforce (write-single-happy-path-test :purpose 'prove-baseline-contract-is-fulfilled))
+    (forbidden 'stopping-generation-after-happy-path)
+    (guard (is-data-transformation-or-algorithmic-contract? diff)
+           (prefer-in-order
+             'property-based-when-library-present
+             'parametrize-or-example-table
+             'named-boundary-examples))
+    (enforce (at-least-one-failure-mode-beyond-happy-path)))
+
+  (phase-3-adversarial-contract
+    (enforce (reason-out-loud-in-scratchpad :tag 'adversarial-scratchpad :before-writing-code t))
+    (note "Generic edges (empty input, missing fields, sentinels) are necessary but not sufficient.")
+    (enforce (prefer-domain-catastrophes-over-checkbox-edges))
+    (derive-scenarios-from
+      '(public-contract domain-invariants trust-boundaries persistence-layer)
+      (when-present 'path-scoped-domain-rules))
+    (examples-portable
+      'silent-data-corruption
+      'trust-boundary-escape
+      'plausible-input-contract-violation
+      'cascading-read-poisoning
+      'unauthorized-privilege-escalation)
+    (enforce (each-case-names-catastrophic-failure-it-guards))
+    (prefer (few-high-blast-radius-cases) over (many-variants-same-failure-class))
+    (note "Omit cases that repeat an already-covered failure class or minor inconvenience (e.g. ui-stutters).")))

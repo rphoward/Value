@@ -1,0 +1,86 @@
+---
+description: USE WHEN creating or editing Agent Skills under .cursor/skills/ or .agents/skills/, or drafting in tools/drafts/skills/.
+alwaysApply: false
+globs: .cursor/skills/**,.agents/skills/**,tools/drafts/skills/**
+---
+
+(def-sop skill-authoring
+  (context
+    (target "cursor-skill-authoring-agent")
+    (optimization "maximum-determinism-on-demand-workflows-minimum-context-bloat")
+    (scan-reference "docs/cursor-customization-reference.md" :section "Agent skills"))
+
+  <central_idea>
+  (center-of-gravity
+    (invariant "Skills are folders each containing SKILL.md with skill frontmatter plus workflow instructions — not .mdc rules. Ship under .cursor/skills/<name>/SKILL.md in this repo; halt on ambiguous trigger or scope."))
+  </central_idea>
+
+  (protocol-1-purpose-and-trigger-grilling
+    (pre-flight-inventory
+      (execute-ide-search :targets '(".cursor/skills/**/SKILL.md" ".agents/skills/**/SKILL.md" "docs/cursor-customization-reference.md")))
+    (grill-interrogation
+      (if (or (ambiguous? workflow-purpose)
+              (ambiguous? when-agent-should-load-skill)
+              (ambiguous? boundary-vs-rules-vs-subagents))
+          (progn
+            (halt-generation)
+            (query-human :count 1 :propose-recommendation t)
+            (wait-for-resolution))))
+    (prefer-skill-over-rule-when '(multi-step-workflow on-demand-procedure scripts-to-run slash-command-style))
+    (prefer-rule-over-skill-when '(always-on-convention short-guardrail path-scoped-alwaysApply-or-globs))
+    (prefer-skill-over-subagent-when '(single-context-window single-shot no-delegation-overhead))
+    (prefer-subagent-over-skill-when '(context-isolation long-research parallel-verification)))
+
+  (protocol-2-file-location-and-frontmatter
+    (canonical-store ".cursor/skills/<name>/SKILL.md")
+    (also-discovered ".agents/skills/<name>/SKILL.md" :project-only)
+    (draft-only "tools/drafts/skills/**" (enforce (promote-to '.cursor/skills/ before-check-in) (forbidden 'leaving-shipped-skills-only-in-tools 'drafts-outside-tools-drafts-skills)))
+    (forbidden-write-locations '~/.cursor/skills-cursor/** :managed-read-only)
+    (valid-keys-only (name description paths disable-model-invocation metadata))
+    (forbidden-on-skill-files 'alwaysApply 'globs-on-skills-use-paths-instead 'model 'readonly 'is_background)
+    (name-field (format "lowercase-hyphens-numbers") (must-match-parent-folder-name))
+    (description-field
+      (audience "agent relevance matching and slash menu")
+      (require "what it does AND when to use it — include trigger phrases user might say")
+      (require-positive-triggers-and-explicit-not-for-near-misses)
+      (note "Cursor undertriggers skills — descriptions slightly pushy; record paths/disable-model-invocation omission in metadata")
+      (forbidden "vague one-liners without triggers"))
+    (paths-field
+      (format "comma-separated literal globs or YAML list")
+      (purpose "surface skill only when working matching files")
+      (omit-when "repo-wide skill"))
+    (disable-model-invocation
+      (false-default "agent may auto-apply when relevant")
+      (true-when "slash-command-only explicit /skill-name invocation")
+      (note "plugin-delivered skills with true may hide from / palette — verify locally"))
+    (metadata-field (optional arbitrary-key-value)))
+
+  (protocol-3-skill-body-and-assets
+    (keep-focused (aim-skill-body-under-500-lines) (move-expansion-to references/))
+    (skill-body-form '(def-sop ...) "required in this repo")
+    (references-form '(def-ref ...) "or artifacts per protocol-3b; imperative markdown forbidden in references/")
+    (structure (def-sop-protocols-or-numbered-steps) (output-format-if-any))
+    (optional-dirs
+      (scripts/ "executable helpers; reference with relative paths from skill root")
+      (references/ "on-demand deep docs")
+      (assets/ "templates static files"))
+    (modules-home "eliotapp/" (follow 'skills-repo.mdc) (scripts-import 'eliotapp))
+    (note "src/eliotwf_skills/ is legacy evacuate-only — not a destination for new modules."))
+    (category-subfolders-allowed ".cursor/skills/<category>/<name>/SKILL.md" :identity-is-folder-containing-skill-md)
+    (forbidden 'duplicating-conduct-safety-thermonuclear 'pasting-entire-style-guides))
+
+  (protocol-3b-reference-format
+    (references-two-kinds
+      (def-ref "rules checks maps — (check ...) (forbidden ...) (section ...) (linked-from protocol-N)")
+      (artifacts "bash tsx css json — fenced blocks in references/*-artifacts.md or file tail after def-ref header"))
+    (skill-body-always '(def-sop ...))
+    (forbidden 'unstructured-prose-blobs-in-rule-refs 'duplicating-full-protocol-text-in-ref)
+    (linking (require linked-from-matches-SKILL-pointer) (depth-one-only "SKILL.md → references/*.md"))
+    (progressive-disclosure (metadata-always) (def-sop-on-activation) (def-ref-on-demand) (artifacts-when-referenced)))
+
+  (protocol-4-set-wide-form-consistency
+    (enforce (match-sibling-authoring-style 'mdc-authoring 'agent-authoring :shared-grilling :structural-subtraction))
+    (assert (no-duplication-of-responsibility-with 'mdc-authoring 'agent-authoring 'conduct 'safety 'any-other-rule))
+    (forbidden 'embedding-hooks-json 'embedding-subagent-md-authoring-here)
+    (note "Skill body pseudo-Lisp matches mdc-authoring form; skills are not .mdc files — no alwaysApply/globs on SKILL.md")
+    (note "Migrate intent-scoped rules via /migrate-to-skills; do not duplicate alwaysApply or globs rules as skills.")))
