@@ -175,6 +175,21 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "(resulting-position resulting_module resulting_atom resulting_status)",
             self.contract_text,
         )
+        self.assertIn(
+            '(resulting_module "requested target phase")',
+            self.contract_text,
+        )
+        self.assertIn(
+            '(resulting_atom "first atom id in the target module")',
+            self.contract_text,
+        )
+        self.assertIn("(resulting_status in_progress)", self.contract_text)
+        self.assertIn(
+            '(position-update "set position.module, position.atom_id, and '
+            "position.status exactly to the decision's resulting_module, "
+            'resulting_atom, and resulting_status")',
+            self.contract_text,
+        )
 
     def test_schema_timestamp_patterns_enforce_rfc3339(self) -> None:
         timestamp_schemas = (
@@ -185,8 +200,26 @@ class ValueSkillReviewContractTests(unittest.TestCase):
         for timestamp_schema in timestamp_schemas:
             pattern = timestamp_schema.get("pattern")
             self.assertTrue(pattern, "RFC 3339 timestamp fields must define a pattern")
-            self.assertRegex("2026-07-18T12:34:56Z", pattern)
-            self.assertNotRegex("2026-07-18T12:34:56", pattern)
+            valid_timestamps = (
+                "2026-07-18T12:34:56Z",
+                "2024-02-29T23:59:59+14:00",
+                "2026-01-01T00:00:00.123-05:30",
+            )
+            invalid_timestamps = (
+                "2023-02-29T12:34:56Z",
+                "2026-02-31T12:34:56Z",
+                "2026-04-31T12:34:56Z",
+                "2026-07-18T12:34:56",
+                "2026-07-18T12:34:56+1400",
+                "2026-07-18T12:34:56+24:00",
+                "2026-07-18T12:34:56+12:60",
+            )
+            for timestamp in valid_timestamps:
+                with self.subTest(timestamp=timestamp):
+                    self.assertIsNotNone(re.fullmatch(pattern, timestamp))
+            for timestamp in invalid_timestamps:
+                with self.subTest(timestamp=timestamp):
+                    self.assertIsNone(re.fullmatch(pattern, timestamp))
 
     def test_conflicts_and_assumptions_have_schema_valid_sources(self) -> None:
         assumption = self.schema["$defs"]["assumptionRecord"]
