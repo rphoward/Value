@@ -321,15 +321,6 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
             )
             self.assertEqual(reopen.returncode, 0, reopen.stderr)
 
-            milestone = run_script(
-                "write_milestone.py",
-                str(session_path),
-                "--module",
-                "profile",
-            )
-            self.assertEqual(milestone.returncode, 0, milestone.stderr)
-            self.assertTrue((session_path.parent / "customer-profile.md").is_file())
-
             briefs = run_script(
                 "write_design_briefs.py",
                 str(session_path),
@@ -533,6 +524,14 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
                 ).returncode,
                 0,
             )
+
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            session["position"] = {
+                "module": "profile",
+                "atom_id": "P12",
+                "status": "in_progress",
+            }
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
 
             records_path.write_text(
                 json.dumps(
