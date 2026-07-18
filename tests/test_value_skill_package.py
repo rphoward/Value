@@ -581,6 +581,202 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
             )
 
 
+class ValueSkillDagTests(unittest.TestCase):
+    def test_atoms_json_dag_metadata(self) -> None:
+        payload = json.loads((ASSETS_DIR / "atoms.json").read_text(encoding="utf-8"))
+        for atom in payload["atoms"]:
+            for field in ("requires", "section", "soft"):
+                self.assertIn(field, atom, f"{atom['id']} missing {field}")
+            self.assertIsInstance(atom["requires"], list)
+            self.assertIsInstance(atom["soft"], bool)
+        session_mod = import_session_helper()
+        cycles = session_mod.detect_dag_cycles(payload["atoms"])
+        self.assertEqual(cycles, [], f"DAG cycles detected: {cycles}")
+
+    def test_parallel_ready_after_p03(self) -> None:
+        session_mod = import_session_helper()
+        atoms = session_mod.load_atoms()
+        session = session_mod.default_session("demo", "Demo")
+        timestamp = session_mod.utc_now_iso()
+        for atom_id in ("P01", "P02", "P03"):
+            session["answers"].append(
+                {
+                    "atom_id": atom_id,
+                    "answer": f"answer for {atom_id}",
+                    "kind": "fact",
+                    "accepted_at": timestamp,
+                }
+            )
+        ready = set(session_mod.ready_atoms(session, atoms))
+        for atom_id in ("P04", "P05", "P06", "P07", "P08"):
+            self.assertIn(atom_id, ready, f"{atom_id} should be ready after P03")
+
+    def test_p08_accepts_unknown_kind(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            timestamp = "2026-07-18T12:00:00Z"
+            for atom_id in ("P01", "P02", "P03"):
+                session["answers"].append(
+                    {
+                        "atom_id": atom_id,
+                        "answer": f"answer for {atom_id}",
+                        "kind": "fact",
+                        "accepted_at": timestamp,
+                    }
+                )
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+            accept = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P08",
+                "--answer",
+                "More bookings; relevance labels unknown.",
+                "--kind",
+                "unknown",
+            )
+            self.assertEqual(accept.returncode, 0, accept.stderr)
+
+    def test_accept_bulk_from_fixture(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            map_path = Path(tmp) / "draft-map.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            timestamp = "2026-07-18T12:00:00Z"
+            session["answers"].append(
+                {
+                    "atom_id": "P01",
+                    "answer": "Independent cleaners",
+                    "kind": "decision",
+                    "accepted_at": timestamp,
+                }
+            )
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+            map_path.write_text(
+                json.dumps(
+                    {
+                        "source": "user_brain_dump",
+                        "mappings": [
+                            {
+                                "atom_id": "P02",
+                                "answer": "New booking request arrives",
+                                "kind": "fact",
+                                "satisfied": True,
+                            },
+                            {
+                                "atom_id": "P03",
+                                "answer": "Fill open slots quickly",
+                                "kind": "fact",
+                                "satisfied": True,
+                            },
+                            {
+                                "atom_id": "P07",
+                                "answer": "No-shows and gaps",
+                                "kind": "unknown",
+                                "satisfied": True,
+                                "gaps": ["severity labels"],
+                            },
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            bulk = run_script(
+                "accept_bulk.py",
+                str(session_path),
+                "--map",
+                str(map_path),
+            )
+            self.assertEqual(bulk.returncode, 0, bulk.stderr)
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            answered = {record["atom_id"] for record in session["answers"]}
+            self.assertTrue({"P02", "P03", "P07"}.issubset(answered))
+
+    def test_gaps_no_hard_when_only_soft_missing(self) -> None:
+        session_mod = import_session_helper()
+        atoms = session_mod.load_atoms()
+        session = session_mod.default_session("demo", "Demo")
+        timestamp = session_mod.utc_now_iso()
+        for atom_id in ("P01", "P02", "P03"):
+            session["answers"].append(
+                {
+                    "atom_id": atom_id,
+                    "answer": f"answer for {atom_id}",
+                    "kind": "fact",
+                    "accepted_at": timestamp,
+                }
+            )
+        hard = session_mod.hard_gaps_by_section(session, atoms)
+        self.assertEqual(hard, {})
+
+    def test_status_sections_strip(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            timestamp = "2026-07-18T12:00:00Z"
+            session["answers"].append(
+                {
+                    "atom_id": "P01",
+                    "answer": "Independent cleaners",
+                    "kind": "decision",
+                    "accepted_at": timestamp,
+                }
+            )
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+            result = run_script("status.py", str(session_path), "--sections")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("Segment✓", result.stdout)
+            self.assertIn("Situation·", result.stdout)
+
+
+def import_session_helper():
+    sys.path.insert(0, str(SCRIPTS_DIR))
+    import _session
+
+    _session._atom_indexes_built = False
+    return _session
+
+
 class ValueSkillReviewContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

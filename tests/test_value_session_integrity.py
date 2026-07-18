@@ -103,7 +103,7 @@ class ValueSessionIntegrityTests(unittest.TestCase):
                 "fact",
             )
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn("Off-position accept", result.stderr)
+            self.assertIn("not in the ready set", result.stderr)
 
     def test_off_position_accept_allowed_with_canonical_bypass(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -296,6 +296,96 @@ class ValueSessionIntegrityTests(unittest.TestCase):
             session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
             payload = json.loads(run_script("next_question.py", str(session_path)).stdout)
             self.assertEqual(payload["atom_id"], "P02")
+
+    def test_ready_off_position_accept_after_p03(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session_mod = import_session()
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            timestamp = "2026-07-18T12:00:00Z"
+            for atom_id in ("P01", "P02", "P03"):
+                session["answers"].append(
+                    {
+                        "atom_id": atom_id,
+                        "answer": f"answer for {atom_id}",
+                        "kind": "fact",
+                        "accepted_at": timestamp,
+                    }
+                )
+            session["position"] = {
+                "module": "profile",
+                "atom_id": "P04",
+                "status": "in_progress",
+            }
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+            result = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P07",
+                "--answer",
+                "Scheduling conflicts and no-shows.",
+                "--kind",
+                "unknown",
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_gate_pending_next_question_holds_until_milestone(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session_mod = import_session()
+            atoms = session_mod.load_atoms()
+            session = session_mod.default_session("demo", "Demo")
+            timestamp = session_mod.utc_now_iso()
+            for atom in atoms:
+                if atom["module"] != "profile" or atom.get("gate"):
+                    continue
+                session["answers"].append(
+                    {
+                        "atom_id": atom["id"],
+                        "answer": f"answer for {atom['id']}",
+                        "kind": "fact",
+                        "accepted_at": timestamp,
+                    }
+                )
+            session["position"] = {
+                "module": "profile",
+                "atom_id": "P12",
+                "status": "gate_pending",
+            }
+            session["artifacts"].append(
+                {"path": "customer-profile.md", "status": "pending"}
+            )
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+            payload = json.loads(run_script("next_question.py", str(session_path)).stdout)
+            self.assertEqual(payload["atom_id"], "P12")
+            self.assertEqual(payload["position_status"], "gate_pending")
 
 
 if __name__ == "__main__":

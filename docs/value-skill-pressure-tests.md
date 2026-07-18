@@ -103,6 +103,20 @@ These complement the prompt-only scenarios above. They run via `tests/test_value
 - [x] Script smoke — sidecar records. Success: `accept_answer.py --records` appends evidence, assumptions, decisions, and unknowns; decision `resulting_*` fields move position on bypass.
 - [x] Script smoke — bypass unlocks briefs. Success: four `bypass <module> gate` decisions let `write_design_briefs.py` run without `--force`.
 - [x] Script smoke — gate pass completion. Success: `pass profile gate` decision plus `write_milestone.py` marks `customer-profile.md` final.
+- [x] DAG scheduler — parallel ready after P03 includes P04–P08; P08 accepts `kind: unknown` on soft atom.
+- [x] DAG scheduler — gate_pending holds focus on gate atom until milestone artifact is final.
+- [x] Bulk accept — `accept_bulk.py` from draft-map advances session; `gaps.py` lists only hard gaps when soft labels remain.
+
+### Scenario D — brain dump after segment lock
+
+Prompt:
+
+```text
+Here's what I know about independent cleaners: they get a new booking request, need to fill open slots fast, hate no-shows, and want more repeat bookings. Map what I said and tell me what's still missing.
+```
+
+- Expected: After P01 accepted, orchestrator runs draft-map-gap-fill; bulk accept fills Jobs and Pains; follow-up asks only Gains (hard gap) or offers one Gains question — not a full profile restart.
+- Result: PASS (script checks — accept_bulk, gaps.py, status --sections; live agent run optional)
 
 ## Planned live state and artifact checks
 
