@@ -66,7 +66,7 @@ ATOM_FIELDS = ("id", "teaches", "asks", "accepts", "writes", "unlocks")
 FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---", re.DOTALL)
 REFERENCE_LINK_RE = re.compile(r"references/([^\s\"')\]]+)")
 ATOM_ID_RE = re.compile(r"\(id\s+([^)\s]+)\)")
-BRACKET_TOKEN_RE = re.compile(r"\[[^\]]+\]")
+BRACKET_TOKEN_RE = re.compile(r"\[[^\]\r\n]+\](?!\s*\()")
 
 
 def read_skill_md() -> str:
@@ -257,6 +257,15 @@ class ValueSkillPackageTests(unittest.TestCase):
             f"session.schema.json must require {list(REQUIRED_SCHEMA_PROPERTIES)}; "
             f"missing from required: {missing}",
         )
+
+    def test_bracket_token_scanner_ignores_markdown_links_and_images(self) -> None:
+        template_text = (
+            "# [Project name]\n"
+            "Read the [research notes](references/research.md).\n"
+            "![Evidence map](assets/evidence-map.png)\n"
+        )
+
+        self.assertEqual(BRACKET_TOKEN_RE.findall(template_text), ["[Project name]"])
 
     def test_templates_exist_without_unfilled_bracket_tokens(self) -> None:
         offenders: list[str] = []
