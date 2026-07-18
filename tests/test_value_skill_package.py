@@ -768,6 +768,79 @@ class ValueSkillDagTests(unittest.TestCase):
             self.assertIn("Segment✓", result.stdout)
             self.assertIn("Situation·", result.stdout)
 
+    def test_express_pacing_skips_to_priority_job_spine(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                    "--pacing-mode",
+                    "express",
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            self.assertEqual(session.get("pacing_mode"), "express")
+            accept = run_script(
+                "accept_answer.py",
+                str(session_path),
+                "--atom-id",
+                "P01",
+                "--answer",
+                "Independent cleaners",
+                "--kind",
+                "decision",
+            )
+            self.assertEqual(accept.returncode, 0, accept.stderr)
+            payload = json.loads(run_script("next_question.py", str(session_path)).stdout)
+            self.assertEqual(payload["atom_id"], "P03")
+            self.assertEqual(payload["pacing_mode"], "express")
+
+    def test_set_pacing_mode_switch(self) -> None:
+        session_mod = import_session_helper()
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            result = run_script(
+                "set_pacing_mode.py",
+                str(session_path),
+                "--mode",
+                "express",
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            self.assertEqual(session.get("pacing_mode"), "express")
+            self.assertEqual(
+                run_script(
+                    "set_pacing_mode.py",
+                    str(session_path),
+                    "--mode",
+                    "standard",
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            self.assertNotIn("pacing_mode", session)
+
 
 def import_session_helper():
     sys.path.insert(0, str(SCRIPTS_DIR))
