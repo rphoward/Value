@@ -4,23 +4,23 @@ _Draft from accepted session answers — not validated demand._
 
 ## Who it is for
 
-(decision) Cursor-using Discord friends who ship personal projects but struggle to
+(decision) Cursor users in Discord who ship personal projects but struggle
 
 ## Progress they want
 
-(decision) Priority job (elevated): Autonomy — safe space to create freely
+(decision) Autonomy — safe space to create freely with AI (also
 
 ## Why it matters to someone else
 
-(inference) Extreme: lack of marketing skills — group can program, vibe-code,
+(inference) lack of marketing skills — group can program, vibe-code, and
 
 ## Outward pitch
 
-For Cursor-using Discord friends who ship personal projects but struggle to make them valuable to people outside: help them Priority job (elevated): Autonomy — safe space to create freely with AI (also named — because Extreme: lack of marketing skills — group can program, vibe-code, and create but cannot articulate or.
+For Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group. They freeze on lack of marketing skills. North star: go from scattered try-post-and-hope showcase cycles to seeing a clear direction.
 
 ## Offering boundary
 
-(decision) Offering: Values — the Cursor skill that grills toward an
+(decision) Values — the Cursor skill that grills toward an outward
 
 ## What is in the box
 
@@ -34,5 +34,5 @@ For Cursor-using Discord friends who ship personal projects but struggle to make
 
 ## Smallest first win
 
-(decision) Priority job (elevated): Autonomy — safe space to create freely
-(fact) Beat: Usual: start another project (throw-more-at-the-wall). Sometimes: abandon Cursor and chase
+(decision) Autonomy — safe space to create freely with AI (also
+(fact) Beat: start another project (throw-more-at-the-wall). Sometimes: abandon Cursor and chase more

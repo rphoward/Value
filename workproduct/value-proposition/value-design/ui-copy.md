@@ -4,7 +4,7 @@ Fill from accepted customer language. Do not invent charm past unknowns.
 
 ## Voice
 
-- (decision) Cursor-using Discord friends who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
+- (decision) Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
 - (fact) Situation: Discord friends post personal projects to the group showcase. Trigger: after repeatedly shipping and posting varied projects (throwing stuff against the wall), none gain meaningful traction or clicks. Fact: observed pattern of low or no engagement across multiple showcase posts. Inference: they accept not every project will appeal widely but expected at least some to stick.
 
 

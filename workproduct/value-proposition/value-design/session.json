@@ -4,7 +4,7 @@
     "slug": "value-design",
     "name": "Value Design",
     "created_at": "2026-07-18T21:18:48Z",
-    "updated_at": "2026-07-19T13:55:50Z"
+    "updated_at": "2026-07-19T17:41:45Z"
   },
   "position": {
     "module": "value-map",
@@ -109,6 +109,14 @@
       "answer": "Pain relievers (mostly hypothesis from lived use): (1) Mid-session grill shifts frame \u2014 more of one's own mind than pure coding-with-AI; calmer; exercises a part of the brain that atrophies under regular AI use. (2) Memory/reference files give endurance \u2014 work isn't wasted; an enduring record (like a finished vibe-coding artifact) that future decisions can stand on. (3) Decision tool steers toward choosing to be valuable to others, not only autonomous self \u2014 reduces pains of dead showcase / lack of interaction, eroded self-confidence and competence, diminished personal worth, and feeling less worthy of relationships with others.",
       "kind": "hypothesis",
       "accepted_at": "2026-07-19T02:07:19Z"
+    },
+    {
+      "atom_id": "P01",
+      "answer": "Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.",
+      "kind": "decision",
+      "accepted_at": "2026-07-19T17:41:31Z",
+      "reopen": true,
+      "conflict_note": "Outward paste should not address the segment as friends; keep segment, drop chummy label."
     }
   ],
   "evidence": [

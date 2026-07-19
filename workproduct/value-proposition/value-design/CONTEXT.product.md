@@ -4,13 +4,13 @@ Customer-domain glossary for coding agents. Terms only — not a spec, not stack
 
 ## Context
 
-- (decision) Cursor-using Discord friends who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
+- (decision) Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
 - (inference) Go from scattered try-post-and-hope showcase cycles to seeing a clear direction: understand what they enjoy building from past attempts, what others respond to, and focus on the overlap where their strengths match something others actually value.
 
 
 ## Segment
 
-- (decision) Cursor-using Discord friends who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
+- (decision) Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
 
 
 ## Situation

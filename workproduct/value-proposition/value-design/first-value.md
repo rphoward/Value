@@ -4,7 +4,7 @@ What "it worked" looks like in the first session. Hide orphans and secondary job
 
 ## Who this is for
 
-- (decision) Cursor-using Discord friends who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
+- (decision) Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
 
 
 ## Smallest observable win

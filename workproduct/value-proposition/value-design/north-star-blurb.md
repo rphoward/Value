@@ -4,7 +4,7 @@ _Draft from accepted session answers — not validated demand. Distinct from the
 
 ## Blurb
 
-For Cursor-using Discord friends who ship personal projects but struggle to make them valuable to people outside: help them Priority job (elevated): Autonomy — safe space to create freely with AI (also named — because Extreme: lack of marketing skills — group can program, vibe-code, and create but cannot articulate or.
+For Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group. They freeze on lack of marketing skills. North star: go from scattered try-post-and-hope showcase cycles to seeing a clear direction.
 
 ## Install (human paste)
 
