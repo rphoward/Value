@@ -37,6 +37,7 @@ REFERENCE_FILES = (
     "business-model.md",
     "experiments.md",
     "session-contract.md",
+    "export-lenses.md",
 )
 
 MODULE_FILES = (
@@ -63,6 +64,11 @@ TEMPLATE_FILES = (
     "app-design-brief.template.md",
     "test-card.template.md",
     "learning-card.template.md",
+    "CONTEXT.product.template.md",
+    "AGENTS.product.template.md",
+    "ui-copy.template.md",
+    "states-and-flows.template.md",
+    "first-value.template.md",
 )
 
 SYNC_IGNORE_NAMES = {".DS_Store", "Thumbs.db"}
@@ -439,6 +445,112 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
             self.assertEqual(len(session["decisions"]), 1)
             self.assertEqual(len(session["unknowns"]), 1)
             self.assertEqual(session["position"]["atom_id"], "P02")
+
+    def test_build_pack_writes_ide_exports_and_skips_ceremony(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--name",
+                    "Demo Cleaners",
+                    "--slug",
+                    "demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            timestamp = "2026-07-18T12:00:00Z"
+            session["answers"] = [
+                {
+                    "atom_id": "P01",
+                    "answer": "Independent cleaners in metro areas; exclude franchises.",
+                    "kind": "decision",
+                    "accepted_at": timestamp,
+                },
+                {
+                    "atom_id": "P03",
+                    "answer": "Fill open slots the same day a booking request arrives.",
+                    "kind": "fact",
+                    "accepted_at": timestamp,
+                },
+                {
+                    "atom_id": "V01",
+                    "answer": "Recorded bypass value-map gate.",
+                    "kind": "decision",
+                    "accepted_at": timestamp,
+                },
+            ]
+            session["decisions"] = [
+                {
+                    "decision": "bypass profile gate",
+                    "reason": "pressure-test",
+                    "source_atom": "P01",
+                    "resulting_module": "value-map",
+                    "resulting_atom": "V01",
+                    "resulting_status": "in_progress",
+                },
+                {
+                    "decision": "accepted segment boundary",
+                    "reason": "Observable role with exclusion",
+                    "source_atom": "P01",
+                    "resulting_module": "profile",
+                    "resulting_atom": "P02",
+                    "resulting_status": "in_progress",
+                },
+            ]
+            session["assumptions"] = [
+                {
+                    "claim": "Cleaners will pay monthly for scheduling",
+                    "criticality": "high",
+                    "evidence_status": "unsupported",
+                    "source_atom": "P01",
+                }
+            ]
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+
+            pack = run_script("write_build_pack.py", str(session_path), "--force")
+            self.assertEqual(pack.returncode, 0, pack.stderr)
+
+            context = (session_path.parent / "CONTEXT.product.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("Independent cleaners", context)
+            self.assertNotIn("Recorded bypass", context)
+            self.assertIn("Fill open slots", context)
+
+            agents = (session_path.parent / "AGENTS.product.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("## Always", agents)
+            self.assertIn("## Ask first", agents)
+            self.assertIn("Cleaners will pay monthly", agents)
+
+            for name in (
+                "ui-copy.md",
+                "states-and-flows.md",
+                "first-value.md",
+            ):
+                self.assertTrue((session_path.parent / name).is_file(), name)
+
+            adr_files = list((session_path.parent / "docs" / "adr").glob("*.md"))
+            self.assertGreaterEqual(len(adr_files), 1)
+            adr_text = "\n".join(path.read_text(encoding="utf-8") for path in adr_files)
+            self.assertIn("bypass profile gate", adr_text)
+            self.assertIn("accepted segment boundary", adr_text)
+
+            brief = run_script(
+                "write_design_briefs.py", str(session_path), "--force"
+            )
+            self.assertEqual(brief.returncode, 0, brief.stderr)
+            product = (
+                session_path.parent / "product-design-brief.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("Independent cleaners", product)
+            self.assertNotIn("Recorded bypass value-map gate", product)
 
     def test_bypassed_modules_unlock_briefs_without_force(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -927,6 +1039,8 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "scripts/next_question.py",
             "scripts/accept_answer.py",
             "scripts/write_design_briefs.py",
+            "scripts/write_build_pack.py",
+            "references/export-lenses.md",
             "assets/knowledge-base.json",
             "assets/atoms.json",
         ):
