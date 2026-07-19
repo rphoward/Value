@@ -1088,6 +1088,247 @@ class ValueSkillDagTests(unittest.TestCase):
         hard = session_mod.hard_gaps_by_section(session, atoms)
         self.assertEqual(hard, {})
 
+    def test_gaps_module_filter_ignores_other_modules(self) -> None:
+        """Adversarial: scoped gaps must not leak ready atoms from another module."""
+        session_mod = import_session_helper()
+        atoms = session_mod.load_atoms()
+        session = session_mod.default_session("demo", "Demo")
+        timestamp = session_mod.utc_now_iso()
+        profile_ids = [
+            atom["id"] for atom in atoms if atom["module"] == "profile"
+        ]
+        for atom_id in profile_ids:
+            session["answers"].append(
+                {
+                    "atom_id": atom_id,
+                    "answer": f"answer for {atom_id}",
+                    "kind": "decision" if atom_id == "P12" else "fact",
+                    "accepted_at": timestamp,
+                }
+            )
+        session["decisions"].append(
+            {
+                "decision": "pass profile gate",
+                "reason": "ready",
+                "source_atom": "P12",
+                "resulting_module": "profile",
+                "resulting_atom": "P12",
+                "resulting_status": "gate_pending",
+            }
+        )
+        session_mod.upsert_artifact(session, "customer-profile.md", "final")
+        session["position"] = {
+            "module": "value-map",
+            "atom_id": "V01",
+            "status": "in_progress",
+        }
+        session["answers"].append(
+            {
+                "atom_id": "V01",
+                "answer": "A booking fill product",
+                "kind": "fact",
+                "accepted_at": timestamp,
+            }
+        )
+        profile_gaps = session_mod.hard_gaps_by_section(session, atoms, "profile")
+        value_gaps = session_mod.hard_gaps_by_section(session, atoms, "value-map")
+        self.assertEqual(profile_gaps, {})
+        self.assertIn("Offering", value_gaps)
+        self.assertIn("V02", value_gaps["Offering"])
+
+    def test_stay_rejects_off_focus_atom(self) -> None:
+        session_mod = import_session_helper()
+        session = session_mod.default_session("demo", "Demo")
+        allowed, hint = session_mod.can_accept_atom(
+            session, "V05", reopen=False, stay=True, records_payload=None
+        )
+        self.assertFalse(allowed)
+        self.assertIsNotNone(hint)
+        self.assertIn("--stay only applies to the active atom", hint)
+
+    def test_gate_pending_flag_required_to_hold_gate(self) -> None:
+        session_mod = import_session_helper()
+        atoms = session_mod.load_atoms()
+        index = session_mod.atom_by_id(atoms)
+        session = session_mod.default_session("demo", "Demo")
+        session["position"] = {
+            "module": "profile",
+            "atom_id": "P12",
+            "status": "in_progress",
+        }
+        session_mod.advance_position_after_accept(
+            session,
+            index["P12"],
+            "P12",
+            reopen=False,
+            stay=False,
+            gate_pending=False,
+            next_atom_override="",
+            records_payload=None,
+        )
+        self.assertNotEqual(session["position"]["status"], "gate_pending")
+
+    def test_gate_pending_flag_holds_with_pending_artifact(self) -> None:
+        session_mod = import_session_helper()
+        atoms = session_mod.load_atoms()
+        index = session_mod.atom_by_id(atoms)
+        session = session_mod.default_session("demo", "Demo")
+        session["position"] = {
+            "module": "profile",
+            "atom_id": "P12",
+            "status": "in_progress",
+        }
+        session_mod.advance_position_after_accept(
+            session,
+            index["P12"],
+            "P12",
+            reopen=False,
+            stay=False,
+            gate_pending=True,
+            next_atom_override="",
+            records_payload=None,
+        )
+        self.assertEqual(session["position"]["status"], "gate_pending")
+        self.assertEqual(
+            session_mod.artifact_status(session, "customer-profile.md"),
+            "pending",
+        )
+
+    def test_records_gate_pending_upserts_pending_artifact(self) -> None:
+        session_mod = import_session_helper()
+        atoms = session_mod.load_atoms()
+        index = session_mod.atom_by_id(atoms)
+        session = session_mod.default_session("demo", "Demo")
+        session["position"] = {
+            "module": "profile",
+            "atom_id": "P12",
+            "status": "in_progress",
+        }
+        session_mod.advance_position_after_accept(
+            session,
+            index["P12"],
+            "P12",
+            reopen=False,
+            stay=False,
+            gate_pending=False,
+            next_atom_override="",
+            records_payload={
+                "decisions": [
+                    {
+                        "decision": "pass profile gate",
+                        "reason": "ready",
+                        "source_atom": "P12",
+                        "resulting_module": "profile",
+                        "resulting_atom": "P12",
+                        "resulting_status": "gate_pending",
+                    }
+                ]
+            },
+        )
+        self.assertEqual(session["position"]["status"], "gate_pending")
+        self.assertEqual(
+            session_mod.artifact_status(session, "customer-profile.md"),
+            "pending",
+        )
+
+    def test_adr_refresh_removes_orphan_files(self) -> None:
+        session_mod = import_session_helper()
+        with tempfile.TemporaryDirectory() as tmp:
+            session_dir = Path(tmp)
+            adr_dir = session_dir / "docs" / "adr"
+            adr_dir.mkdir(parents=True)
+            stale = adr_dir / "0001-segment-boundary-locked.md"
+            stale.write_text("# stale\n", encoding="utf-8")
+            session = {
+                "decisions": [
+                    {
+                        "decision": "park orphan feature X",
+                        "reason": "out of scope",
+                        "source_atom": "V06",
+                    }
+                ]
+            }
+            written = session_mod.write_hard_decision_adrs(session, session_dir)
+            self.assertEqual(len(written), 1)
+            self.assertTrue(written[0].is_file())
+            self.assertFalse(stale.exists())
+            names = sorted(path.name for path in adr_dir.glob("*.md"))
+            self.assertEqual(names, [written[0].name])
+
+    def test_adr_empty_hard_decisions_leaves_existing_files(self) -> None:
+        session_mod = import_session_helper()
+        with tempfile.TemporaryDirectory() as tmp:
+            session_dir = Path(tmp)
+            adr_dir = session_dir / "docs" / "adr"
+            adr_dir.mkdir(parents=True)
+            keep = adr_dir / "0001-manual-note.md"
+            keep.write_text("# keep\n", encoding="utf-8")
+            written = session_mod.write_hard_decision_adrs({"decisions": []}, session_dir)
+            self.assertEqual(written, [])
+            self.assertTrue(keep.is_file())
+
+    def test_milestone_recovers_when_final_artifact_file_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            session["position"] = {
+                "module": "value-map",
+                "atom_id": "V01",
+                "status": "in_progress",
+            }
+            session["decisions"].append(
+                {
+                    "decision": "pass profile gate",
+                    "reason": "ready",
+                    "source_atom": "P12",
+                    "resulting_module": "profile",
+                    "resulting_atom": "P12",
+                    "resulting_status": "gate_pending",
+                }
+            )
+            session["artifacts"].append(
+                {"path": "customer-profile.md", "status": "final"}
+            )
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+            milestone = run_script(
+                "write_milestone.py",
+                str(session_path),
+                "--module",
+                "profile",
+            )
+            self.assertEqual(milestone.returncode, 0, milestone.stderr)
+            self.assertTrue((session_path.parent / "customer-profile.md").is_file())
+
+    def test_fill_section_missing_heading_raises(self) -> None:
+        session_mod = import_session_helper()
+        with self.assertRaises(ValueError) as ctx:
+            session_mod.fill_section("# Title\n\n## Present\n\nbody\n", "Missing", "NEW")
+        self.assertIn("Missing section heading", str(ctx.exception))
+
+    def test_save_session_is_atomic_replace(self) -> None:
+        session_mod = import_session_helper()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "session.json"
+            session = session_mod.default_session("demo", "Demo")
+            session_mod.save_session(path, session)
+            self.assertTrue(path.is_file())
+            self.assertFalse(path.with_name("session.json.tmp").exists())
+            loaded = session_mod.load_session(path)
+            self.assertEqual(loaded["project"]["slug"], "demo")
+
     def test_status_sections_strip(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             work_root = Path(tmp) / "workproduct" / "value-proposition"
@@ -1198,7 +1439,7 @@ def import_session_helper():
     sys.path.insert(0, str(SCRIPTS_DIR))
     import _session
 
-    _session._atom_indexes_built = False
+    _session.reset_atom_indexes()
     return _session
 
 
