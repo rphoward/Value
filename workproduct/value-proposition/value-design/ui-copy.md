@@ -1,0 +1,37 @@
+# UI copy — Value Design
+
+Fill from accepted customer language. Do not invent charm past unknowns.
+
+## Voice
+
+- (decision) Cursor-using Discord friends who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
+- (fact) Situation: Discord friends post personal projects to the group showcase. Trigger: after repeatedly shipping and posting varied projects (throwing stuff against the wall), none gain meaningful traction or clicks. Fact: observed pattern of low or no engagement across multiple showcase posts. Inference: they accept not every project will appeal widely but expected at least some to stick.
+
+
+## Hero and primary CTA
+
+- (inference) Go from scattered try-post-and-hope showcase cycles to seeing a clear direction: understand what they enjoy building from past attempts, what others respond to, and focus on the overlap where their strengths match something others actually value.
+- (hypothesis) Gains for Cursor Discord friends who ship personal projects: (unexpected/delight) self-doubt turns into felt competence; (expected) emojis, likes, and chat interactions on showcase posts; (desired extension) recognition that carries beyond the showcase into the Discord general chat; (unexpected/delight) recognition by community leaders / ambassadors.
+
+
+## Empty states
+
+- (fact) Situation: Discord friends post personal projects to the group showcase. Trigger: after repeatedly shipping and posting varied projects (throwing stuff against the wall), none gain meaningful traction or clicks. Fact: observed pattern of low or no engagement across multiple showcase posts. Inference: they accept not every project will appeal widely but expected at least some to stick.
+- (inference) Extreme: lack of marketing skills — group can program, vibe-code, and create but cannot articulate or position outward value; observed main bottleneck to showcase traction and differentiation from other vibe-coding communities. (User labeled severity severe/extreme.)
+
+
+## Error and recovery
+
+- (inference) Extreme: lack of marketing skills — group can program, vibe-code, and create but cannot articulate or position outward value; observed main bottleneck to showcase traction and differentiation from other vibe-coding communities. (User labeled severity severe/extreme.)
+- (fact) Usual: start another project (throw-more-at-the-wall). Sometimes: abandon Cursor and chase more expensive models (Anthropic, Codex) hoping the model leap closes the gap. Big temptation: evolve into fancy UIs and colorful pictures with unexplained mechanics behind a polished presentation — novelty/chrome instead of outward value.
+
+
+## Success
+
+- (hypothesis) Gains for Cursor Discord friends who ship personal projects: (unexpected/delight) self-doubt turns into felt competence; (expected) emojis, likes, and chat interactions on showcase posts; (desired extension) recognition that carries beyond the showcase into the Discord general chat; (unexpected/delight) recognition by community leaders / ambassadors.
+- (decision) Priority job (elevated): Autonomy — safe space to create freely with AI (also named creativity, liberty, freedom). Why highest: huge attraction of AI work and vibe coding; traditional developers are autonomy-starved so it is valuable there too; listed as a human need under names like autonomy/creativity/liberty/freedom. Competence is nearly equal and usually follows. Only after autonomy and competence are felt do they turn to others' needs and creating value for close Discord friends.
+
+
+## Trust and evidence
+
+- (fact) Strongest observed signal is absence: after weak or no showcase traction, they quit interacting with the group (go quiet) rather than iterating on outward value. Source: owner observation of Discord showcase/group behavior. Strength: moderate — pattern of non-interaction is visible; motives inferred.

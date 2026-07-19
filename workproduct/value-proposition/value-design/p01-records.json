@@ -1,0 +1,12 @@
+{
+  "decisions": [
+    {
+      "decision": "accepted segment boundary",
+      "reason": "Scope Value Design to Discord friends who ship personal projects and want outward value, excluding vibecoders whose primary goal is self-amusement through absurd or novelty-first builds.",
+      "source_atom": "P01",
+      "resulting_module": "profile",
+      "resulting_atom": "P02",
+      "resulting_status": "in_progress"
+    }
+  ]
+}
