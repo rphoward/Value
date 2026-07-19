@@ -1,20 +1,16 @@
 # Value skill — living state
 
-Last updated: 2026-07-18
+Last updated: 2026-07-19
 
 ## Shipped
 
-- DAG pacing, section gap-fill, express mode — Value `9208d67`, Values `47fd193`
-- 55 value tests green at last check
+- Session helper package split (`scripts/_session/`) + thermos bugfixes (gaps module filter, atomic save, ADR sync, `--stay` / `--gate-pending`, save-before-export, milestone recovery) — Value `812ab13`, Values `879b2a5`
+- Prior: match board, north-star blurb, value-trail, DAG/express/voice — see git log
 
 ## Next (owned by fresh session)
 
-User voice pass — see [.cursor/plans/value_skill_user_voice_fresh.plan.md](../.cursor/plans/value_skill_user_voice_fresh.plan.md)
-
-- Quiet Python output (`status --brief` default)
-- Name-first session; slug derived silently
-- Orchestrator voice recipe; no Bloom
+None locked. Optional later: collapse remaining thin aliases / split mega-test file (thermos polish, not blocking).
 
 ## Local only
 
-- `workproduct/value-proposition/value-design/` — untracked live session
+- `workproduct/value-proposition/value-design/` — untracked live session (leave as-is)
