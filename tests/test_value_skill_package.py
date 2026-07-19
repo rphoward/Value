@@ -675,6 +675,115 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
             self.assertIn("Same-day slot matcher", trail)
             self.assertEqual(pitch_before, pitch_after)
 
+    def test_outward_pitch_strips_labels_and_avoids_autonomy_slop(self) -> None:
+        """Catastrophe: Discord paste leaks interview labels or autonomy-as-offering."""
+        session_mod = import_session_helper()
+        session = {
+            "answers": [
+                {
+                    "atom_id": "P01",
+                    "answer": (
+                        "Cursor-using Discord friends who ship personal projects "
+                        "but struggle to make them valuable to people outside; "
+                        "Excluded: novelty-first vibecoders."
+                    ),
+                    "kind": "decision",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+                {
+                    "atom_id": "P11",
+                    "answer": (
+                        "Priority job (elevated): Autonomy — safe space to create "
+                        "freely with AI (also named creativity, liberty, freedom)."
+                    ),
+                    "kind": "decision",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+                {
+                    "atom_id": "P07",
+                    "answer": (
+                        "Extreme: lack of marketing skills — group can program "
+                        "but cannot articulate outward value; Mild: slow replies."
+                    ),
+                    "kind": "inference",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+            ]
+        }
+        pitch = session_mod.compose_outward_pitch(session)
+        self.assertIn("They freeze on", pitch)
+        self.assertIn("lack of marketing skills", pitch)
+        self.assertIn("You get a clear outward pitch", pitch)
+        self.assertNotIn("Priority job", pitch)
+        self.assertNotIn("Extreme:", pitch)
+        self.assertNotIn("help them", pitch)
+        self.assertNotIn("Autonomy", pitch)
+
+        cleaners = {
+            "answers": [
+                {
+                    "atom_id": "P01",
+                    "answer": "Independent cleaners in metro areas; exclude franchises.",
+                    "kind": "decision",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+                {
+                    "atom_id": "P03",
+                    "answer": "Fill open slots the same day a booking request arrives.",
+                    "kind": "fact",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+                {
+                    "atom_id": "P07",
+                    "answer": "Extreme: no-shows wreck the day; Mild: late replies.",
+                    "kind": "inference",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+            ]
+        }
+        cleaners_pitch = session_mod.compose_outward_pitch(cleaners)
+        self.assertIn("Independent cleaners in metro areas", cleaners_pitch)
+        self.assertIn("They freeze on no-shows wreck the day", cleaners_pitch)
+        self.assertIn("North star: fill open slots the same day", cleaners_pitch)
+        self.assertNotIn("Extreme:", cleaners_pitch)
+        self.assertNotIn("help them", cleaners_pitch)
+
+        long_job = {
+            "answers": [
+                {
+                    "atom_id": "P01",
+                    "answer": (
+                        "Cursor-using Discord friends who ship personal projects "
+                        "but struggle to make them valuable to people outside."
+                    ),
+                    "kind": "decision",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+                {
+                    "atom_id": "P03",
+                    "answer": (
+                        "Go from scattered try-post-and-hope showcase cycles to "
+                        "seeing a clear direction: understand what they should "
+                        "build next for someone else."
+                    ),
+                    "kind": "fact",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+                {
+                    "atom_id": "P07",
+                    "answer": "Extreme: lack of marketing skills — cannot articulate.",
+                    "kind": "inference",
+                    "accepted_at": "2026-07-19T12:00:00Z",
+                },
+            ]
+        }
+        long_pitch = session_mod.compose_outward_pitch(long_job)
+        self.assertIn("They freeze on lack of marketing skills", long_pitch)
+        self.assertIn("North star: go from scattered", long_pitch)
+        self.assertIn("seeing a clear direction", long_pitch)
+        self.assertNotIn("understand what they", long_pitch)
+        self.assertNotIn("help them", long_pitch)
+
     def test_bypassed_modules_unlock_briefs_without_force(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             work_root = Path(tmp) / "workproduct" / "value-proposition"
@@ -1489,6 +1598,9 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "never paste JSON",
             "scripts-silent",
             "match-board",
+            "post-fix",
+            "revise <area>",
+            "prefix-notification-every-turn",
         ):
             self.assertIn(needle, self.skill_text)
 
@@ -1540,6 +1652,11 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "pregnant_man_trap",
             "fit_check_rules",
             "spreadsheet_mirage",
+            "North_Star_Lens",
+            "Discord_Update_Blurb",
+            "ai-slop-pitch-voice",
+            "feature-semicolon-laundry-list",
+            "Peer Discord",
         ):
             self.assertIn(needle, export_lenses)
         for needle in (
@@ -1547,6 +1664,8 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "trail, breadcrumbs, value record, marketing, or ads",
             "path-only-without-quoting-trail",
             "value-trail.md",
+            "ai-slop-pitch-voice",
+            "Discord_Update_Blurb",
         ):
             self.assertIn(needle, self.skill_text)
 
