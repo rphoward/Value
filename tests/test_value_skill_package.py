@@ -70,6 +70,7 @@ TEMPLATE_FILES = (
     "states-and-flows.template.md",
     "first-value.template.md",
     "north-star-blurb.template.md",
+    "value-trail.template.md",
 )
 
 SYNC_IGNORE_NAMES = {".DS_Store", "Thumbs.db"}
@@ -535,6 +536,7 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
                 "states-and-flows.md",
                 "first-value.md",
                 "north-star-blurb.md",
+                "value-trail.md",
             ):
                 self.assertTrue((session_path.parent / name).is_file(), name)
 
@@ -561,6 +563,117 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
             self.assertIn("Independent cleaners", product)
             self.assertNotIn("Recorded bypass value-map gate", product)
+
+    def _trail_fixture_session(self, session_path: Path, *, with_v02: bool = False) -> None:
+        session = json.loads(session_path.read_text(encoding="utf-8"))
+        timestamp = "2026-07-19T12:00:00Z"
+        session["answers"] = [
+            {
+                "atom_id": "P01",
+                "answer": "Independent cleaners in metro areas; exclude franchises.",
+                "kind": "decision",
+                "accepted_at": timestamp,
+            },
+            {
+                "atom_id": "P03",
+                "answer": "Fill open slots the same day a booking request arrives.",
+                "kind": "fact",
+                "accepted_at": timestamp,
+            },
+            {
+                "atom_id": "P07",
+                "answer": (
+                    "Extreme: no-shows wreck the day; Mild: late replies from clients."
+                ),
+                "kind": "inference",
+                "accepted_at": timestamp,
+            },
+        ]
+        if with_v02:
+            session["answers"].append(
+                {
+                    "atom_id": "V02",
+                    "answer": "Same-day slot matcher; SMS reminders; client reply inbox.",
+                    "kind": "hypothesis",
+                    "accepted_at": timestamp,
+                }
+            )
+        session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+
+    def test_value_trail_smoke_matches_outward_pitch(self) -> None:
+        session_mod = import_session_helper()
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo Cleaners",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            self._trail_fixture_session(session_path)
+            pack = run_script("write_build_pack.py", str(session_path), "--force")
+            self.assertEqual(pack.returncode, 0, pack.stderr)
+
+            trail = (session_path.parent / "value-trail.md").read_text(encoding="utf-8")
+            blurb = (session_path.parent / "north-star-blurb.md").read_text(
+                encoding="utf-8"
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            pitch = session_mod.compose_outward_pitch(session)
+
+            for title in (
+                "Who it is for",
+                "Progress they want",
+                "Why it matters to someone else",
+                "Outward pitch",
+            ):
+                self.assertIn(f"## {title}", trail, title)
+            self.assertIn(pitch, trail)
+            self.assertIn(pitch, blurb)
+            self.assertIn("no-shows wreck the day", trail)
+            self.assertNotIn("P01", trail)
+            self.assertNotIn("Ledger:", trail)
+            self.assertNotIn("npx skills add", trail)
+
+    def test_value_trail_adds_parts_without_changing_pitch(self) -> None:
+        session_mod = import_session_helper()
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo Cleaners",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            self._trail_fixture_session(session_path)
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            pitch_before = session_mod.compose_outward_pitch(session)
+
+            self._trail_fixture_session(session_path, with_v02=True)
+            pack = run_script("write_build_pack.py", str(session_path), "--force")
+            self.assertEqual(pack.returncode, 0, pack.stderr)
+
+            trail = (session_path.parent / "value-trail.md").read_text(encoding="utf-8")
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            pitch_after = session_mod.compose_outward_pitch(session)
+
+            self.assertIn("## What is in the box", trail)
+            self.assertIn("Same-day slot matcher", trail)
+            self.assertEqual(pitch_before, pitch_after)
 
     def test_bypassed_modules_unlock_briefs_without_force(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -1160,8 +1273,39 @@ class ValueSkillReviewContractTests(unittest.TestCase):
     def test_pause_refreshes_build_pack_with_one_endurance_sentence(self) -> None:
         for needle in (
             '(run "scripts/write_build_pack.py --force")',
-            "exactly one human sentence naming what endured",
+            "one human sentence naming what endured",
             "north-star-blurb.md",
+            "quote ## Blurb and ## Install",
+            "value-trail section titles grew",
+            "do not paste the entire trail",
+            "requiring-a-canvas-to-see-the-blurb",
+        ):
+            self.assertIn(needle, self.skill_text)
+
+    def test_north_star_surfaces_in_chat_not_path_only(self) -> None:
+        for needle in (
+            "surface-north-star",
+            "on-ask \"when user asks for discord, blurb, pitch, north star, or paste",
+            "only-mentioning-file-path-without-quoting-body",
+        ):
+            self.assertIn(needle, self.skill_text)
+
+    def test_value_trail_lens_and_on_ask_triggers(self) -> None:
+        export_lenses = (REFERENCES_DIR / "export-lenses.md").read_text(encoding="utf-8")
+        for needle in (
+            "Value_Trail_Lens",
+            "value-trail.md",
+            "cognitive_murder",
+            "pregnant_man_trap",
+            "fit_check_rules",
+            "spreadsheet_mirage",
+        ):
+            self.assertIn(needle, export_lenses)
+        for needle in (
+            "value-trail",
+            "trail, breadcrumbs, value record, marketing, or ads",
+            "path-only-without-quoting-trail",
+            "value-trail.md",
         ):
             self.assertIn(needle, self.skill_text)
 
