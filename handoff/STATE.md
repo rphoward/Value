@@ -4,6 +4,7 @@ Last updated: 2026-07-19
 
 ## Shipped
 
+- Peer Discord paste voice (who + freeze + what you get; so-what into daily relief) in export-lenses + `docs/values-discord-intro.md`; recorded on Value Design trail as V02 include + V03 pain reliever
 - Session helper package split (`scripts/_session/`) + thermos bugfixes (gaps module filter, atomic save, ADR sync, `--stay` / `--gate-pending`, save-before-export, milestone recovery) — Value `812ab13`, Values `879b2a5`
 - Prior: match board, north-star blurb, value-trail, DAG/express/voice — see git log
 

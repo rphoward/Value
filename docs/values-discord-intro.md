@@ -5,7 +5,13 @@ Discord intro for fellow Cursor users. Skim-length; no curriculum tour.
 ## Evergreen intro
 
 ```
-We build cool stuff for each other, then steer every decision toward what feels clever or novel — not toward value for someone else. Values is a short grill that locks a north star aimed outward; try it on the project you have open, then base the next decision on what that customer would value.
+You ship into the showcase and get almost no traction. The build isn’t what’s stuck — you can’t say why someone else would care enough to keep going.
+
+Values is a short Cursor grill: one question at a time on who that person is and what makes the project worth something to them. You lock that before you walk away. Later decisions check against that customer, not against what feels clever.
+
+You pick up the same answers mid-project. When a choice might bend toward “what I want” instead of “what they value,” you reopen it in place.
+
+For Cursor friends who can ship but freeze on “why would anyone else care”: you get an outward north star that sticks, not another clever build that dies in the showcase.
 
 npx skills add rphoward/Values
 https://github.com/rphoward/Values
@@ -13,15 +19,26 @@ https://github.com/rphoward/Values
 
 ## Update / upgrade posts
 
-Peer Discord voice (from a human rewrite that beat the AI draft):
+Peer Discord voice (relief over features; Connection is private QA, not a fourth paragraph):
 
-- Open casual: what we did this morning, or that the north star got harder to lose.
+- Role: peer builder. Stark, literal facts. One idea per sentence; cut at the real clause.
+- So what?: for every feature note, ask “so what?” until you hit the daily relief — never paste the chain.
+- Shape: who + freeze + what you get. Prefer “you get …” over “the skill now …”.
+- Open casual on upgrades: what we did this morning, or that the north star got harder to lose. I/we openers are fine; avoid tool-as-subject gymnastics when “you get” already works.
 - Tell the session story first (what Values spotted), then the upgrade — not a feature laundry list.
-- Separate short paragraphs per theme. Prefer “you get …” over “the skill now …”.
-- Close with who + freeze + what you get. Honest when something is out of scope for the post.
-- Avoid: “We ran Values on Values…”, semicolon feature chains, “Same idea as before:”, interview labels in the paste.
+- Close with who + freeze + what you get. Honest when something is out of scope.
+- Avoid: “We ran Values on Values…”, semicolon feature chains, “Same idea as before:”, interview labels, marketing slop (seamless, revolutionary, unlock, leverage, supercharge, empower), false pitch enthusiasm.
 
-### Current upgrade paste (2026-07-19)
+### Current upgrade paste (2026-07-19 — Discord voice)
+
+```
+AI kept turning Values posts into feature lists and fake hype. You get a peer Discord voice that so-whats each note into daily relief — who, freeze, what you get — so the paste sounds like something you’d actually say in showcase.
+
+npx skills add rphoward/Values
+https://github.com/rphoward/Values
+```
+
+### Prior upgrade paste (2026-07-19 morning)
 
 ```
 More upgrades — I'm using Values to add value to the skill pack :) Here's what we did this morning.

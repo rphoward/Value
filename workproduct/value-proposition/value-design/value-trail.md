@@ -27,6 +27,7 @@ For Cursor users in Discord who ship personal projects but struggle to make them
 - (fact) Installable Cursor skill (global or local via npx skills /
 - (fact) a decision tool — not a planning tool — for
 - (fact) reference/output files that carry decision memory (the whys) into later
+- (fact) Peer Discord paste voice — who + freeze + what
 
 ## Pain relief claims
 

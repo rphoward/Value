@@ -4,7 +4,7 @@
     "slug": "value-design",
     "name": "Value Design",
     "created_at": "2026-07-18T21:18:48Z",
-    "updated_at": "2026-07-19T17:41:45Z"
+    "updated_at": "2026-07-19T20:39:47Z"
   },
   "position": {
     "module": "value-map",
@@ -117,6 +117,22 @@
       "accepted_at": "2026-07-19T17:41:31Z",
       "reopen": true,
       "conflict_note": "Outward paste should not address the segment as friends; keep segment, drop chummy label."
+    },
+    {
+      "atom_id": "V02",
+      "answer": "Included: (1) Installable Cursor skill (global or local via npx skills / Values repo) that can be picked up and put down mid work-session; (2) a decision tool \u2014 not a planning tool \u2014 for deciding on values and making the product valuable to someone else; (3) reference/output files that carry decision memory (the whys) into later development planning and agent context; (4) Peer Discord paste voice \u2014 who + freeze + what you get, so-what each feature note into daily relief \u2014 so north-star and upgrade posts say why someone else would care without feature laundry or pitch hype.",
+      "kind": "fact",
+      "accepted_at": "2026-07-19T20:39:34Z",
+      "reopen": true,
+      "conflict_note": "Record Discord peer-voice paste as included value after skill-pack voice upgrade."
+    },
+    {
+      "atom_id": "V03",
+      "answer": "Pain relievers (mostly hypothesis from lived use): (1) Mid-session grill shifts frame \u2014 more of one's own mind than pure coding-with-AI; calmer; exercises a part of the brain that atrophies under regular AI use. (2) Memory/reference files give endurance \u2014 work isn't wasted; an enduring record (like a finished vibe-coding artifact) that future decisions can stand on. (3) Decision tool steers toward choosing to be valuable to others, not only autonomous self \u2014 reduces pains of dead showcase / lack of interaction, eroded self-confidence and competence, diminished personal worth, and feeling less worthy of relationships with others. (4) Peer Discord paste voice so-whats feature notes into daily relief (who + freeze + what you get) \u2014 reduces the extreme pain of lack of marketing skills when saying why someone else would care in showcase, without feature laundry or false pitch enthusiasm.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-19T20:39:39Z",
+      "reopen": true,
+      "conflict_note": "Add Discord so-what paste voice as pain reliever for marketing-skills freeze."
     }
   ],
   "evidence": [
@@ -127,7 +143,20 @@
       "strength": "moderate"
     }
   ],
-  "assumptions": [],
+  "assumptions": [
+    {
+      "claim": "Peer Discord so-what voice reduces feature-laundry / pitch-hype when saying outward value out loud",
+      "criticality": "high",
+      "evidence_status": "partial",
+      "source_atom": "V03"
+    },
+    {
+      "claim": "Discord so-what paste voice reduces extreme marketing-skills pain when posting outward value to showcase",
+      "criticality": "high",
+      "evidence_status": "partial",
+      "source_atom": "V03"
+    }
+  ],
   "decisions": [
     {
       "decision": "accepted segment boundary",
@@ -167,6 +196,14 @@
       "source_atom": "V01",
       "resulting_module": "value-map",
       "resulting_atom": "V02",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "ship peer Discord paste voice",
+      "reason": "AI Discord posts rattled features and false pitch enthusiasm; so-what into daily relief (who + freeze + what you get) is the outward-value paste that fits showcase friends who freeze on marketing skills.",
+      "source_atom": "V02",
+      "resulting_module": "value-map",
+      "resulting_atom": "V04",
       "resulting_status": "in_progress"
     }
   ],

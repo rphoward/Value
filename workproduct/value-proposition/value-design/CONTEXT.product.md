@@ -37,7 +37,7 @@ Customer-domain glossary for coding agents. Terms only — not a spec, not stack
 ## Offering
 
 - (decision) Offering: Values — the Cursor skill that grills toward an outward north star. Exclusion for this map: not mapping the autonomy drive itself (or a product built around autonomy-as-primary). Autonomy stays important to retain, but centering it here would pull toward self-centered latent desire rather than looking for what others value.
-- (fact) Included: (1) Installable Cursor skill (global or local via npx skills / Values repo) that can be picked up and put down mid work-session; (2) a decision tool — not a planning tool — for deciding on values and making the product valuable to someone else; (3) reference/output files that carry decision memory (the whys) into later development planning and agent context.
+- (fact) Included: (1) Installable Cursor skill (global or local via npx skills / Values repo) that can be picked up and put down mid work-session; (2) a decision tool — not a planning tool — for deciding on values and making the product valuable to someone else; (3) reference/output files that carry decision memory (the whys) into later development planning and agent context; (4) Peer Discord paste voice — who + freeze + what you get, so-what each feature note into daily relief — so north-star and upgrade posts say why someone else would care without feature laundry or pitch hype.
 
 
 ## Alternatives

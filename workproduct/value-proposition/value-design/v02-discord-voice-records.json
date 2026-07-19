@@ -1,0 +1,20 @@
+{
+  "decisions": [
+    {
+      "decision": "ship peer Discord paste voice",
+      "reason": "AI Discord posts rattled features and false pitch enthusiasm; so-what into daily relief (who + freeze + what you get) is the outward-value paste that fits showcase friends who freeze on marketing skills.",
+      "source_atom": "V02",
+      "resulting_module": "value-map",
+      "resulting_atom": "V04",
+      "resulting_status": "in_progress"
+    }
+  ],
+  "assumptions": [
+    {
+      "claim": "Peer Discord so-what voice reduces feature-laundry / pitch-hype when saying outward value out loud",
+      "criticality": "high",
+      "evidence_status": "partial",
+      "source_atom": "V03"
+    }
+  ]
+}
