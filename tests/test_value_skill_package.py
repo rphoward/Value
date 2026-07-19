@@ -69,6 +69,7 @@ TEMPLATE_FILES = (
     "ui-copy.template.md",
     "states-and-flows.template.md",
     "first-value.template.md",
+    "north-star-blurb.template.md",
 )
 
 SYNC_IGNORE_NAMES = {".DS_Store", "Thumbs.db"}
@@ -533,8 +534,17 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
                 "ui-copy.md",
                 "states-and-flows.md",
                 "first-value.md",
+                "north-star-blurb.md",
             ):
                 self.assertTrue((session_path.parent / name).is_file(), name)
+
+            blurb = (session_path.parent / "north-star-blurb.md").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("Independent cleaners", blurb)
+            self.assertNotIn("P01", blurb)
+            self.assertNotIn("Ledger:", blurb)
+            self.assertIn("Draft from accepted session answers", blurb)
 
             adr_files = list((session_path.parent / "docs" / "adr").glob("*.md"))
             self.assertGreaterEqual(len(adr_files), 1)
@@ -713,6 +723,100 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
                     item["path"] == "customer-profile.md" and item["status"] == "final"
                     for item in session["artifacts"]
                 )
+            )
+            blurb_path = session_path.parent / "north-star-blurb.md"
+            self.assertTrue(
+                blurb_path.is_file(),
+                "write_milestone must refresh build pack including north-star-blurb.md",
+            )
+            self.assertTrue((session_path.parent / "CONTEXT.product.md").is_file())
+
+    def test_next_question_includes_match_board_for_v03(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            work_root = Path(tmp) / "workproduct" / "value-proposition"
+            session_path = work_root / "demo" / "session.json"
+            self.assertEqual(
+                run_script(
+                    "init_session.py",
+                    "--slug",
+                    "demo",
+                    "--name",
+                    "Demo",
+                    "--root",
+                    str(work_root),
+                ).returncode,
+                0,
+            )
+            session = json.loads(session_path.read_text(encoding="utf-8"))
+            timestamp = "2026-07-19T12:00:00Z"
+            session["answers"] = [
+                {
+                    "atom_id": "P01",
+                    "answer": "Independent cleaners in metro areas; exclude franchises.",
+                    "kind": "decision",
+                    "accepted_at": timestamp,
+                },
+                {
+                    "atom_id": "P07",
+                    "answer": (
+                        "Extreme: no-shows wreck the day; Mild: late replies from clients."
+                    ),
+                    "kind": "inference",
+                    "accepted_at": timestamp,
+                },
+                {
+                    "atom_id": "P08",
+                    "answer": "Steady bookings; calmer mornings.",
+                    "kind": "hypothesis",
+                    "accepted_at": timestamp,
+                },
+                {
+                    "atom_id": "V01",
+                    "answer": "Scheduling assistant for independents; exclude franchise CRM.",
+                    "kind": "decision",
+                    "accepted_at": timestamp,
+                },
+                {
+                    "atom_id": "V02",
+                    "answer": (
+                        "Included: (1) SMS reminder bot; (2) same-day slot board; "
+                        "(3) deposit hold."
+                    ),
+                    "kind": "fact",
+                    "accepted_at": timestamp,
+                },
+            ]
+            session["decisions"] = [
+                {
+                    "decision": "bypass profile gate",
+                    "reason": "match-board smoke",
+                    "source_atom": "P01",
+                    "resulting_module": "value-map",
+                    "resulting_atom": "V01",
+                    "resulting_status": "in_progress",
+                }
+            ]
+            session["position"] = {
+                "module": "value-map",
+                "atom_id": "V03",
+                "status": "in_progress",
+            }
+            session_path.write_text(json.dumps(session, indent=2), encoding="utf-8")
+            payload = json.loads(run_script("next_question.py", str(session_path)).stdout)
+            self.assertEqual(payload["atom_id"], "V03")
+            self.assertIn("match_board", payload)
+            board = payload["match_board"]
+            self.assertGreaterEqual(len(board["parts"]), 2)
+            self.assertGreaterEqual(len(board["targets"]), 1)
+            self.assertEqual(len(board["part_labels"]), len(board["parts"]))
+            self.assertEqual(len(board["target_labels"]), len(board["targets"]))
+            for label in board["part_labels"] + board["target_labels"]:
+                self.assertLessEqual(len(label.split()), 10, label)
+            self.assertIn("match_prompt", payload)
+            self.assertIn("Offering parts:", payload["match_prompt"])
+            self.assertIn("Accepted pains:", payload["match_prompt"])
+            self.assertTrue(
+                any("Extreme" in item or "no-shows" in item for item in board["targets"])
             )
 
 
@@ -1030,6 +1134,34 @@ class ValueSkillReviewContractTests(unittest.TestCase):
             "edge",
             "never paste JSON",
             "scripts-silent",
+            "match-board",
+        ):
+            self.assertIn(needle, self.skill_text)
+
+    def test_drop_in_decision_mode_uses_accepted_alternatives(self) -> None:
+        for needle in (
+            "drop-in-decision-mode",
+            "if segment satisfied do not restart at P01",
+            "accepted P09 alternatives when present",
+            "never hardcode fixed alternative names",
+            "serves outward value / park as orphan / record unknown",
+            "never treat Values as an autonomy or creativity coach for the product",
+        ):
+            self.assertIn(needle, self.skill_text)
+
+    def test_autonomy_guardrail_allows_profile_parks_offering(self) -> None:
+        self.assertIn("profile may hold autonomy", self.skill_text)
+        self.assertIn("park autonomy-as-offering", self.skill_text)
+        self.assertIn(
+            "autonomy-as-offering-without-reopen",
+            self.contract_text,
+        )
+
+    def test_pause_refreshes_build_pack_with_one_endurance_sentence(self) -> None:
+        for needle in (
+            '(run "scripts/write_build_pack.py --force")',
+            "exactly one human sentence naming what endured",
+            "north-star-blurb.md",
         ):
             self.assertIn(needle, self.skill_text)
 
