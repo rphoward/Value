@@ -1,16 +1,18 @@
 # Value skill — living state
 
-Last updated: 2026-07-19
+Last updated: 2026-07-20
 
 ## Shipped
 
+- **Value-map gate presentation** — Mock C inline stickies; expand Fit links or Differentiation on ask (`value-map-gate-review` in SKILL.md); see `handoff/VALUE-GATE-PRESENTATION-PASSED.md`
 - Peer Discord paste voice (who + freeze + what you get; so-what into daily relief) in export-lenses + `docs/values-discord-intro.md`; recorded on Value Design trail as V02 include + V03 pain reliever
 - Session helper package split (`scripts/_session/`) + thermos bugfixes (gaps module filter, atomic save, ADR sync, `--stay` / `--gate-pending`, save-before-export, milestone recovery) — Value `812ab13`, Values `879b2a5`
-- Prior: match board, north-star blurb, value-trail, DAG/express/voice — see git log
+- Section strip required on resume / where-am-I / pause / gate (SKILL.md + session-contract) — agent-facing, not a gate lens yet
+- Prior: match board, north-star-blurb, value-trail, DAG/express/voice — see git log
 
-## Next (owned by fresh session)
+## Open gates
 
-None locked. Optional later: collapse remaining thin aliases / split mega-test file (thermos polish, not blocking).
+None.
 
 ## Local only
 

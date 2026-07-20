@@ -1,0 +1,10 @@
+phase	option	summary	tradeoffs	status
+arena	A	Three-beat disclosure: who → box → links one-at-a-time	Best cognitive_murder; 4+ turns may exceed 2-min gate; no new artifact	finalist
+arena	B	Ad-lib pitch first, structure on ask	Fastest single turn; ad-lib wall repeats session failure; conflicts with V08 three-variation KB	rejected
+arena	C	Split stickies + inline fit strength in one turn	Smallest inline diff; five links in one sticky still dense	finalist
+arena	D	Gate_Review_Lens: strip + quoted gate brief, drill on ask	Mirrors north-star lens; best implementability; brief can feel operator-card vs chat voice	winner
+pick	D+A-drill	Gate brief turn 1 with immediate pass; A beats on box/links/diff drill	Encodes in export-lenses + gate-review protocol in SKILL; template gate-brief.md	fallback
+pick	C-dogfood	Inline three stickies; links/diff on ask only	SKILL.md gate-review only; no Gate_Review_Lens yet	dogfood-first
+judge	composer-rubric	D>C>A>B (23/20/20/17)	Finalists D+C; B dismissed ad-lib wall	reported
+judge	grok-prose	A>D>C>B	Finalist A for peer voice; D runner-up for single-turn brief	reported
+judge	gpt-architecture	C>D>B>A	Dogfood C inline first; promote D lens only if C still dense	reported

@@ -33,6 +33,14 @@ For Cursor users in Discord who ship personal projects but struggle to make them
 
 (hypothesis) Pain relievers (mostly hypothesis from lived use): (1) Mid-session grill
 
+## Gain creation claims
+
+(hypothesis) Gain creators (hypothesis; links are light / possible only): (1)
+
+## Difference vs alternatives
+
+(hypothesis) Meaningful difference vs start-another-project / swap-models / polish-chrome: Values stays
+
 ## Smallest first win
 
 (decision) Autonomy — safe space to create freely with AI (also

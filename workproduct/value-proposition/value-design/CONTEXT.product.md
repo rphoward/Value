@@ -47,9 +47,11 @@ Customer-domain glossary for coding agents. Terms only — not a spec, not stack
 
 ## Non-goals
 
-none
+- (decision) Orphan candidates: empty — no offering part parked, cut, or retired. All four stay in the box (installable skill, decision tool, reference/output files, peer Discord voice). Rationale: each is true enough on its own; weak fit links are not grounds to discard until we can replace them with more direct linkages or strengthen connections (skill-package knowledge may help later). Caveat on competence path: self-doubt → felt competence likely depends on autonomy first; community-leader recognition may short-circuit real competence from valuable outward decisions — likely more accurate than a direct decision-tool → competence link. Nurture autonomy silently — not parked, not the map center.
 
 
 ## Flagged unknowns
 
 - How strongly autonomy-as-safe-space was evidenced before this priority turn (new framing vs prior accepted jobs) (blocking=False)
+- Which offering changes would create the accepted gains without stretching imagination? (blocking=False)
+- What gate presentation format actually works for this user — progressive stickies, split views, ad-lib-first, canvas? (blocking=False)

@@ -22,6 +22,7 @@ Critical paths only. Weight Empty and Error — sampling dies there.
 ## Desired outcomes
 
 - (hypothesis) Gains for Cursor Discord friends who ship personal projects: (unexpected/delight) self-doubt turns into felt competence; (expected) emojis, likes, and chat interactions on showcase posts; (desired extension) recognition that carries beyond the showcase into the Discord general chat; (unexpected/delight) recognition by community leaders / ambassadors.
+- (hypothesis) Gain creators (hypothesis; links are light / possible only): (1) Decision tool → felt competence (self-doubt turns into competence). (2) Peer Discord paste voice → expected showcase engagement (emojis, likes, chat interactions). (3) Installable Cursor skill → recognition that carries beyond showcase into Discord general chat. (4) Reference/output files → might be spotted by community leaders/ambassadors. Honest assessment: these links require significant imagination to detect a POSSIBLE link; the offering parts as currently defined are not really working as gain creators.
 
 
 ## Empty

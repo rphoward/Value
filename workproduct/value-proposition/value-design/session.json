@@ -4,11 +4,11 @@
     "slug": "value-design",
     "name": "Value Design",
     "created_at": "2026-07-18T21:18:48Z",
-    "updated_at": "2026-07-19T20:39:47Z"
+    "updated_at": "2026-07-20T04:32:39Z"
   },
   "position": {
-    "module": "value-map",
-    "atom_id": "V04",
+    "module": "business-model",
+    "atom_id": "B01",
     "status": "in_progress"
   },
   "answers": [
@@ -133,6 +133,44 @@
       "accepted_at": "2026-07-19T20:39:39Z",
       "reopen": true,
       "conflict_note": "Add Discord so-what paste voice as pain reliever for marketing-skills freeze."
+    },
+    {
+      "atom_id": "V04",
+      "answer": "Gain creators (hypothesis; links are light / possible only): (1) Decision tool \u2192 felt competence (self-doubt turns into competence). (2) Peer Discord paste voice \u2192 expected showcase engagement (emojis, likes, chat interactions). (3) Installable Cursor skill \u2192 recognition that carries beyond showcase into Discord general chat. (4) Reference/output files \u2192 might be spotted by community leaders/ambassadors. Honest assessment: these links require significant imagination to detect a POSSIBLE link; the offering parts as currently defined are not really working as gain creators.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-20T02:45:36Z"
+    },
+    {
+      "atom_id": "V05",
+      "answer": "Fit links (inference \u2014 indirect/conditional chains, not direct cause-effect): Offering parts: (1) Installable Cursor skill \u2192 desired gain recognition beyond showcase (enabler: low friction matters if adoption spreads past showcase). (2) Decision tool \u2192 expected gain emojis/likes/chat only if the grill actually creates engagement AND peer Discord voice conveys what value was added. (3) Reference/output files + session state \u2192 pains of wasted work / quitting before communicating value \u2014 valuable when someone completes the interview, not before. (4) Peer Discord paste voice \u2192 enabler in the engagement chain (conveys outward value for showcase posts), not a gain creator on its own. Pain relievers: frame-shift grill \u2192 autonomy/competence pains and marketing-skill gap (indirect); memory files \u2192 endurance / abandon-before-value pain; decision steering \u2192 outward-value vs self-only build pain. Gain-creator claims from V04 stay thin \u2014 indirect only. No item gets a direct [\u2713] without a conditional chain; nothing invented beyond accepted profile.",
+      "kind": "inference",
+      "accepted_at": "2026-07-20T03:00:11Z"
+    },
+    {
+      "atom_id": "V06",
+      "answer": "Orphan candidates: empty \u2014 no offering part parked, cut, or retired. All four stay in the box (installable skill, decision tool, reference/output files, peer Discord voice). Rationale: each is true enough on its own; weak fit links are not grounds to discard until we can replace them with more direct linkages or strengthen connections (skill-package knowledge may help later). Caveat on competence path: self-doubt \u2192 felt competence likely depends on autonomy first; community-leader recognition may short-circuit real competence from valuable outward decisions \u2014 likely more accurate than a direct decision-tool \u2192 competence link. Nurture autonomy silently \u2014 not parked, not the map center.",
+      "kind": "decision",
+      "accepted_at": "2026-07-20T03:11:16Z"
+    },
+    {
+      "atom_id": "V07",
+      "answer": "Meaningful difference vs start-another-project / swap-models / polish-chrome: Values stays in the real work \u2014 mid-session decision grill, not a detour. Helps competence first (not autonomy-as-product, not outward-value step yet): you keep building while the frame shifts. Unlike throw-more-at-the-wall or model-chasing, it does not abandon the current build; unlike chrome-first, it does not fake traction. Building outward value over time is how real and perceived competence compound \u2014 long game, hypothesis.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-20T03:43:13Z"
+    },
+    {
+      "atom_id": "V08",
+      "answer": "Reopen \u2014 gate not passed. Map content may be a coherent hypothesis, but gate presentation failed: text wall and monolithic Mermaid were unusable. Skill pack lacks a progressive gate review lens; record as product decision before pass or business-model advance.",
+      "kind": "decision",
+      "accepted_at": "2026-07-20T03:51:42Z"
+    },
+    {
+      "atom_id": "V08",
+      "answer": "Pass \u2014 value map is a coherent hypothesis; gate presentation fix shipped (Mock C inline stickies).",
+      "kind": "decision",
+      "accepted_at": "2026-07-20T04:13:53Z",
+      "reopen": true,
+      "conflict_note": "Gate presentation skill fix shipped; supersede reopen for presentation failure."
     }
   ],
   "evidence": [
@@ -141,6 +179,12 @@
       "kind": "fact",
       "source": "owner observation of Discord showcase and group chat",
       "strength": "moderate"
+    },
+    {
+      "claim": "User reported gate text was not understandable and Mermaid could not show whole picture \u2014 valueless information",
+      "kind": "fact",
+      "source": "user feedback at value-map gate review",
+      "strength": "strong"
     }
   ],
   "assumptions": [
@@ -155,6 +199,108 @@
       "criticality": "high",
       "evidence_status": "partial",
       "source_atom": "V03"
+    },
+    {
+      "claim": "Decision tool creates felt competence (self-doubt \u2192 competence)",
+      "criticality": "medium",
+      "evidence_status": "unsupported",
+      "source_atom": "V04"
+    },
+    {
+      "claim": "Peer Discord paste voice creates expected showcase engagement (emojis, likes, chat)",
+      "criticality": "medium",
+      "evidence_status": "unsupported",
+      "source_atom": "V04"
+    },
+    {
+      "claim": "Installable Cursor skill creates recognition beyond showcase into Discord general chat",
+      "criticality": "medium",
+      "evidence_status": "unsupported",
+      "source_atom": "V04"
+    },
+    {
+      "claim": "Reference/output files create recognition by community leaders/ambassadors",
+      "criticality": "medium",
+      "evidence_status": "unsupported",
+      "source_atom": "V04"
+    },
+    {
+      "claim": "Offering parts as currently defined do not reliably create the accepted gains \u2014 proposed links are possible only with significant imagination",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "V04"
+    },
+    {
+      "claim": "Installable skill value for recognition-beyond-showcase is indirect \u2014 easy install matters only if the skill is adopted and used beyond the showcase channel",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "V05"
+    },
+    {
+      "claim": "Decision tool \u2192 showcase engagement (emojis/likes/chat) is conditional on the tool actually driving engagement and Discord voice conveying the added outward value",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "V05"
+    },
+    {
+      "claim": "Reference/output files and state memory become valuable only if a user completes the interview \u2014 value is completion-dependent, not inherent in the files alone",
+      "criticality": "high",
+      "evidence_status": "partial",
+      "source_atom": "V05"
+    },
+    {
+      "claim": "Ambassador recognition and recognition-beyond-showcase are mutually reinforcing indirect outcomes, not direct effects of any single offering part",
+      "criticality": "medium",
+      "evidence_status": "unsupported",
+      "source_atom": "V05"
+    },
+    {
+      "claim": "Felt competence (self-doubt \u2192 competence) depends on autonomy first \u2014 without felt autonomy, few reach real competence via the decision tool",
+      "criticality": "high",
+      "evidence_status": "partial",
+      "source_atom": "V06"
+    },
+    {
+      "claim": "Community-leader/ambassador recognition may short-circuit competence \u2014 social proof of competence more direct than competence from making a valuable outward decision",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "V06"
+    },
+    {
+      "claim": "Autonomy should be nurtured silently in the product \u2014 not parked as offering, not foregrounded as the map center",
+      "criticality": "medium",
+      "evidence_status": "partial",
+      "source_atom": "V06"
+    },
+    {
+      "claim": "Offering parts stand alone as true enough; weak indirect links may strengthen via skill-package knowledge or new parts before any retire/cut decision",
+      "criticality": "medium",
+      "evidence_status": "unknown",
+      "source_atom": "V06"
+    },
+    {
+      "claim": "Differentiation vs alternatives lands on competence first \u2014 not running or distracting from real build work",
+      "criticality": "high",
+      "evidence_status": "partial",
+      "source_atom": "V07"
+    },
+    {
+      "claim": "Building outward value eventually builds real and perceived competence \u2014 long game, not immediate payoff",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "V07"
+    },
+    {
+      "claim": "Value-map gate review currently dumps too much at once \u2014 text and single-diagram Mermaid both failed user comprehension",
+      "criticality": "high",
+      "evidence_status": "supported",
+      "source_atom": "V08"
+    },
+    {
+      "claim": "Accepted map atoms (offering, pains, gains, indirect fit) may still be valid hypothesis despite presentation failure",
+      "criticality": "medium",
+      "evidence_status": "partial",
+      "source_atom": "V08"
     }
   ],
   "decisions": [
@@ -205,15 +351,67 @@
       "resulting_module": "value-map",
       "resulting_atom": "V04",
       "resulting_status": "in_progress"
+    },
+    {
+      "decision": "park no offering parts as orphans \u2014 keep all four in the box",
+      "reason": "Nothing cancelled; parts are valid standing alone; connections weak but not grounds to remove until stronger direct linkages or replacements emerge from skill KB or new design",
+      "source_atom": "V06",
+      "resulting_module": "value-map",
+      "resulting_atom": "V07",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "reopen value-map gate",
+      "reason": "Gate presentation failed: skill pack provided no usable comprehension layer. Dense text wall violated cognitive_murder pacing; monolithic Mermaid could not show the whole picture at once. Map content may stand as hypothesis but gate cannot pass until review is progressive (segment \u2192 box \u2192 links one-at-a-time) or a dedicated gate lens exists.",
+      "source_atom": "V08",
+      "resulting_module": "value-map",
+      "resulting_atom": "V08",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "skill pack needs gate review presentation lens",
+      "reason": "State is durable; gate comprehension is not. Exports (trail, blurb, briefs) do not render a readable value map. Candidate fixes: three-beat disclosure, split stickies, part\u00d7pain/gain matrix with strength only, ad-lib pitch before diagram, optional canvas.",
+      "source_atom": "V08",
+      "resulting_module": "value-map",
+      "resulting_atom": "V08",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "pass value-map gate",
+      "reason": "Value map is a coherent hypothesis; gate presentation fix shipped (Mock C inline stickies).",
+      "source_atom": "V08",
+      "resulting_module": "value-map",
+      "resulting_atom": "V08",
+      "resulting_status": "gate_pending"
+    },
+    {
+      "decision": "resolve gate presentation format unknown",
+      "reason": "Mock C inline stickies + drill-on-ask shipped in value-map-gate-review SKILL block.",
+      "source_atom": "V08",
+      "resulting_module": "value-map",
+      "resulting_atom": "V08",
+      "resulting_status": "gate_pending"
     }
   ],
   "unknowns": [
     {
       "question": "How strongly autonomy-as-safe-space was evidenced before this priority turn (new framing vs prior accepted jobs)",
       "blocking": false
+    },
+    {
+      "question": "Which offering changes would create the accepted gains without stretching imagination?",
+      "blocking": false
+    },
+    {
+      "question": "What gate presentation format actually works for this user \u2014 progressive stickies, split views, ad-lib-first, canvas?",
+      "blocking": false
     }
   ],
   "artifacts": [
+    {
+      "path": "value-map.md",
+      "status": "final"
+    },
     {
       "path": "customer-profile.md",
       "status": "final"
@@ -253,13 +451,23 @@
     {
       "path": "docs/adr/0002-accepted-offering-boundary.md",
       "status": "final"
+    },
+    {
+      "path": "docs/adr/0003-park-no-offering-parts-as-orphans-keep-all-four.md",
+      "status": "final"
     }
   ],
   "ledger": {
-    "phase": "Design",
-    "active_module": "value-map",
-    "completion_pct": 39,
-    "validation_milestone": "Problem-Solution Fit",
-    "unvalidated_bombs": []
+    "phase": "Evolve",
+    "active_module": "business-model",
+    "completion_pct": 53,
+    "validation_milestone": "Product-Market Fit",
+    "unvalidated_bombs": [
+      "Offering parts as currently defined do not reliably create the accepted gains \u2014 proposed links are possible only with significant imagination",
+      "Installable skill value for recognition-beyond-showcase is indirect \u2014 easy install matters only if the skill is adopted and used beyond the showcase channel",
+      "Decision tool \u2192 showcase engagement (emojis/likes/chat) is conditional on the tool actually driving engagement and Discord voice conveying the added outward value",
+      "Community-leader/ambassador recognition may short-circuit competence \u2014 social proof of competence more direct than competence from making a valuable outward decision",
+      "Building outward value eventually builds real and perceived competence \u2014 long game, not immediate payoff"
+    ]
   }
 }

@@ -9,6 +9,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from tests.value_session_support import append_accepted_answers, assert_omits_atom_ids
+
 
 def repo_root() -> Path:
     here = Path(__file__).resolve()
@@ -257,11 +259,85 @@ class ValueSessionIntegrityTests(unittest.TestCase):
         self.assertIn("Independent cleaners", content)
         self.assertIn("New booking request arrives", content)
         self.assertIn("Fill the open slot quickly", content)
+        assert_omits_atom_ids(self, content, "P01", "P02", "P03")
         segment_body = content.split("## Segment")[1].split("## Situation")[0]
         jobs_body = content.split("## Jobs")[1].split("## Pains")[0]
         self.assertIn("Independent cleaners", segment_body)
         self.assertNotIn("Fill the open slot quickly", segment_body)
         self.assertIn("Fill the open slot quickly", jobs_body)
+
+    def test_human_artifacts_omit_atom_ids(self) -> None:
+        session_mod = import_session()
+        milestone_cases = (
+            (
+                "profile",
+                (
+                    ("P01", "Independent cleaners"),
+                    ("P02", "New booking request arrives"),
+                    ("P03", "Fill the open slot quickly"),
+                ),
+                ("P01", "P02", "P03"),
+            ),
+            (
+                "value-map",
+                (
+                    ("V01", "Values skill offering"),
+                    ("V03", "Pain relief hypothesis"),
+                ),
+                ("V01", "V03"),
+            ),
+            (
+                "business-model",
+                (("B01", "Deliver via installable skill"),),
+                ("B01",),
+            ),
+            (
+                "experiments",
+                (("E01", "Segment will pay for guided value design"),),
+                ("E01",),
+            ),
+        )
+        for module, answers, atom_ids in milestone_cases:
+            with self.subTest(artifact=f"milestone:{module}"):
+                session = session_mod.default_session("demo", "Demo")
+                append_accepted_answers(session, session_mod, answers)
+                content = session_mod.fill_milestone_template(session, module)
+                assert_omits_atom_ids(self, content, *atom_ids)
+
+        brief_cases = (
+            (
+                "product-design-brief.template.md",
+                (
+                    ("P01", "Independent cleaners"),
+                    ("V01", "Values skill offering"),
+                    ("B01", "Deliver via installable skill"),
+                ),
+                ("P01", "V01", "B01"),
+            ),
+            (
+                "ux-brief.template.md",
+                (
+                    ("P01", "Independent cleaners"),
+                    ("P02", "New booking request arrives"),
+                    ("P03", "Fill the open slot quickly"),
+                ),
+                ("P01", "P02", "P03"),
+            ),
+            (
+                "app-design-brief.template.md",
+                (
+                    ("V01", "Values skill offering"),
+                    ("V02", "Installable Cursor skill package"),
+                ),
+                ("V01", "V02"),
+            ),
+        )
+        for template, answers, atom_ids in brief_cases:
+            with self.subTest(artifact=f"brief:{template}"):
+                session = session_mod.default_session("demo", "Demo")
+                append_accepted_answers(session, session_mod, answers)
+                content = session_mod.fill_design_brief(session, template)
+                assert_omits_atom_ids(self, content, *atom_ids)
 
     def test_next_question_prefers_curriculum_gap_over_position(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
