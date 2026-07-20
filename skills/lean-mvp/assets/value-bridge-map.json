@@ -1,0 +1,17 @@
+{
+  "value_session_root": "workproduct/value-proposition",
+  "atom_map": {
+    "P01": "C01",
+    "P02": "C06",
+    "P03": "U01",
+    "P11": "U01",
+    "P07": "U02",
+    "P08": "U03",
+    "P09": "MS01",
+    "V01": "MS02",
+    "V07": "MS03"
+  },
+  "artifact_hints": {
+    "customer-profile.md": "customer-context.md"
+  }
+}

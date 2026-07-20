@@ -1,0 +1,36 @@
+{
+  "milestones": {
+    "customer-context": {
+      "Segment": ["C01"],
+      "Persona": ["C02", "C03"],
+      "Lifecycle": ["C04"],
+      "Earlyvangelist": ["C05"],
+      "Observation": ["C06"]
+    },
+    "underserved-needs": {
+      "Benefits": ["U01", "U02"],
+      "Laddering": ["U03"],
+      "Opportunity": ["U04", "U05"]
+    },
+    "mvp-scope": {
+      "Competition": ["MS01"],
+      "Kano": ["MS02", "MS03", "MS04"],
+      "Stories": ["MS05"],
+      "ROI": ["MS06"]
+    },
+    "ux-prototype": {
+      "Concept": ["UX01"],
+      "IA": ["UX02"],
+      "Interaction": ["UX03"],
+      "Test format": ["UX04"],
+      "Ramen script": ["UX05"]
+    },
+    "metrics": {
+      "Equation": ["MT01"],
+      "Unit economics": ["MT02", "MT03"],
+      "Analytics": ["MT04"],
+      "Experiment": ["MT05"]
+    }
+  },
+  "design_briefs": {}
+}

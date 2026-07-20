@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lean-mvp-skill/session.schema.json",
+  "title": "Lean Product Playbook Session",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "position",
+    "ledger",
+    "answers",
+    "evidence",
+    "assumptions",
+    "decisions",
+    "unknowns",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["1.0", "1.1"] },
+    "pacing_mode": { "type": "string", "enum": ["standard", "express"] },
+    "value_import": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_session", "imported_at", "mapped_atoms"],
+      "properties": {
+        "source_session": { "type": "string" },
+        "imported_at": { "type": "string" },
+        "mapped_atoms": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^(C|U|MS|UX|MT)[0-9]{2}$" }
+        }
+      }
+    },
+    "project": { "$ref": "#/$defs/project" },
+    "position": { "$ref": "#/$defs/position" },
+    "ledger": { "$ref": "#/$defs/ledger" },
+    "answers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/answerRecord" }
+    },
+    "evidence": { "type": "array" },
+    "assumptions": { "type": "array" },
+    "decisions": { "type": "array" },
+    "unknowns": { "type": "array" },
+    "artifacts": { "type": "array" }
+  },
+  "$defs": {
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slug", "name", "created_at", "updated_at"],
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      }
+    },
+    "position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module", "atom_id", "status"],
+      "properties": {
+        "module": {
+          "type": "string",
+          "enum": [
+            "customer-context",
+            "underserved-needs",
+            "mvp-scope",
+            "ux-prototype",
+            "metrics"
+          ]
+        },
+        "atom_id": {
+          "type": "string",
+          "pattern": "^(C|U|MS|UX|MT)[0-9]{2}$"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["in_progress", "gate_pending", "completed", "bypassed"]
+        }
+      }
+    },
+    "ledger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phase",
+        "active_module",
+        "completion_pct",
+        "validation_milestone",
+        "unvalidated_bombs"
+      ],
+      "properties": {
+        "phase": { "type": "string" },
+        "active_module": {
+          "type": "string",
+          "enum": [
+            "customer-context",
+            "underserved-needs",
+            "mvp-scope",
+            "ux-prototype",
+            "metrics",
+            "none"
+          ]
+        },
+        "completion_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "validation_milestone": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Target Customer Defined",
+            "Needs Prioritized",
+            "MVP Scoped",
+            "Customer Test Ready",
+            "Lean Product Process Complete"
+          ]
+        },
+        "unvalidated_bombs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "answerRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["atom_id", "answer", "kind", "accepted_at"],
+      "properties": {
+        "atom_id": {
+          "type": "string",
+          "pattern": "^(C|U|MS|UX|MT)[0-9]{2}$"
+        },
+        "answer": { "type": "string", "minLength": 1 },
+        "kind": {
+          "type": "string",
+          "enum": ["fact", "inference", "hypothesis", "decision", "unknown"]
+        },
+        "accepted_at": { "type": "string" },
+        "provenance": { "type": "string", "enum": ["value-import"] },
+        "source_atom": { "type": "string" },
+        "reopen": { "type": "boolean" },
+        "conflict_note": { "type": "string" }
+      }
+    }
+  }
+}

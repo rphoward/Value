@@ -1,0 +1,104 @@
+{
+  "system_metadata": {
+    "framework": "The Product-Market Fit Pyramid",
+    "author": "Dan Olsen",
+    "version": "1.0",
+    "grounding_source": "The Lean Product Playbook: How to Innovate with Minimum Viable Products and Rapid Customer Feedback (2015)",
+    "prompt_suite": "docs/lean-product-playbook-prompt-suite.md"
+  },
+  "visual_grounding_analogies": {
+    "space_pen_mirage": {
+      "analogy": "Paul Fisher spending $1 million inventing the Space Pen while Russian astronauts used pencils.",
+      "risk": "Jumping into solution space before defining the core problem.",
+      "action": "Separate What (problem space) from How (solution space) before design begins."
+    },
+    "follow_me_home": {
+      "analogy": "Intuit employees following Quicken buyers home to watch install and first use.",
+      "action": "Prioritize direct behavioral observation over polite survey comments."
+    },
+    "oprah_versus_spock": {
+      "analogy": "Oprah (qualitative, attitudinal) versus Spock (quantitative, behavioral).",
+      "action": "Use Oprah to validate product-market fit on paper; use Spock to optimize metrics after launch."
+    },
+    "silver_bullet_metric": {
+      "analogy": "Friendster's address-book importer doubling invites per sender in one week.",
+      "action": "Find low-effort, high-upside levers with compound growth."
+    },
+    "local_maximum_hill": {
+      "analogy": "Optimizing a landing page to a local peak while missing a global maximum that needs a pivot.",
+      "action": "When iterative tests flatten, zoom out to target customer or value proposition."
+    }
+  },
+  "pmf_pyramid_hierarchy": {
+    "solution_space_product": ["UX", "Feature Set", "Value Proposition"],
+    "problem_space_market": ["Underserved Needs", "Target Customer"]
+  },
+  "phase_module_map": {
+    "customer-context": "Step 1: Target Customer",
+    "underserved-needs": "Step 2: Underserved Needs",
+    "mvp-scope": "Steps 3–4: Value Prop & MVP Features",
+    "ux-prototype": "Steps 5–6: Prototype & Customer Test",
+    "metrics": "Post-Launch Optimization"
+  },
+  "olsen_hierarchy_of_web_needs": {
+    "5_ux_design": "How easy and enjoyable the product is to use.",
+    "4_feature_set": "Functionality that meets a customer need.",
+    "3_absence_of_bugs": "Quality — does it work as supposed to?",
+    "2_page_load_time": "Performance — response time fast enough.",
+    "1_uptime": "Baseline availability when wanted."
+  },
+  "kano_model_categories": {
+    "must_haves": {
+      "definition": "Table stakes; absence causes extreme dissatisfaction.",
+      "example": "Seat belts in a car."
+    },
+    "performance_features": {
+      "definition": "More is better; satisfaction scales with fulfillment.",
+      "example": "Fuel efficiency or page load speed."
+    },
+    "delighters": {
+      "definition": "Unexpected wow; absence does not dissatisfy.",
+      "example": "GPS navigation in the 2000s."
+    },
+    "migration_rule": "Yesterday's delighters become today's performance features and tomorrow's must-haves."
+  },
+  "invest_user_story_rubric": {
+    "I": "Independent",
+    "N": "Negotiable",
+    "V": "Valuable",
+    "E": "Estimable",
+    "S": "Small",
+    "T": "Testable"
+  },
+  "opportunity_formulas": {
+    "value_delivered": "Importance × Satisfaction",
+    "opportunity_score": "Importance × (1 − Satisfaction)"
+  },
+  "ux_iceberg_layers": {
+    "visual_design": "Typography, colors, iconography, style.",
+    "interaction_design": "Flows, decisions, state models.",
+    "information_architecture": "Sitemaps, navigation, labels.",
+    "conceptual_design": "Core design metaphor."
+  },
+  "mvp_test_matrix_2x2": {
+    "qualitative_marketing": ["Marketing materials", "Five-second test", "Concept discovery mockups"],
+    "quantitative_marketing": ["Landing page smoke test", "AdWords CTR", "Explainer video waitlist", "Crowdfunding pre-sales"],
+    "qualitative_product": ["Wireframes", "Clickable mockups", "Interactive prototypes", "Wizard of Oz", "Concierge MVPs", "Live product beta"],
+    "quantitative_product": ["Fake door tests", "Product analytics", "Product A/B testing"]
+  },
+  "validation_metrics": {
+    "nps": {
+      "formula": "% Promoters (9-10) − % Detractors (0-6)"
+    },
+    "sean_ellis_pmf": {
+      "question": "How would you feel if you could no longer use [product]?",
+      "pmf_threshold": 0.4,
+      "target_answer": "Very disappointed"
+    }
+  },
+  "ltv_cac_ratio_bands": {
+    "terminal": "Ratio < 1.0 — losing money per customer",
+    "unstable": "1.0 ≤ Ratio < 3.0 — unstable for SaaS",
+    "healthy": "Ratio ≥ 3.0 — venture standard for scalability"
+  }
+}

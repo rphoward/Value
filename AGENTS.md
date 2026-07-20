@@ -9,7 +9,9 @@ Develop and distribute a Cursor agent skill from this GitHub repo. The layered s
 | Path | Role |
 |------|------|
 | `skills/value/` | Ship package for `npx skills add rphoward/Value` |
+| `skills/lean-mvp/` | Lean MVP skill (pairs with value; dev in monorepo) |
 | `.cursor/skills/value/` | Same skill for Cursor while developing this repo |
+| `.cursor/skills/lean-mvp/` | Lean MVP skill for Cursor in this repo |
 | `src/value/` | Layered spoke product (retargeted at init) |
 | `tests/` | Unittest / pytest suite |
 | `tools/` | Local scripts (`start-*.ps1`) |
