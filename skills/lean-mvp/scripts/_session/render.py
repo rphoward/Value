@@ -152,14 +152,12 @@ def format_bombs_block(session: dict[str, Any]) -> str:
 
 
 def format_orphan_non_goals(session: dict[str, Any]) -> str:
-    body = format_content_block_for_atoms(session, ["V06"])
-    if body != "unknown":
-        return body
     parked = [
         f"- {item['decision']}: {item['reason']}"
         for item in session.get("decisions", [])
         if "orphan" in f"{item.get('decision', '')} {item.get('reason', '')}".lower()
         or "park" in f"{item.get('decision', '')} {item.get('reason', '')}".lower()
+        or "non-goal" in f"{item.get('decision', '')} {item.get('reason', '')}".lower()
     ]
     return "\n".join(parked) if parked else "none"
 

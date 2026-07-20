@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .constants import MODULE_ORDER, SLUG_RE
+from .constants import MODULE_BRIEF_LABEL, MODULE_ORDER, SLUG_RE
 
 SKILL_ROOT = Path(__file__).resolve().parent.parent.parent
 ASSETS_DIR = SKILL_ROOT / "assets"
@@ -98,13 +98,8 @@ def atom_provenance_label(atom_id: str) -> str:
     _build_atom_indexes()
     module = ATOM_MODULE_BY_ID.get(atom_id, "session")
     section = atom_section_label(atom_id)
-    module_names = {
-        "profile": "Customer profile",
-        "value-map": "Value map",
-        "business-model": "Business model",
-        "experiments": "Experiments",
-    }
-    return f"{module_names.get(module, module)} — {section}"
+    module_label = MODULE_BRIEF_LABEL.get(module, module.replace("-", " ").title())
+    return f"{module_label} — {section}"
 
 
 def atom_by_id(atoms: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:

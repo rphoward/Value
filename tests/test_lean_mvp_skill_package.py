@@ -16,7 +16,10 @@ def iter_skill_files(root: Path) -> list[Path]:
     return sorted(
         path
         for path in root.rglob("*")
-        if path.is_file() and path.name not in SYNC_IGNORE_NAMES
+        if path.is_file()
+        and path.name not in SYNC_IGNORE_NAMES
+        and "__pycache__" not in path.parts
+        and path.suffix != ".pyc"
     )
 
 
