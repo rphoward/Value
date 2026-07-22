@@ -59,7 +59,7 @@ metadata:
   (protocol-1-activation
     (on-activation
       1 "read references/session-contract.md and references/value-bridge.md"
-      2 "when session.json exists run scripts/status.py --brief then scripts/import_value_context.py <session> internally"
+      2 "when session.json exists run scripts/status.py (default brief; --brief alias ok) then scripts/import_value_context.py <session> internally"
       3 "when absent: missing-session creation; init_session.py; then import_value_context when value session exists")
     (session-root "workproduct/lean-mvp/<project-slug>/")
     (kb-load "read assets/knowledge-base.json for Kano, INVEST, opportunity math, test matrix, LTV/CAC bands")
@@ -83,4 +83,6 @@ metadata:
       (run "import_value_context status next_question accept_answer")))
 
   (protocol-4-gates
-    (each-module "pass <module> gate phrase writes milestone artifact via write_milestone.py")))
+    (each-module "pass <module> gate with accept_answer --gate-pending autofills decisions[] then write_milestone.py")
+    (forbidden-stay-on-gate "do not use --stay on gate atoms"))
+)

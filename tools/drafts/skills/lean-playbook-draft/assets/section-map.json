@@ -1,0 +1,25 @@
+{
+  "milestones": {
+    "need-prioritizer": {
+      "Start": [
+        "S01"
+      ]
+    },
+    "mvp-scoper": {
+      "Start": [
+        "S02"
+      ]
+    },
+    "ux-designer": {
+      "Start": [
+        "S03"
+      ]
+    },
+    "metric-optimizer": {
+      "Start": [
+        "S04"
+      ]
+    }
+  },
+  "design_briefs": {}
+}

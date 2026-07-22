@@ -7,7 +7,13 @@ import argparse
 import sys
 from pathlib import Path
 
-from _session import SLUG_RE, default_session, derive_slug_from_name, save_session
+from _session import (
+    SLUG_RE,
+    default_lean_mvp_workproduct_root,
+    default_session,
+    derive_slug_from_name,
+    save_session,
+)
 
 PACING_CHOICES = ("standard", "express")
 
@@ -21,8 +27,11 @@ def main() -> int:
     )
     parser.add_argument(
         "--root",
-        default="workproduct/lean-mvp",
-        help="Workproduct root relative to cwd (default: workproduct/lean-mvp)",
+        default=None,
+        help=(
+            "Workproduct root for sessions (default: <repo>/workproduct/lean-mvp "
+            "when the skill lives under the repo; else workproduct/lean-mvp)"
+        ),
     )
     parser.add_argument(
         "--pacing-mode",
@@ -43,7 +52,8 @@ def main() -> int:
         print(f"Invalid slug: {slug!r}", file=sys.stderr)
         return 1
 
-    session_dir = Path(args.root) / slug
+    root = Path(args.root) if args.root else default_lean_mvp_workproduct_root()
+    session_dir = root / slug
     session_path = session_dir / "session.json"
     if session_path.exists():
         print(f"Session already exists: {session_path}", file=sys.stderr)

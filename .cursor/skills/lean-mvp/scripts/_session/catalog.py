@@ -139,3 +139,32 @@ def derive_slug_from_name(name: str) -> str:
     if not slug or not SLUG_RE.fullmatch(slug):
         raise ValueError(f"Cannot derive path-safe slug from name: {name!r}")
     return slug
+
+
+def resolve_repo_root() -> Path | None:
+    """Repo root when skill lives under skills/<name> or .cursor/skills/<name>."""
+    skill = SKILL_ROOT
+    candidates: list[Path] = []
+    if skill.parent.name == "skills" and skill.parent.parent.name == ".cursor":
+        candidates.append(skill.parent.parent.parent)
+    if skill.parent.name == "skills":
+        candidates.append(skill.parent.parent)
+    for root in candidates:
+        if (root / ".git").exists() or (root / "AGENTS.md").is_file():
+            return root
+    return candidates[0] if candidates else None
+
+
+def default_lean_mvp_workproduct_root() -> Path:
+    """Prefer <repo>/workproduct/lean-mvp over cwd-relative paths."""
+    repo = resolve_repo_root()
+    if repo is not None:
+        return repo / "workproduct" / "lean-mvp"
+    return Path("workproduct/lean-mvp")
+
+
+def default_value_proposition_workproduct_root() -> Path:
+    repo = resolve_repo_root()
+    if repo is not None:
+        return repo / "workproduct" / "value-proposition"
+    return Path("workproduct/value-proposition")

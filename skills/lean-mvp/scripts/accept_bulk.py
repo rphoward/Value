@@ -10,6 +10,7 @@ from pathlib import Path
 
 from _session import (
     append_session_records,
+    atom_by_id,
     load_atoms,
     load_session,
     ready_atoms,
@@ -41,6 +42,7 @@ def main() -> int:
 
     session = load_session(args.session)
     atoms = load_atoms()
+    index = atom_by_id(atoms)
     try:
         payload = json.loads(args.map.read_text(encoding="utf-8"))
         mappings = validate_draft_map(payload)
@@ -48,7 +50,6 @@ def main() -> int:
         print(str(exc), file=sys.stderr)
         return 1
 
-    ready = set(ready_atoms(session, atoms))
     accepted: list[str] = []
     skipped: list[str] = []
     for item in mappings:
@@ -56,6 +57,13 @@ def main() -> int:
         if not item.get("satisfied", True):
             skipped.append(atom_id)
             continue
+        if index[atom_id].get("gate"):
+            print(
+                f"Atom {atom_id} is a module gate; "
+                "use accept_answer.py --gate-pending (not accept_bulk).",
+                file=sys.stderr,
+            )
+            return 1
         ready = set(ready_atoms(session, atoms))
         if atom_id not in ready:
             print(f"Atom {atom_id} is not ready; refusing bulk accept.", file=sys.stderr)

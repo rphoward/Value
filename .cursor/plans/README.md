@@ -6,7 +6,9 @@ Last indexed: 2026-07-17.
 
 ## Active
 
-None. UI/UX wave is next per `handoff/STATE.md` (no plan file yet).
+| Plan | Role |
+|------|------|
+| [prompt-suite-to-skill/](prompt-suite-to-skill/overview.md) | Portable doc → paced scripted skill compiler + poteto runbook |
 
 ## Deferred (no active plan file)
 

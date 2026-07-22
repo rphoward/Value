@@ -1,0 +1,106 @@
+{
+  "atoms": [
+    {
+      "id": "S01",
+      "module": "need-prioritizer",
+      "asks": "What is the first concrete fact for Need-Prioritizer?",
+      "accepts_summary": "States a concrete fact or labels unknown.",
+      "unlocks": "G01",
+      "gate": false,
+      "requires": [],
+      "section": "Start",
+      "soft": false
+    },
+    {
+      "id": "G01",
+      "module": "need-prioritizer",
+      "asks": "Review Need-Prioritizer. Pass the gate, reopen, or record unknowns.",
+      "accepts_summary": "Pass with 'pass need-prioritizer gate', reopen, or blocking unknowns.",
+      "unlocks": "S02",
+      "gate": true,
+      "requires": [
+        "S01"
+      ],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S02",
+      "module": "mvp-scoper",
+      "asks": "What is the first concrete fact for MVP-Scoper?",
+      "accepts_summary": "States a concrete fact or labels unknown.",
+      "unlocks": "G02",
+      "gate": false,
+      "requires": [
+        "G01"
+      ],
+      "section": "Start",
+      "soft": false
+    },
+    {
+      "id": "G02",
+      "module": "mvp-scoper",
+      "asks": "Review MVP-Scoper. Pass the gate, reopen, or record unknowns.",
+      "accepts_summary": "Pass with 'pass mvp-scoper gate', reopen, or blocking unknowns.",
+      "unlocks": "S03",
+      "gate": true,
+      "requires": [
+        "S02"
+      ],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S03",
+      "module": "ux-designer",
+      "asks": "What is the first concrete fact for UX-Designer?",
+      "accepts_summary": "States a concrete fact or labels unknown.",
+      "unlocks": "G03",
+      "gate": false,
+      "requires": [
+        "G02"
+      ],
+      "section": "Start",
+      "soft": false
+    },
+    {
+      "id": "G03",
+      "module": "ux-designer",
+      "asks": "Review UX-Designer. Pass the gate, reopen, or record unknowns.",
+      "accepts_summary": "Pass with 'pass ux-designer gate', reopen, or blocking unknowns.",
+      "unlocks": "S04",
+      "gate": true,
+      "requires": [
+        "S03"
+      ],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S04",
+      "module": "metric-optimizer",
+      "asks": "What is the first concrete fact for Metric-Optimizer?",
+      "accepts_summary": "States a concrete fact or labels unknown.",
+      "unlocks": "G04",
+      "gate": false,
+      "requires": [
+        "G03"
+      ],
+      "section": "Start",
+      "soft": false
+    },
+    {
+      "id": "G04",
+      "module": "metric-optimizer",
+      "asks": "Review Metric-Optimizer. Pass the gate, reopen, or record unknowns.",
+      "accepts_summary": "Pass with 'pass metric-optimizer gate', reopen, or blocking unknowns.",
+      "unlocks": null,
+      "gate": true,
+      "requires": [
+        "S04"
+      ],
+      "section": "Gate",
+      "soft": false
+    }
+  ]
+}

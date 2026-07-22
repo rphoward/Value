@@ -9,9 +9,10 @@ import sys
 from pathlib import Path
 
 from _session import (
-    atom_by_id,
     answered_atom_ids,
+    atom_by_id,
     atom_requires,
+    default_value_proposition_workproduct_root,
     load_atoms,
     load_json,
     load_session,
@@ -113,8 +114,11 @@ def main() -> int:
     parser.add_argument("session", type=Path, help="Path to lean-mvp session.json")
     parser.add_argument(
         "--value-root",
-        default="workproduct/value-proposition",
-        help="Value workproduct root (default: workproduct/value-proposition)",
+        default=None,
+        help=(
+            "Value workproduct root (default: <repo>/workproduct/value-proposition "
+            "when detectable)"
+        ),
     )
     parser.add_argument(
         "--dry-run",
@@ -133,7 +137,12 @@ def main() -> int:
     bridge = load_json(BRIDGE_PATH)
     lean_session = load_session(args.session)
     slug = lean_session["project"]["slug"]
-    value_path = Path(args.value_root) / slug / "session.json"
+    value_root = (
+        Path(args.value_root)
+        if args.value_root
+        else default_value_proposition_workproduct_root()
+    )
+    value_path = value_root / slug / "session.json"
     bridge["_resolved_value_session"] = str(value_path).replace("\\", "/")
 
     if not value_path.is_file():

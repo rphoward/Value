@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/prompt-suite-compile/prompt-suite.ir.schema.json",
+  "title": "PromptSuiteIR",
+  "type": "object",
+  "required": ["title", "source", "knowledge_base", "orchestrator", "modules"],
+  "properties": {
+    "title": { "type": "string" },
+    "source": { "type": "string" },
+    "knowledge_base": { "type": "object" },
+    "orchestrator": {
+      "type": "object",
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "prompt_markdown": { "type": "string" }
+      }
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "prompt_markdown"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "prompt_markdown": { "type": "string" },
+          "heading": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -34,7 +34,12 @@ def main() -> int:
     parser.add_argument(
         "--operator",
         action="store_true",
-        help="Full ledger telemetry for tests and debugging (default is --brief)",
+        help="Full ledger telemetry for tests and debugging",
+    )
+    parser.add_argument(
+        "--brief",
+        action="store_true",
+        help="No-op alias: brief one-liner is already the default",
     )
     args = parser.parse_args()
 

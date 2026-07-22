@@ -28,6 +28,7 @@
     (ask-first "what the user is working on — display name only; derive slug silently from name")
     (wait-for "explicit consent before creating session.json")
     (init-command "scripts/init_session.py --name <display-name> [--slug <slug>]")
+    (init-root "defaults to <repo>/workproduct/lean-mvp when skill is under the repo — not cwd under the skill tree")
     (after-init "run scripts/import_value_context.py <session-path> when value session exists for same slug")
     (forbidden 'ask-user-for-slug 'invent-prior-answers))
 
@@ -43,6 +44,16 @@
     (optional provenance source_atom reopen conflict_note)
     (provenance-value-import "answer copied from value skill; do not re-ask unless user reopens"))
 
+  (section gate-pass
+    (canonical-phrase "pass <module> gate — see CANONICAL_GATE_PASS in scripts/_session/constants.py")
+    (cli "scripts/accept_answer.py --atom-id <gate> --answer <phrase-or-reason> --kind decision --gate-pending")
+    (autofill "lean-mvp synthesizes the decisions[] row and holds gate_pending when --gate-pending is set, or when --answer matches the canonical phrase — no --records sidecar required for the happy path")
+    (sidecar-optional "scripts/accept_answer.py --records path.json still appends evidence assumptions decisions unknowns artifacts when needed")
+    (milestone "scripts/write_milestone.py --module <module> after gate_pending + pass decision")
+    (forbidden-stay "--stay is refused on gate atoms; leave the gate unanswered to pause, or pass then write the milestone")
+    (status-values gate_pending "final atom accepted; milestone write due"))
+
   (section scripts-silent
-    (run "status --brief, next_question, accept_answer, import_value_context — parse JSON internally")
-    (never "quote script stdout verbatim to the user"))
+    (status "scripts/status.py — default brief one-liner; --brief is a no-op alias; --operator full ledger; --sections strip")
+    (run "status, next_question, accept_answer, import_value_context — parse JSON internally")
+    (never "quote script stdout verbatim to the user unless user asks for import details")))

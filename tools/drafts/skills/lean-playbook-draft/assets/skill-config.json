@@ -1,0 +1,83 @@
+{
+  "skill_slug": "lean-playbook-draft",
+  "workproduct_root": "workproduct/lean-playbook-draft",
+  "entry_atom": "S01",
+  "module_order": [
+    "need-prioritizer",
+    "mvp-scoper",
+    "ux-designer",
+    "metric-optimizer"
+  ],
+  "module_phase": {
+    "need-prioritizer": "Phase 1: Need-Prioritizer",
+    "mvp-scoper": "Phase 2: MVP-Scoper",
+    "ux-designer": "Phase 3: UX-Designer",
+    "metric-optimizer": "Phase 4: Metric-Optimizer"
+  },
+  "gate_artifacts": {
+    "need-prioritizer": "need-prioritizer.md",
+    "mvp-scoper": "mvp-scoper.md",
+    "ux-designer": "ux-designer.md",
+    "metric-optimizer": "metric-optimizer.md"
+  },
+  "milestone_templates": {
+    "need-prioritizer": "need-prioritizer.template.md",
+    "mvp-scoper": "mvp-scoper.template.md",
+    "ux-designer": "ux-designer.template.md",
+    "metric-optimizer": "metric-optimizer.template.md"
+  },
+  "canonical_gate_pass": {
+    "need-prioritizer": "pass need-prioritizer gate",
+    "mvp-scoper": "pass mvp-scoper gate",
+    "ux-designer": "pass ux-designer gate",
+    "metric-optimizer": "pass metric-optimizer gate"
+  },
+  "module_brief_labels": {
+    "need-prioritizer": "Need Prioritizer",
+    "mvp-scoper": "MVP Scoper",
+    "ux-designer": "UX Designer",
+    "metric-optimizer": "Metric Optimizer"
+  },
+  "express_spine": {
+    "need-prioritizer": [
+      "S01",
+      "G01"
+    ],
+    "mvp-scoper": [
+      "S02",
+      "G02"
+    ],
+    "ux-designer": [
+      "S03",
+      "G03"
+    ],
+    "metric-optimizer": [
+      "S04",
+      "G04"
+    ]
+  },
+  "express_requires": {
+    "G01": [
+      "S01"
+    ],
+    "S01": [],
+    "G02": [
+      "S02"
+    ],
+    "S02": [
+      "G01"
+    ],
+    "G03": [
+      "S03"
+    ],
+    "S03": [
+      "G02"
+    ],
+    "G04": [
+      "S04"
+    ],
+    "S04": [
+      "G03"
+    ]
+  }
+}

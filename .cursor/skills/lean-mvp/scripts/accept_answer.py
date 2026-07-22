@@ -15,6 +15,7 @@ from _session import (
     can_accept_atom,
     load_atoms,
     load_session,
+    prepare_gate_accept,
     recompute_ledger,
     save_session,
     utc_now_iso,
@@ -95,6 +96,18 @@ def main() -> int:
             print(str(exc), file=sys.stderr)
             return 1
 
+    records_payload, gate_pending, gate_error = prepare_gate_accept(
+        args.atom_id,
+        args.answer,
+        gate_pending=args.gate_pending,
+        stay=args.stay,
+        records_payload=records_payload,
+        session=session,
+    )
+    if gate_error:
+        print(gate_error, file=sys.stderr)
+        return 1
+
     allowed, hint = can_accept_atom(
         session,
         args.atom_id,
@@ -151,7 +164,7 @@ def main() -> int:
         args.atom_id,
         reopen=args.reopen,
         stay=args.stay,
-        gate_pending=args.gate_pending,
+        gate_pending=gate_pending,
         next_atom_override=args.next_atom,
         records_payload=records_payload,
     )

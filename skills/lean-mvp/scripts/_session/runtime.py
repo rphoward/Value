@@ -135,6 +135,117 @@ def is_canonical_bypass_decision(text: str) -> bool:
     return "bypass" in lowered and " gate" in lowered
 
 
+def answer_matches_canonical_gate_pass(atom_id: str, answer: str) -> bool:
+    """True when answer text is the canonical pass phrase for this gate atom."""
+    _build_atom_indexes()
+    module = GATE_ATOMS.get(atom_id)
+    if module is None:
+        return False
+    return answer.lower().strip() == canonical_gate_pass_text(module)
+
+
+def records_include_gate_pass(records_payload: dict[str, Any] | None, atom_id: str) -> bool:
+    """True when sidecar already has this gate's canonical pass decision."""
+    if not records_payload:
+        return False
+    _build_atom_indexes()
+    module = GATE_ATOMS.get(atom_id)
+    if module is None:
+        return False
+    canonical = canonical_gate_pass_text(module)
+    for decision in records_payload.get("decisions", []):
+        text = str(decision.get("decision", "")).lower().strip()
+        source = decision.get("source_atom", atom_id)
+        if source == atom_id and text == canonical:
+            return True
+    return False
+
+
+def session_has_gate_pass(session: dict[str, Any] | None, atom_id: str) -> bool:
+    """True when session.decisions already records this gate's canonical pass."""
+    if not session:
+        return False
+    _build_atom_indexes()
+    module = GATE_ATOMS.get(atom_id)
+    if module is None:
+        return False
+    canonical = canonical_gate_pass_text(module)
+    for decision in session.get("decisions", []):
+        text = str(decision.get("decision", "")).lower().strip()
+        if decision.get("source_atom") == atom_id and text == canonical:
+            return True
+    return False
+
+
+def synthesize_gate_pass_decision(
+    atom_id: str, *, reason: str = "Gate passed"
+) -> dict[str, Any]:
+    """Build the decisions[] row write_milestone / module_gate_passed expect."""
+    _build_atom_indexes()
+    if atom_id not in GATE_ATOMS:
+        raise KeyError(f"Not a gate atom: {atom_id!r}")
+    module = GATE_ATOMS[atom_id]
+    return {
+        "decision": canonical_gate_pass_text(module),
+        "reason": reason,
+        "source_atom": atom_id,
+        "resulting_module": module,
+        "resulting_atom": atom_id,
+        "resulting_status": "gate_pending",
+    }
+
+
+def prepare_gate_accept(
+    atom_id: str,
+    answer: str,
+    *,
+    gate_pending: bool,
+    stay: bool,
+    records_payload: dict[str, Any] | None,
+    session: dict[str, Any] | None = None,
+) -> tuple[dict[str, Any] | None, bool, str | None]:
+    """Lean-mvp gate UX: autofill decisions[] and hold gate_pending on pass.
+
+    Returns (records_payload, effective_gate_pending, error_message).
+    Bypass decisions are never treated as pass signals.
+    """
+    _build_atom_indexes()
+    if atom_id not in GATE_ATOMS:
+        return records_payload, gate_pending, None
+    if stay:
+        return (
+            records_payload,
+            gate_pending,
+            f"--stay is not allowed on gate atom {atom_id}; "
+            "leave the gate unanswered, or pass with --gate-pending.",
+        )
+
+    if is_canonical_bypass_decision(answer):
+        return records_payload, gate_pending, None
+
+    already_passed = records_include_gate_pass(
+        records_payload, atom_id
+    ) or session_has_gate_pass(session, atom_id)
+
+    wants_pass = (
+        gate_pending
+        or answer_matches_canonical_gate_pass(atom_id, answer)
+        or already_passed
+    )
+    if not wants_pass:
+        return records_payload, False, None
+
+    if already_passed:
+        return records_payload, True, None
+
+    decision = synthesize_gate_pass_decision(atom_id)
+    merged: dict[str, Any] = dict(records_payload or {})
+    decisions = list(merged.get("decisions", []))
+    decisions.append(decision)
+    merged["decisions"] = decisions
+    return merged, True, None
+
+
 def is_ceremony_answer(record: dict[str, Any]) -> bool:
     """True when an answers[] row is gate/bypass ceremony, not customer content."""
     text = record.get("answer", "").lower().strip()

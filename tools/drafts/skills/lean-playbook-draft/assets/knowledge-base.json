@@ -1,0 +1,132 @@
+{
+  "system_metadata": {
+    "framework": "The Product-Market Fit Pyramid",
+    "author": "Dan Olsen",
+    "version": "1.0",
+    "grounding_source": "The Lean Product Playbook: How to Innovate with Minimum Viable Products and Rapid Customer Feedback (2015)"
+  },
+  "visual_grounding_analogies": {
+    "space_pen_mirage": {
+      "analogy": "Paul Fisher spending $1 million of his own money to invent the Space Pen to write in zero gravity, while Russian astronauts used cheap pencils.",
+      "risk": "Jumping into the solution space prematurely without defining the core problem statement.",
+      "action": "Force separation of 'What' (Problem Space) from 'How' (Solution Space) before design begins."
+    },
+    "follow_me_home": {
+      "analogy": "Intuit employees waiting at retail stores, buying Quicken with customers, and following them home to watch them install and use the software.",
+      "action": "Prioritize direct behavioral observation of actual setup and friction over polite survey comments."
+    },
+    "oprah_versus_spock": {
+      "analogy": "Oprah (qualitative, attitudinal, one-on-one deep conversations) versus Spock (quantitative, behavioral, pure numbers and A/B test data).",
+      "action": "Use Oprah to define and validate the product-market fit on paper; use Spock to optimize metrics after launch."
+    },
+    "silver_bullet_metric": {
+      "analogy": "Friendster's Yahoo Address Book Importer, which doubled the 'Average number of invites sent per sender' from 2.3 to 5.3 in one week of development.",
+      "action": "Identify low-effort, high-upside opportunities that yield exponential compound growth."
+    },
+    "local_maximum_hill": {
+      "analogy": "Optimizing a landing page to death and hitting a local peak, while missing the global maximum mountain that requires a complete pivot in the business model.",
+      "action": "If iterative testing yields diminishing returns, zoom out to re-evaluate the target customer or core value proposition."
+    }
+  },
+  "pmf_pyramid_hierarchy": {
+    "solution_space_product": [
+      "UX",
+      "Feature Set",
+      "Value Proposition"
+    ],
+    "problem_space_market": [
+      "Underserved Needs",
+      "Target Customer"
+    ]
+  },
+  "olsen_hierarchy_of_web_needs": {
+    "5_ux_design": "How easy and enjoyable the product is to use.",
+    "4_feature_set": "The functionality provided to meet a customer need.",
+    "3_absence_of_bugs": "The quality level - does it work as supposed to?",
+    "2_page_load_time": "The performance - response time must be fast enough.",
+    "1_uptime": "The baseline availability of the service when wanted."
+  },
+  "kano_model_categories": {
+    "must_haves": {
+      "definition": "Table stakes or cost of entry. Their presence does not increase satisfaction, but their absence causes extreme dissatisfaction.",
+      "example": "Seat belts or cup holders in a car."
+    },
+    "performance_features": {
+      "definition": "Linear 'more is better' needs. Customer satisfaction increases proportionally as the need is more fully met.",
+      "example": "Fuel efficiency (MPG) or page load speed."
+    },
+    "delighters": {
+      "definition": "Unexpected wow factors that provide a pleasant surprise. Their absence does not cause dissatisfaction.",
+      "example": "GPS navigation in the 2000s or background photos changing daily."
+    },
+    "migration_rule": "Yesterday's delighters become today's performance features and tomorrow's must-haves."
+  },
+  "invest_user_story_rubric": {
+    "I": "Independent (overlap-free, implementable in any order)",
+    "N": "Negotiable (not an explicit contract, open to discussion)",
+    "V": "Valuable (delivers clear benefit to the end user)",
+    "E": "Estimable (scope can be reasonably estimated by developers)",
+    "S": "Small (short scope, large epics must be broken down)",
+    "T": "Testable (has clear acceptance criteria to confirm completion)"
+  },
+  "ux_iceberg_layers": {
+    "visual_design": "Top - typography, colors, iconography, and style guides.",
+    "interaction_design": "Upper Middle - user flows, decision blocks, state models, and flowcharts.",
+    "information_architecture": "Lower Middle - sitemaps, navigation hierarchies, and content labels.",
+    "conceptual_design": "Bottom - core design metaphor (e.g. Quicken's paper checkbook conceptual design)."
+  },
+  "mvp_test_matrix_2x2": {
+    "qualitative_marketing": [
+      "Marketing materials",
+      "Five-second test",
+      "Concept discovery mockups"
+    ],
+    "quantitative_marketing": [
+      "Landing page smoke test",
+      "AdWords CTR tracking",
+      "Explainer video waiting list",
+      "Crowdfunding pre-sales"
+    ],
+    "qualitative_product": [
+      "Wireframes",
+      "Clickable mockups",
+      "Interactive prototypes",
+      "Wizard of Oz",
+      "Concierge MVPs",
+      "Live product beta tests"
+    ],
+    "quantitative_product": [
+      "Fake door/404 page tests",
+      "Product analytics tracking",
+      "Product A/B testing"
+    ]
+  },
+  "validation_metrics": {
+    "nps": {
+      "formula": "% Promoters (9-10) - % Detractors (0-6)",
+      "promoters_range": [
+        9,
+        10
+      ],
+      "passives_range": [
+        7,
+        8
+      ],
+      "detractors_range": [
+        0,
+        6
+      ]
+    },
+    "sean_ellis_pmf": {
+      "question": "How would you feel if you could no longer use [product X]?",
+      "pmf_threshold": 0.4,
+      "target_answer": "Very disappointed"
+    }
+  },
+  "phase_module_map": {
+    "need-prioritizer": "Phase 1: Need-Prioritizer",
+    "mvp-scoper": "Phase 2: MVP-Scoper",
+    "ux-designer": "Phase 3: UX-Designer",
+    "metric-optimizer": "Phase 4: Metric-Optimizer"
+  }
+}
