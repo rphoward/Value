@@ -28,5 +28,9 @@ Thumbs.db
 
 # Local workproduct / runs (if added later)
 workproduct/runs/
+workproduct/lean-mvp/
+
+# Session hook (cursordoctrine) — local only
+.scope.json
 
 .tmp-values-ship/
