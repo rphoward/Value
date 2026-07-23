@@ -19,9 +19,9 @@ workproduct/lean-mvp/<slug>/session.json
 workproduct/lean-mvp/<slug>/customer-context.md
 ```
 
-Lean MVP reads value artifacts. Value never reads lean-mvp artifacts.
+Lean MVP reads value artifacts. Value may read lean-mvp session answers via its own `import_lean_context.py` bridge; lean-mvp never writes value paths.
 
-## Value bridge (chapter 1)
+## Value bridge (lean ← value)
 
 On lean-mvp session init or resume, run `scripts/import_value_context.py` internally when `workproduct/value-proposition/<slug>/session.json` exists.
 
@@ -29,11 +29,17 @@ Mapping lives in `assets/value-bridge-map.json`. Imported answers are recorded w
 
 If no value session exists, chapter 1 runs from atom C01 with no import.
 
+## Lean bridge (value ← lean)
+
+On value session init or resume, run `scripts/import_lean_context.py` internally when `workproduct/lean-mvp/<slug>/session.json` exists.
+
+Mapping lives in value skill `assets/lean-bridge-map.json` (v1: C01→P01, MS01→P09). Imported answers use `provenance: lean-import`. Value never writes lean-mvp paths.
+
 ## Session state
 
 Canonical file: `workproduct/lean-mvp/<slug>/session.json`. Schema: `assets/session.schema.json`. Atom index: `assets/atoms.json`.
 
-Optional top-level `value_import` records source path, import timestamp, and which atoms were prefilled.
+Optional top-level `value_import` records source path, import timestamp, and which atoms were prefilled. Value session may carry optional `lean_import` with the same shape for reverse imports.
 
 ## Modules (v1)
 
@@ -56,6 +62,7 @@ Source prompt suite: `docs/lean-product-playbook-prompt-suite.md` (Dan Olsen, Le
 1. Value skill tests remain green (unchanged).
 2. Lean-mvp package mirror test: `skills/lean-mvp/` digest matches `.cursor/skills/lean-mvp/`.
 3. `import_value_context.py` fixture test: value session answers map to lean atoms without overwriting newer lean answers.
+4. `import_lean_context.py` fixture test: lean session answers map to value atoms without overwriting existing value answers.
 
 ## Deferred
 
