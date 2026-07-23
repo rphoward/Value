@@ -18,7 +18,7 @@
       decisions
       unknowns
       artifacts)
-    (optional-top-level pacing_mode)
+    (optional-top-level pacing_mode lean_import)
     (schema-version "1.0 or 1.1 — lazy upgrade on read sets 1.1")
     (pacing-mode "standard default; express schedules gate spine only — agent-internal; user sees section names on the progress strip, never spine codes")
     (project-fields slug name created_at updated_at)
@@ -78,6 +78,9 @@
       (answer "accepted text for this atom")
       (kind "one of fact inference hypothesis decision unknown")
       (accepted_at "RFC 3339 timestamp"))
+    (optional provenance source_atom reopen conflict_note)
+    (provenance-lean-import "answer copied from lean-mvp skill; do not re-ask unless user reopens")
+    (lean-import-top-level "optional lean_import records source_session imported_at mapped_atoms when any lean import lands")
     (sidecar "accept_answer.py --records path.json may append evidence assumptions decisions unknowns artifacts in one write")
     (sidecar-shape
       (evidence "array of claim kind source strength")

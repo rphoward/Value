@@ -20,11 +20,13 @@ metadata:
       (business-model references/business-model.md)
       (experiments references/experiments.md)
       (session-contract references/session-contract.md)
+      (lean-bridge references/lean-bridge.md)
       (export-lenses references/export-lenses.md))
     (assets
       (session-schema assets/session.schema.json)
       (atoms-index assets/atoms.json)
       (knowledge-base assets/knowledge-base.json)
+      (lean-bridge-map assets/lean-bridge-map.json)
       (context-product-template assets/CONTEXT.product.template.md)
       (agents-product-template assets/AGENTS.product.template.md)
       (ui-copy-template assets/ui-copy.template.md)
@@ -43,6 +45,7 @@ metadata:
       (learning-card-template assets/learning-card.template.md))
     (scripts
       (init scripts/init_session.py)
+      (import-lean scripts/import_lean_context.py)
       (status scripts/status.py)
       (next scripts/next_question.py)
       (accept scripts/accept_answer.py)
@@ -67,9 +70,9 @@ metadata:
 
   (protocol-1-activation
     (on-activation
-      1 "read references/session-contract.md for field shapes, evidence kinds, creation, ledger, and script orchestration"
-      2 "when session.json exists run scripts/status.py --brief internally; do not quote its output to the user"
-      3 "when absent follow missing-session creation; ask what the user is working on (display name only); derive slug silently; obtain consent before scripts/init_session.py --name ...")
+      1 "read references/session-contract.md and references/lean-bridge.md for field shapes, evidence kinds, creation, ledger, and script orchestration"
+      2 "when session.json exists run scripts/status.py --brief internally; then scripts/import_lean_context.py <session> internally when lean session exists"
+      3 "when absent follow missing-session creation; ask what the user is working on (display name only); derive slug silently; obtain consent before scripts/init_session.py --name ...; then import_lean_context when lean session exists")
     (session-root "workproduct/value-proposition/<project-slug>/")
     (canonical-state "session.json")
     (kb-load "read assets/knowledge-base.json when applying scales, high-value rubric, BM 0–10 anchors, experiment library, data traps, or validation funnel")

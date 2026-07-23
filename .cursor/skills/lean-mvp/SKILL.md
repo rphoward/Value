@@ -54,7 +54,7 @@ metadata:
     (olsen-hierarchy "Uptime and quality before UX delighters — load olsen_hierarchy_of_web_needs when scoping")
     (oprah-spock "Qualitative discovery before quantitative optimization")
     (end-nudge "One contextual next-step design decision per turn")
-    (value-sibling "value skill owns Strategyzer canvas; lean-mvp owns Olsen playbook — read value artifacts, never write value paths"))
+    (value-sibling "value skill owns Strategyzer canvas; lean-mvp owns Olsen playbook — read value artifacts, never write value paths; value may read lean sessions via its own import_lean_context bridge"))
 
   (protocol-1-activation
     (on-activation

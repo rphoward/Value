@@ -37,3 +37,7 @@
   (write "workproduct/lean-mvp/<slug>/customer-context.md at customer-context gate"))
 
   (check value-read-only "value skill files and Values repo are never modified by lean-mvp activation"))
+
+  (section sibling-bridge
+    (reverse "value skill reads lean via its own assets/lean-bridge-map.json and scripts/import_lean_context.py — see value references/lean-bridge.md")
+    (never "lean-mvp never writes workproduct/value-proposition paths or modifies value skill files")))
