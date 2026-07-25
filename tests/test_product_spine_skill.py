@@ -138,6 +138,22 @@ class ProductSpineSkillTests(unittest.TestCase):
         self.assertIn("when-ms05-focus", text)
         self.assertTrue(STORY_SKILL.is_file())
 
+    def test_claim_phase_loads_value_notes_and_names_paths(self) -> None:
+        """Guards claim dumping vibecoders into a file hunt instead of opening saved notes."""
+        path_text = PATH_REF.read_text(encoding="utf-8")
+        combined = f"{self.skill_text}\n{path_text}"
+        for needle in (
+            "protocol-3-claim-evidence-handoff",
+            "customer-profile.md",
+            "value-map.md",
+            "north-star-blurb.md",
+            "files-im-using",
+            "ask-human-to-find-or-paste-profile-map-or-north-star-when-those-files-exist",
+        ):
+            self.assertIn(needle, combined, f"missing claim-evidence wiring: {needle}")
+        self.assertIn("claim-evidence-handoff", path_text)
+        self.assertIn("Files I'm using", path_text)
+
     def test_spine_does_not_instruct_self_reload(self) -> None:
         """Guards circular handoffs that bounce the agent back into /product-spine forever."""
         self.assertNotIn("read .cursor/skills/product-spine", self.skill_text)

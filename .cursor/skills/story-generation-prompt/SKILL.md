@@ -73,9 +73,10 @@ disable-model-invocation: true
       (require cost "an observable cost of doing it that way")
       (on-missing-slot "ask one question for the missing slot")
       (on-repo-evidence "when the facts the story needs live in a repo or doc set rather than in observation, run protocol-6 first and emit the pass-1 question before asking the operator to summarise the project from memory")
-      (forbidden 'invent-the-missing-slot))
+      (on-sibling-workproduct "when /product-spine (or the human) names a workproduct slug, or hands paths under workproduct/value-proposition/<slug>/, read customer-profile.md, value-map.md, and north-star-blurb.md if present before asking for a paste — fill evidence intake from those files; say the paths you used in plain words")
+      (forbidden 'invent-the-missing-slot 'ask-human-to-paste-profile-map-or-north-star-when-those-files-exist))
     (workflow
-      1 "Fill assets/evidence-intake.template.md from what the user supplied; leave a slot blank rather than guessing at it."
+      1 "Fill assets/evidence-intake.template.md from sibling workproduct files and/or what the user supplied; leave a slot blank rather than guessing at it."
       2 "Write the so-that clause first, capped at the funnel stage the evidence can test (see story-elements funnel-honesty)."
       3 "Write the want clause as the outcome that produces that benefit, then apply the Negotiable test from references/drafting-inputs.md."
       4 "Name the persona last, from the actor and moment in the intake — not from a demographic label."
@@ -91,8 +92,9 @@ disable-model-invocation: true
       2 "Read references/source-fidelity.md when the producer will use repo or doc sources (default for overview/video)."
       3 "Fill assets/generation-prompt.template.md — audience, claim ceiling from the funnel stage, source allowlist, fidelity rules, brief (verbatim if operator supplied), output format, do-not list, Producer paste block filled"
       4 "Emit the user story as one sentence for MS05 or captions"
-      5 "If user also wants literacy, add a short plain-English pointer to story-elements sections (persona vs flow vs brief)")
-    (forbidden 'inflate so-that beyond validated funnel stage 'drop INVEST without user opt-out 'narrative-glue-hallucinations 'high-risk-debate-format-without-accuracy-pass))
+      5 "When the human needs NotebookLM or video next: emit the Human how-to block from assets/generation-prompt.template.md — numbered steps only, one upload folder path, Box A for chat, Box B for video; do not bury the steps in prose"
+      6 "If user also wants literacy, add a short plain-English pointer to story-elements sections (persona vs flow vs brief) after the how-to, not instead of it")
+    (forbidden 'inflate so-that beyond validated funnel stage 'drop INVEST without user opt-out 'narrative-glue-hallucinations 'high-risk-debate-format-without-accuracy-pass 'notebooklm-directions-as-long-essay 'conflicting-upload-options-in-the-same-turn))
 
   (protocol-3-prompt-to-story
     (when "user requests reverse or only has a generation brief")

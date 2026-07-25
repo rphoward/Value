@@ -35,14 +35,14 @@ disable-model-invocation: true
   (protocol-0-activation
     (on-activation
       1 "read references/path.md"
-      2 "discover shared slug: look under workproduct/value-proposition/*/session.json and workproduct/lean-mvp/*/session.json; if several slugs, ask one clarifying question"
+      2 "discover project slug: look under workproduct/value-proposition/*/session.json and workproduct/lean-mvp/*/session.json; prefer a value slug when claiming; if several value slugs, ask one clarifying question (name the project in plain words)"
       3 "when a session exists, run that skill's scripts/status.py <session> read-only (default brief) to learn module position — do not --refresh, accept, init, or import from spine"
       4 "choose phase with protocol-1; speak protocol-2 voice"
-      5 "if phase is claim: read .cursor/skills/story-generation-prompt/SKILL.md and follow it in this turn — open with a first story action (NotebookLM pass-1 question or draft-story ask), not a pointer to open another slash"
+      5 "if phase is claim: run protocol-3 claim-evidence-handoff — read the slug's saved notes from disk, list every path in the guide-turn, then read .cursor/skills/story-generation-prompt/SKILL.md and follow it in this turn using those files as evidence — open with a first story action, not a pointer to another slash and not a request that the human hunt or paste the notes"
       6 "if phase is clarity or mvp: fill guide-turn This-turn with exactly /value or /lean-mvp plus leg purpose; stop grilling — the sibling owns atoms on the next leg"
       7 "close guide-turn Come-back-when: when that leg's done-enough is met (or you are lost), invoke /product-spine again")
-    (forbidden 'invent-spine-session-json 'accept-or-init-sibling-atoms 'grill-canvas-or-lean-atoms 'quote-status-stdout-atom-ids-to-user)
-    (allowed 'read-sibling-session-json 'run-status-py-read-only 'read-and-follow-story-skill-on-claim-phase))
+    (forbidden 'invent-spine-session-json 'accept-or-init-sibling-atoms 'grill-canvas-or-lean-atoms 'quote-status-stdout-atom-ids-to-user 'ask-human-to-find-or-paste-profile-map-or-north-star-when-those-files-exist)
+    (allowed 'read-sibling-session-json 'read-sibling-milestone-md 'run-status-py-read-only 'read-and-follow-story-skill-on-claim-phase))
 
   (protocol-1-journey
     (shared-slug "value and lean-mvp use the same project slug under workproduct/")
@@ -62,7 +62,7 @@ disable-model-invocation: true
         "done-enough: mvp-scope gate passed or bypassed (MS05 story may use story skill inside lean), then return to /product-spine")
       (claim
         "claim-intent, or clarity-ready and mvp-ready, or no session but finished repo/docs needing an honest shareable claim"
-        "destination: read and follow .cursor/skills/story-generation-prompt/SKILL.md now — claim turns execute story inline; routing-only claim is forbidden"
+        "destination: protocol-3 then follow .cursor/skills/story-generation-prompt/SKILL.md now — claim turns execute story inline with saved notes; routing-only claim is forbidden"
         "done-enough: human has story sentence and, when they want video, producer paste block for NotebookLM pass 2")
       (return-after-learning
         "after experiment results, prototype learning, or story kill-signal → reopen value or lean-mvp for the module that must absorb learning; say which and why"))
@@ -76,18 +76,36 @@ disable-model-invocation: true
 
   (protocol-2-voice
     (guide-turn
-      (you-are-here "phase label + shared slug when known + one plain sentence of situation")
+      (you-are-here "phase label + project slug when known + one plain sentence of situation")
       (why-this-phase "one precedence sentence — why this phase won")
-      (this-turn "clarity/mvp/return: exactly one sibling slash and what happens there; claim: follow story-generation-prompt with a first story action in this turn")
+      (files-im-using "claim only: bullet the exact relative paths you opened — say you are using the notes already saved; the human does not hunt folders or paste files")
+      (this-turn "clarity/mvp/return: exactly one sibling slash and what happens there; claim: follow story-generation-prompt with a first story action in this turn, drafted from Files-im-using")
       (come-back-when "done-enough for that leg + explicit /product-spine re-entry — omit only while already inside claim story work this turn"))
-    (shape "short guide-turn in that order — no atom IDs, no script stdout")
-    (slug "say the shared slug when known")
+    (shape "short guide-turn in that order — no atom IDs, no script stdout; keep words simple enough for a first-time vibecoder")
+    (slug "say the project slug when known")
     (carry "the human should feel guided, not sorted into a queue; spine is the entrance and the re-entrance until claim work is in hand")
     (illegal-replies
       "clarity or mvp turn that names a slash without done-enough and /product-spine return cue"
       "claim turn that only routes to story-generation-prompt without reading and following it"
       "claim turn with no first story action (pass-1 question or draft ask)"
+      "claim turn that tells the human to find, open, or paste profile, value-map, or north-star when those files exist on disk"
+      "claim turn that skips reading existing customer-profile.md or value-map.md for the chosen slug"
       "lean before clarity-ready without explicit skip-value and stated re-grilling cost"
       "treating status.py brief active module as clarity-ready or mvp-ready"
       "any sibling init, accept, import, or --refresh from spine"))
+
+  (protocol-3-claim-evidence-handoff
+    (when "phase is claim and a value slug is known (or the human just named one)")
+    (must-read-if-present
+      "workproduct/value-proposition/<slug>/customer-profile.md"
+      "workproduct/value-proposition/<slug>/value-map.md"
+      "workproduct/value-proposition/<slug>/north-star-blurb.md")
+    (optional-lean-if-present
+      "workproduct/lean-mvp/<slug>/customer-context.md"
+      "workproduct/lean-mvp/<slug>/underserved-needs.md"
+      "workproduct/lean-mvp/<slug>/mvp-scope.md")
+    (slug-mismatch "value and lean may use different folder names; load value notes for the chosen value slug; only add lean files under that same slug, or skip lean notes — do not invent a merge")
+    (missing-profile-or-map "if neither customer-profile.md nor value-map.md exists, say so in plain words and either open /value first or draft from what the human just typed — never pretend the notes exist")
+    (hand-to-story "pass the file contents into story-generation-prompt as evidence; story must not ask the human to re-paste those files")
+    (see references/path.md section claim-evidence-handoff))
 )

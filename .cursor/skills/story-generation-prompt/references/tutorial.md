@@ -81,9 +81,13 @@ Fill `assets/story-card.template.md` when you want the full card, not only the s
 
 INVEST-plus is split into two tables in `references/invest-plus.md`. **N**, **V**, and **T** can be judged from the sentence. **I**, **E**, and **S** need backlog and team context; without that, the honest mark is `not answerable here`, not `pass`.
 
+## When value notes already exist (no paste hunt)
+
+If you already ran `/value` (or came here from `/product-spine` on claim), the notes live under `workproduct/value-proposition/<your-project>/`. The skill (and spine on claim) must open `customer-profile.md`, `value-map.md`, and `north-star-blurb.md` when they exist, list those paths, and draft from them. You should not dig through folders or paste those files back into chat.
+
 ## When you are not using NotebookLM
 
-Open `assets/evidence-intake.template.md` and fill **Actor and moment**, **What they do instead today**, and **Observable cost** before any sentence is written. If a slot is empty, ask one question and wait; do not invent an interview.
+Open `assets/evidence-intake.template.md` and fill **Actor and moment**, **What they do instead today**, and **Observable cost** before any sentence is written — unless those slots are already covered by the value notes above. If a slot is empty, ask one question and wait; do not invent an interview.
 
 `references/drafting-inputs.md` ranks evidence types. Observed workarounds rank highest; bare survey scores rank lowest because a number alone has no testable outcome.
 

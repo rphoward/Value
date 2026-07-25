@@ -30,7 +30,9 @@
     (cost "An observable cost of doing it that way — time, rework, an abandoned attempt, money.")
     (check "All three present before any sentence is written.")
     (on-missing "Ask one question for the missing ingredient and wait.")
-    (forbidden "Filling an ingredient from imagination to complete the form."))
+    (sibling-workproduct "When a value slug is known, read workproduct/value-proposition/<slug>/customer-profile.md, value-map.md, and north-star-blurb.md if present before asking the human to paste — those files are the intake.")
+    (forbidden "Filling an ingredient from imagination to complete the form.")
+    (forbidden "Asking the human to re-paste profile, map, or north-star when those files already exist on disk."))
 
   (section negotiable-test
     (procedure "Swap the implementation you have in mind for a different one, then read the want clause again.")
