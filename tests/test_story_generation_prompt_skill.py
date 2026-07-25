@@ -125,6 +125,18 @@ class StoryGenerationPromptSkillTests(unittest.TestCase):
         text = GENERATION_PROMPT.read_text(encoding="utf-8")
         self.assertIn("## Source fidelity", text)
         self.assertIn("## Producer paste block", text)
+        self.assertIn("## Human how-to", text)
+        self.assertIn("Do this in NotebookLM", text)
+        self.assertIn("Box A", text)
+        self.assertIn("Box B", text)
+
+    def test_human_notebooklm_how_to_is_required_in_skill_voice(self) -> None:
+        """Guards claim dumping vibecoders into essay-length NotebookLM forks."""
+        recon = NOTEBOOKLM_RECON.read_text(encoding="utf-8")
+        self.assertIn("Tell the human (keep this short)", recon)
+        self.assertIn("Do this in NotebookLM", recon)
+        self.assertIn("human-how-to-shape", self.skill_text)
+        self.assertIn("conflicting-upload-options-in-the-same-turn", self.skill_text)
 
     def test_notebooklm_recon_template_has_pass1_question_and_forbidden_script(self) -> None:
         """Guards pass 1 stays recon, not entertainment script generation."""

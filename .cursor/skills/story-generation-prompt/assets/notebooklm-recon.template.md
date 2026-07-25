@@ -1,5 +1,19 @@
 # NotebookLM reconnaissance (pass 1)
 
+## Tell the human (keep this short)
+
+When you send NotebookLM directions in chat, use this shape — not a long explanation:
+
+Do this in NotebookLM
+
+1. Upload this folder: `<ONE path you name>`
+2. Chat box → paste Box A (the Pass 1 question in the fenced block below)
+3. Video / Studio box → paste Box B (Producer paste block from the skill, later)
+
+One folder path only. Do not list three upload options.
+
+---
+
 Run this **before** the skill writes the story sentence or the producer prompt. NotebookLM holds the repo as **sources**; this pass builds a **mechanism ledger**, not a showcase script and not marketing copy.
 
 Ask a codebase only what a codebase knows. Most repositories are written by coders for themselves: they explain what to install and how to run it, and they say nothing about audience, positioning, or when someone should skip the tool. Asking the sources those questions returns "not in sources" on every row that matters. So pass 1 collects mechanism, and the skill derives positioning afterwards using `references/positioning-inference.md`.

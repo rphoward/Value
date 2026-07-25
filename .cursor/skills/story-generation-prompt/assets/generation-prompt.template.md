@@ -47,3 +47,21 @@ Short instructions for NotebookLM pass 2 or a small instruction box. Sources sta
 ```text
 (≤120 words: claim ceiling, section order, fidelity rules, tone, success signal — operator fills from sections above)
 ```
+
+## Human how-to (emit this to the user — keep it this short)
+
+When the human must use NotebookLM, say it like this. Do not replace this with a long essay. Do not give two different upload plans.
+
+```text
+Do this in NotebookLM
+
+1. Upload this folder: <ONE path — fill in>
+2. Chat box → paste Box A (below)
+3. Video / Studio box → paste Box B (below)
+
+Box A — chat (facts only, not the video)
+<pass-1 question OR say: skip if you already ran pass 1>
+
+Box B — video
+<Producer paste block from above>
+```

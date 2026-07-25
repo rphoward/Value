@@ -84,12 +84,14 @@ disable-model-invocation: true
     (shape "short guide-turn in that order — no atom IDs, no script stdout; keep words simple enough for a first-time vibecoder")
     (slug "say the project slug when known")
     (carry "the human should feel guided, not sorted into a queue; spine is the entrance and the re-entrance until claim work is in hand")
+    (notebooklm-directions "when claim emits video/NotebookLM steps, follow story-generation-prompt Human how-to: numbered Do this — one upload folder, Chat box = Box A, Video/Studio = Box B; forbidden: long essays or two upload plans")
     (illegal-replies
       "clarity or mvp turn that names a slash without done-enough and /product-spine return cue"
       "claim turn that only routes to story-generation-prompt without reading and following it"
       "claim turn with no first story action (pass-1 question or draft ask)"
       "claim turn that tells the human to find, open, or paste profile, value-map, or north-star when those files exist on disk"
       "claim turn that skips reading existing customer-profile.md or value-map.md for the chosen slug"
+      "claim turn that explains NotebookLM in a long essay instead of numbered Do this + Box A + Box B"
       "lean before clarity-ready without explicit skip-value and stated re-grilling cost"
       "treating status.py brief active module as clarity-ready or mvp-ready"
       "any sibling init, accept, import, or --refresh from spine"))

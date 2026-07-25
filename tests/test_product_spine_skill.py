@@ -153,6 +153,8 @@ class ProductSpineSkillTests(unittest.TestCase):
             self.assertIn(needle, combined, f"missing claim-evidence wiring: {needle}")
         self.assertIn("claim-evidence-handoff", path_text)
         self.assertIn("Files I'm using", path_text)
+        self.assertIn("notebooklm-directions", self.skill_text)
+        self.assertIn("Box A", path_text + self.skill_text)
 
     def test_spine_does_not_instruct_self_reload(self) -> None:
         """Guards circular handoffs that bounce the agent back into /product-spine forever."""

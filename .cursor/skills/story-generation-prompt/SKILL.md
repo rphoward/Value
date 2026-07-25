@@ -117,27 +117,34 @@ disable-model-invocation: true
   (protocol-5-output-shape
     (order-by-direction
       (draft-story "Story card → INVEST-plus → Test hook → Evidence intake gaps")
-      (story-to-prompt "User story (one sentence) → Generation prompt → Producer paste block → Story card → INVEST-plus → Test hook")
-      (notebooklm-recon "Pass-1 question or ledger → positioning inference table → protocol-1 draft → same output order as story-to-prompt")
+      (story-to-prompt "User story (one sentence) → Human how-to for NotebookLM (when video/overview) → Box A + Box B paste blocks → Story card → INVEST-plus → Test hook")
+      (notebooklm-recon "Human how-to with one folder path → Box A pass-1 question → wait → then ledger path as today")
       (prompt-to-story "Reconstructed story → Unknowns → INVEST-plus → Questions for the operator"))
-    (voice "Generation prompt: imperative, producer-facing. Story card: product-facing.")
+    (voice "Generation prompt: imperative, producer-facing. Story card: product-facing. Human how-to: short numbered steps a twelve-year-old could follow — folder path, chat box, video box; no forks, no essays.")
+    (human-how-to-shape
+      "Do this in NotebookLM"
+      "1. Upload this folder: <one absolute or repo path>"
+      "2. Chat box → paste Box A"
+      "3. Video / Studio box → paste Box B"
+      "Then show Box A and Box B as fenced copy-paste blocks only")
     (sections "omit empty optional blocks")
     (examples references/examples.md)
     (after-emit
       "Remind the human to paste the one sentence into lean-mvp MS05 when that atom is open"
       "If the claim exposed a customer gap, offer opening the value skill"
-      "Optional re-triage via /product-spine — do not read product-spine/SKILL.md in a loop"))
+      "Optional re-triage via /product-spine — do not read product-spine/SKILL.md in a loop")
+    (forbidden 'walls-of-prose-instead-of-numbered-notebooklm-steps 'two-different-upload-plans-in-one-turn))
 
   (protocol-6-notebooklm-recon
     (when "the project's facts live in a repo or doc set — operator names a repo, mentions NotebookLM, asks for the recon question, or pastes pass-1 ledger output")
     (workflow
-      1 "If no fact ledger exists yet, emit the upload allowlist and the pass-1 question from assets/notebooklm-recon.template.md as copy-paste text, then wait. Emit them unprompted rather than asking whether the operator wants them."
+      1 "If no fact ledger exists yet: emit Human how-to first (one upload folder path + Box A = pass-1 question from assets/notebooklm-recon.template.md), then wait. One path only — do not offer Value monorepo vs Product-Spine vs allowlist forks in the same turn."
       2 "On pasted ledger, fill evidence intake Source fact ledger; read references/source-fidelity.md."
       3 "Run protocol-7 — derive positioning from mechanism; confirm only what the sentence needs before drafting clauses."
       4 "If actor, workaround, or cost missing, ask one question — neither the ledger nor the inference table can supply observation."
       5 "Run protocol-1 steps 2–6, grounding factual clauses in the ledger and positioning clauses in confirmed inference."
-      6 "Run protocol-2; Producer paste block targets NotebookLM pass 2 on the same sources.")
-    (forbidden 'pass-1-script-or-podcast-request 'ask-sources-for-audience-or-benefit-they-never-state 'treat-ledger-as-verbatim-without-spot-check))
+      6 "Run protocol-2; emit Human how-to again with Box B = Producer paste block for the video / Studio box on the same sources.")
+    (forbidden 'pass-1-script-or-podcast-request 'ask-sources-for-audience-or-benefit-they-never-state 'treat-ledger-as-verbatim-without-spot-check 'conflicting-upload-options-in-the-same-turn))
 
   (protocol-7-positioning-inference
     (when "sources are a codebase or doc set that states mechanism but not audience, positioning, use, or skip — the normal case for a repo README")

@@ -70,7 +70,8 @@
     (files-im-using "claim only — exact paths; say already saved")
     (this-turn "one sibling slash, or claim inline story with a first story action from those files")
     (come-back-when "done-enough + /product-spine re-entry")
-    (tone "plain words a teenage vibecoder can follow — no atom codes, no curriculum jargon"))
+    (tone "plain words a teenage vibecoder can follow — no atom codes, no curriculum jargon")
+    (notebooklm "when giving video steps: Do this → 1 upload folder 2 Chat Box A 3 Video Box B — never a wall of options"))
 
   (check no-spine-session "product-spine has no scripts/ of its own and no session.json")
 
