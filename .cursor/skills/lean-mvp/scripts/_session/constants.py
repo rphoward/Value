@@ -36,7 +36,6 @@ MILESTONE_TEMPLATES = {
 DESIGN_BRIEFS: tuple[tuple[str, str], ...] = ()
 BUILD_PACK_FILES: tuple[tuple[str, str], ...] = ()
 VALUE_TRAIL_CRUMBS: tuple[dict[str, Any], ...] = ()
-MATCH_BOARD_ATOMS: dict[str, tuple[str, str, str]] = {}
 _NUMBERED_ITEM_RE = re.compile(r"\((\d+)\)\s*")
 _LINE_ITEM_RE = re.compile(
     r"(?:^|\n)\s*(?:[-*•]|\(?\d+[\)\].:])\s+",

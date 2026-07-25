@@ -1,0 +1,12 @@
+{
+  "atom_id": "MS12",
+  "module": "mvp-scope",
+  "section": "Gate",
+  "asks": "Review MVP scope. Pass the gate, reopen, or record unknowns.",
+  "accepts_summary": "Pass gate, reopen, or blocking unknowns.",
+  "soft": false,
+  "gate": true,
+  "gate_due": true,
+  "pacing_mode": "standard",
+  "position_status": "in_progress"
+}

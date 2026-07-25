@@ -7,7 +7,6 @@ from typing import Any
 
 from .catalog import ASSETS_DIR
 from .constants import (
-    MATCH_BOARD_ATOMS,
     VALUE_TRAIL_CRUMBS,
     _EXTREME_PAIN_RE,
     _LINE_ITEM_RE,
@@ -118,48 +117,6 @@ def _prefer_extreme_first(items: list[str]) -> list[str]:
     extreme = [item for item in items if _EXTREME_PAIN_RE.search(item)]
     rest = [item for item in items if not _EXTREME_PAIN_RE.search(item)]
     return extreme + rest if extreme else items
-
-
-def match_board_for_atom(session: dict[str, Any], atom_id: str) -> dict[str, Any] | None:
-    """Agent-internal parts×pains/gains board for pain-reliever and gain-creator match steps."""
-    if atom_id not in MATCH_BOARD_ATOMS:
-        return None
-    target_atom, target_name, link_question = MATCH_BOARD_ATOMS[atom_id]
-    parts_record = current_answer(session, "V02")
-    targets_record = current_answer(session, target_atom)
-    parts = (
-        split_sticky_items(parts_record["answer"])
-        if parts_record and not is_ceremony_answer(parts_record)
-        else []
-    )
-    targets = (
-        split_sticky_items(targets_record["answer"])
-        if targets_record and not is_ceremony_answer(targets_record)
-        else []
-    )
-    if atom_id == "V03":
-        targets = _prefer_extreme_first(targets)
-    part_labels = [sticky_label(item) for item in parts]
-    target_labels = [sticky_label(item) for item in targets]
-    parts_list = "\n".join(f"- {label}" for label in part_labels) or "- (no offering parts yet)"
-    targets_list = (
-        "\n".join(f"- {label}" for label in target_labels)
-        or f"- (no accepted {target_name} yet)"
-    )
-    match_prompt = (
-        f"Offering parts:\n{parts_list}\n\n"
-        f"Accepted {target_name}:\n{targets_list}\n\n"
-        f"{link_question}"
-    )
-    return {
-        "parts": parts,
-        "targets": targets,
-        "part_labels": part_labels,
-        "target_labels": target_labels,
-        "target_atom": target_atom,
-        "target_name": target_name,
-        "match_prompt": match_prompt,
-    }
 
 
 def answer_text(session: dict[str, Any], atom_id: str) -> str:

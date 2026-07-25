@@ -11,9 +11,9 @@ from pathlib import Path
 from _session import (
     GATE_ATOMS,
     all_modules_ready,
+    coaching_for_atom,
     load_atoms,
     load_session,
-    match_board_for_atom,
     module_outcome,
     pacing_mode,
     schedule_next_atom,
@@ -82,17 +82,7 @@ def main() -> int:
         "pacing_mode": pacing_mode(session),
         "position_status": position["status"],
     }
-    board = match_board_for_atom(session, atom["id"])
-    if board is not None:
-        payload["match_board"] = {
-            "parts": board["parts"],
-            "targets": board["targets"],
-            "part_labels": board["part_labels"],
-            "target_labels": board["target_labels"],
-            "target_atom": board["target_atom"],
-            "target_name": board["target_name"],
-        }
-        payload["match_prompt"] = board["match_prompt"]
+    payload["coaching"] = coaching_for_atom(session, atom["id"])
     print(json.dumps(payload, indent=2))
     return 0
 

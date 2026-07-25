@@ -1,0 +1,12 @@
+{
+  "atom_id": "MS05",
+  "module": "mvp-scope",
+  "section": "Stories",
+  "asks": "Write one INVEST user story for the top MVP feature chunk (As a … I want … so that …).",
+  "accepts_summary": "Story plus brief INVEST pass/fail notes.",
+  "soft": false,
+  "gate": false,
+  "gate_due": false,
+  "pacing_mode": "standard",
+  "position_status": "in_progress"
+}

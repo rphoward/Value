@@ -1,0 +1,524 @@
+{
+  "C01": {
+    "why_it_matters": "Every later module assumes a bounded segment. A vague \u201ceveryone\u201d answer poisons opportunity scoring, MVP cuts, and test recruiting because you cannot tell who you are optimizing for.",
+    "kb_refs": ["pmf_pyramid_hierarchy", "visual_grounding_analogies.space_pen_mirage"],
+    "reads": [],
+    "complete_when": [
+      "Names a specific segment you could find in the wild, not a job title alone.",
+      "States who is out of scope, or labels the boundary unknown with what you would need to learn."
+    ],
+    "worked_example": "Solo operators shipping a first paid product alone, not funded teams with PMs. Excludes agencies billing hourly and hobbyists with no budget.",
+    "common_miss": "Answering with a product category (\u201cSaaS founders\u201d) instead of a segment you could recruit for a follow-me-home session."
+  },
+  "C02": {
+    "why_it_matters": "The archetype name and the quote are what later turns argue with. Without a quote in their words, every downstream call gets made in your voice and nobody notices the swap.",
+    "kb_refs": ["visual_grounding_analogies.follow_me_home"],
+    "reads": [
+      { "atom": "C01", "why": "the segment boundary the archetype has to sit inside" }
+    ],
+    "complete_when": [
+      "One archetype name a stranger could repeat back to you.",
+      "One quote in the customer's own words about what they care about most.",
+      "A note on whether the quote is remembered from a real conversation or written by you as a stand-in."
+    ],
+    "worked_example": "The Van Groomer. \"If I lose one appointment I lose the afternoon, because the next dog is across town.\" Heard on a ride-along, not paraphrased.",
+    "common_miss": "Writing the quote yourself in marketing language. If nobody has said it out loud, label it a stand-in so a later turn can go get the real one."
+  },
+  "C03": {
+    "why_it_matters": "Traits are what make the persona findable and priceable. Vague traits mean you cannot tell later whether a $40 a month price or a phone-first design is plausible.",
+    "kb_refs": ["pmf_pyramid_hierarchy.problem_space_market"],
+    "reads": [
+      { "atom": "C01", "why": "the segment the traits have to stay inside" },
+      { "atom": "C02", "why": "the archetype and quote the traits have to stay consistent with" }
+    ],
+    "complete_when": [
+      "An age band or a life-stage marker.",
+      "An income or budget band, for the person or for the business.",
+      "Tech comfort, stated as what tools they already run without help.",
+      "Risk posture toward spending money and changing how they work.",
+      "Any of the four marked unknown, with the question you would ask to close it."
+    ],
+    "worked_example": "Van groomers, 30 to 50, business revenue 60k to 110k a year, comfortable with a phone and Square but not with a laptop, spend fast on anything that saves a drive and refuse anything with a setup fee.",
+    "common_miss": "Filling all four traits with plausible guesses. Mark the ones you have not checked as unknown so they do not harden into facts."
+  },
+  "C04": {
+    "why_it_matters": "Adoption position decides how forgiving your first users are. Aim a rough prototype at an early majority buyer and the test fails for reasons that have nothing to do with the idea.",
+    "kb_refs": ["adoption_lifecycle"],
+    "reads": [
+      { "atom": "C02", "why": "the archetype whose buying habits you are placing" },
+      { "atom": "C03", "why": "the tech comfort and risk posture that hint at the position" }
+    ],
+    "complete_when": [
+      "One position named out of innovator, early adopter, early majority, late majority, laggard.",
+      "One or two behaviors you have seen that put them there.",
+      "Whether the placement is observed or a hypothesis."
+    ],
+    "worked_example": "Early majority. Van groomers wait until two people in their Facebook group say a tool works, then buy the same one. Observed in that group, three threads over a month.",
+    "common_miss": "Naming early adopter because you hope so. An early adopter already bought something half-broken for this problem, so if you cannot point at that purchase you are further right on the curve."
+  },
+  "C05": {
+    "why_it_matters": "This ladder separates a buyer from a sympathetic listener. A rung you skip here shows up later as a prototype nobody schedules time for.",
+    "kb_refs": ["earlyvangelist_ladder"],
+    "reads": [
+      { "atom": "C01", "why": "the segment you are running the ladder against" },
+      { "atom": "C03", "why": "the budget band that decides whether the money rung is plausible" },
+      { "atom": "C04", "why": "the adoption position that predicts active searching" }
+    ],
+    "complete_when": [
+      "Has the problem, yes, no, or unknown.",
+      "Knows they have it, yes, no, or unknown.",
+      "Searches for a fix actively, yes, no, or unknown.",
+      "Has cobbled a workaround, with the workaround named.",
+      "Has budget, with the number or the approver named.",
+      "One phrase of evidence per rung, or the word unknown."
+    ],
+    "worked_example": "Has it yes, two hours a week lost to no-shows. Knows it yes, they complain unprompted. Searches yes, they asked the Facebook group for an app twice. Workaround is a paper day sheet plus reminder texts typed one at a time. Budget yes, they already pay $30 a month for Square, so that is the ceiling they compare against.",
+    "common_miss": "Treating yes on the first two rungs as a pass. The workaround and the budget rungs are the ones that predict whether anyone pays."
+  },
+  "C06": {
+    "why_it_matters": "This turn decides whether your evidence will be behavior or opinion. With no named plan, the importance and satisfaction numbers later are your own guesses wearing a percentage sign.",
+    "kb_refs": ["visual_grounding_analogies.follow_me_home"],
+    "reads": [
+      { "atom": "C01", "why": "the segment you have to recruit from" },
+      { "atom": "C02", "why": "the claim in the quote you want to watch someone act out" },
+      { "atom": "C05", "why": "the workaround the plan should catch in use" }
+    ],
+    "complete_when": [
+      "What you will watch someone do, not what you will ask them.",
+      "How many people, and how you will reach them.",
+      "When it happens, or the blocker stopping it, named plainly."
+    ],
+    "worked_example": "Ride along for three full mornings with two groomers, one weekday and one Saturday. Recruit from the two grooming Facebook groups by offering to pay for the day. Watch how the paper day sheet gets used between stops instead of asking about it.",
+    "common_miss": "Planning a survey or a round of interviews. Those collect what people say. You need one place where you watch the workaround get used."
+  },
+  "C12": {
+    "why_it_matters": "This gate locks who you are building for before any needs work starts. Passing with a persona that contradicts the ladder means every opportunity score after it is scored for the wrong person.",
+    "kb_refs": ["pmf_pyramid_hierarchy.problem_space_market"],
+    "reads": [
+      { "atom": "C01", "why": "the segment boundary you are gating" },
+      { "atom": "C02", "why": "the persona and quote the rest has to match" },
+      { "atom": "C04", "why": "the adoption position your first test depends on" },
+      { "atom": "C05", "why": "the ladder that says whether they buy" },
+      { "atom": "C06", "why": "the observation plan that would produce real evidence" }
+    ],
+    "complete_when": [
+      "One of three: pass the gate, reopen a named section with the conflict you found, or record a blocking unknown.",
+      "If you pass, one sentence naming the bet you are making.",
+      "If you reopen, which earlier answer is wrong and what changed your mind."
+    ],
+    "worked_example": "Reopen the Earlyvangelist section. The lifecycle answer says early majority, but the ladder says they search actively and already pay for a workaround. One of the two is wrong, and the ride-along notes say it is the lifecycle answer.",
+    "common_miss": "Passing because the segment sounds crisp. The gate asks whether the persona, the ladder, and the observation plan describe one person."
+  },
+  "U01": {
+    "why_it_matters": "This benefit is what your MVP gets judged against. Stated as a feature, it locks you into one solution before you know the problem is worth solving.",
+    "kb_refs": ["visual_grounding_analogies.space_pen_mirage"],
+    "reads": [
+      { "atom": "C01", "why": "the segment whose benefit this is" },
+      { "atom": "C02", "why": "the words the benefit statement should echo" },
+      { "atom": "C05", "why": "the workaround that shows what they are already trying to get done" }
+    ],
+    "complete_when": [
+      "One sentence starting with an action verb such as help, check, reduce, or maximize.",
+      "No product and no feature named anywhere in it.",
+      "The evidence behind it labeled fact, inference, or hypothesis."
+    ],
+    "worked_example": "Reduce the hours a food bank volunteer coordinator spends rebuilding Saturday's shift list after cancellations. Inference from two Friday afternoons watching the phone tree.",
+    "common_miss": "Writing a feature with a verb bolted on, such as send automatic reminders. Say what improves for them, so a different solution could still win."
+  },
+  "U02": {
+    "why_it_matters": "A second benefit gives the opportunity score something to beat. With one candidate, the ranking turn has nothing to rank and your first guess wins by default.",
+    "kb_refs": ["kano_model_categories.performance_features"],
+    "reads": [
+      { "atom": "U01", "why": "the first benefit this one has to be genuinely different from" },
+      { "atom": "C05", "why": "the workaround that may hide a second job worth naming" }
+    ],
+    "complete_when": [
+      "A second benefit in the same action-verb form, or one line on why you are skipping it.",
+      "One clause on how it differs from the first, not a restatement of the first."
+    ],
+    "worked_example": "Check that every Saturday shift has someone trained on the forklift before the doors open. This one is about a single qualification, where the first is about volume of hours.",
+    "common_miss": "Restating the first benefit in new words. If one fix would satisfy both, you still have one benefit."
+  },
+  "U03": {
+    "why_it_matters": "One why past the stated benefit tells you what the person is protecting. That is what makes a story land later, and skipping it leaves you optimizing the surface request.",
+    "kb_refs": ["visual_grounding_analogies.space_pen_mirage"],
+    "reads": [
+      { "atom": "U01", "why": "the benefit you are laddering under" },
+      { "atom": "C02", "why": "the quote whose motive you are digging past" }
+    ],
+    "complete_when": [
+      "One deeper motivation, in a sentence.",
+      "Marked inference when you are reading between the lines, or unknown when you are not sure."
+    ],
+    "worked_example": "Under the scheduling hours is not wanting to call a volunteer who already showed up twice and ask again. Inference, nobody said it directly.",
+    "common_miss": "Running five whys until you land on something abstract like peace of mind. Stop at the first answer that still names a real situation."
+  },
+  "U04": {
+    "why_it_matters": "These two numbers drive the opportunity score, and that score decides what the MVP leads with. An unlabeled guess here quietly becomes the reason you built the wrong thing.",
+    "kb_refs": ["opportunity_formulas.opportunity_score"],
+    "reads": [
+      { "atom": "U01", "why": "the benefit you are scoring" },
+      { "atom": "U03", "why": "the deeper motivation that argues for a high importance" },
+      { "atom": "C05", "why": "the workaround whose quality anchors the satisfaction number" },
+      { "atom": "C06", "why": "the observation plan that says whether these numbers are watched or guessed" }
+    ],
+    "complete_when": [
+      "Importance as a percentage.",
+      "Satisfaction with today's alternatives as a percentage.",
+      "One basis per number, marked fact, estimate, or unknown.",
+      "The alternative you scored satisfaction against, named."
+    ],
+    "worked_example": "Importance 85%, the coordinator calls it the worst part of the week without being asked. Satisfaction 25%, the phone tree works but eats the afternoon. Both estimates from two observed Fridays, not from a survey.",
+    "common_miss": "Scoring satisfaction against nothing. Satisfaction is how well the current workaround already does the job, so name the workaround you scored."
+  },
+  "U05": {
+    "why_it_matters": "The focus benefit is what the MVP is for. Picked without the arithmetic, the MVP leads with whatever was most fun to build.",
+    "kb_refs": ["opportunity_formulas.opportunity_score"],
+    "reads": [
+      { "atom": "U01", "why": "the benefit in the running" },
+      { "atom": "U03", "why": "the motivation that explains why importance is that high" },
+      { "atom": "U04", "why": "the importance and satisfaction numbers the score comes out of" }
+    ],
+    "complete_when": [
+      "One benefit named as the focus.",
+      "The score worked out, importance times one minus satisfaction, for every benefit you scored.",
+      "One sentence on why the loser lost, or a note that you scored only one."
+    ],
+    "worked_example": "Rebuilding Saturday's shift list leads. 85% x 0.75 = 64. Forklift coverage scored 60% x 0.4 = 24, high stakes but the paper sign-off sheet already handles it.",
+    "common_miss": "Picking the benefit with the highest importance. A benefit people are already served well on is a bad place to lead, however important it is."
+  },
+  "U12": {
+    "why_it_matters": "This gate closes the problem space. Pass it with a focus benefit the numbers do not support and the MVP scope work inherits a bad target while looking fine doing it.",
+    "kb_refs": ["opportunity_formulas.opportunity_score"],
+    "reads": [
+      { "atom": "U01", "why": "the benefit statement you are gating" },
+      { "atom": "U03", "why": "the motivation under it" },
+      { "atom": "U04", "why": "the numbers behind the score" },
+      { "atom": "U05", "why": "the ranking those numbers produced" }
+    ],
+    "complete_when": [
+      "One of three: pass the gate, reopen a named section with the conflict you found, or record a blocking unknown.",
+      "If you pass, one sentence naming the bet you are making.",
+      "If you reopen, which earlier answer is wrong and what changed your mind."
+    ],
+    "worked_example": "Blocking unknown. Satisfaction is scored at 25% from two Fridays in the slow season, and peak season is when the phone tree breaks. The score could move either way until one December Friday is watched, so hold the gate.",
+    "common_miss": "Passing because the score has a number in it. Check that the number came from something you saw, and say so plainly when it did not."
+  },
+  "MS01": {
+    "why_it_matters": "The competitor columns are what the must-have and offense calls get measured against. Leave out the pen-and-paper incumbent and you will build against software while losing to a clipboard.",
+    "kb_refs": ["kano_model_categories.migration_rule"],
+    "reads": [
+      { "atom": "C01", "why": "the segment whose alternatives count" },
+      { "atom": "C05", "why": "the workaround that is already your strongest competitor" },
+      { "atom": "U05", "why": "the focus benefit the columns get compared on" }
+    ],
+    "complete_when": [
+      "Named products, not categories.",
+      "At least one manual or paper workaround as its own column.",
+      "One line per column on who uses it today."
+    ],
+    "worked_example": "For a two-bay shop maintenance log, the columns are Fiix, a shared Google Sheet, the whiteboard by the bay door, and the service binder in the office. The whiteboard is what the techs actually use.",
+    "common_miss": "Listing only funded software. The thing you have to beat is usually the free habit already in the room."
+  },
+  "MS02": {
+    "why_it_matters": "Must-haves are the price of entry. Miss one and no amount of new value saves the release, because the first thing anyone checks is whether it does the boring part.",
+    "kb_refs": ["kano_model_categories.must_haves"],
+    "reads": [
+      { "atom": "C05", "why": "the workaround that shows what they get for free today" },
+      { "atom": "U05", "why": "the focus benefit that decides which table stakes are in play" },
+      { "atom": "MS01", "why": "the incumbents whose table stakes you have to match" }
+    ],
+    "complete_when": [
+      "Each must-have written as a benefit, not as a feature.",
+      "Each one marked table stakes, with the alternative that already delivers it.",
+      "Nothing on the list that is a differentiator or a delighter."
+    ],
+    "worked_example": "For the shop log, record a repair against a machine in under a minute, see a machine's history without asking the owner, and survive a tech dropping the tablet. The whiteboard already does the first two, so both are table stakes.",
+    "common_miss": "Sneaking your favorite differentiator onto the must-have list. If no alternative already does it, it belongs in a later turn."
+  },
+  "MS03": {
+    "why_it_matters": "Offense is where you spend your only advantage, and defense is what you agree to lose. Ceding nothing spreads a solo build across five fronts and wins none of them.",
+    "kb_refs": ["kano_model_categories.performance_features"],
+    "reads": [
+      { "atom": "U05", "why": "the focus benefit that points at the offense vector" },
+      { "atom": "MS01", "why": "the competitors you are picking the fight with" },
+      { "atom": "MS02", "why": "the must-haves that are already spoken for" }
+    ],
+    "complete_when": [
+      "One performance benefit you will be clearly better at, with the alternative you beat on it.",
+      "At least one benefit you will lose on, named out loud.",
+      "One sentence on why that trade is survivable."
+    ],
+    "worked_example": "Offense on the time to log a repair, ten seconds against two minutes in the sheet. Cede reporting and multi-site rollups to Fiix. Survivable because a two-bay shop has one site and the owner reads the log, not a dashboard.",
+    "common_miss": "Naming an offense vector without naming what you give up. A cede you cannot say out loud is a cede you will quietly break next month."
+  },
+  "MS04": {
+    "why_it_matters": "This turn decides whether v1 spends effort on wow. A delighter added before the must-haves hold is the most common way a first release ships late and still feels broken.",
+    "kb_refs": ["kano_model_categories.delighters"],
+    "reads": [
+      { "atom": "U05", "why": "the focus benefit a delighter would have to serve" },
+      { "atom": "MS02", "why": "the must-haves that have to be paid for first" },
+      { "atom": "MS03", "why": "the offense vector a delighter competes with for build time" }
+    ],
+    "complete_when": [
+      "In or out, said plainly.",
+      "If in, which delighter, and what it costs in build time.",
+      "If out, the trigger that brings it back, such as after the first paying shop."
+    ],
+    "worked_example": "No delighter in v1 for the shop log. Photo-to-log is the candidate, deferred until three shops log repairs for a month without being reminded.",
+    "common_miss": "Keeping a delighter because it is the part you are excited about. Name the trigger that earns it back and it stops feeling like a loss."
+  },
+  "MS05": {
+    "why_it_matters": "This story is the contract for the top MVP chunk. If it is vague or untestable, ROI placement and prototype tests optimize the wrong behavior.",
+    "kb_refs": ["invest_user_story_rubric"],
+    "reads": [
+      { "atom": "C02", "why": "the persona that fills the As a clause" },
+      { "atom": "U05", "why": "the focus benefit that fills the so that clause" },
+      { "atom": "MS02", "why": "the must-haves the story has to sit inside" },
+      { "atom": "MS04", "why": "the delighter call the story has to respect" }
+    ],
+    "complete_when": [
+      "One As a / I want / so that sentence tied to the incumbent workaround and the v1 feature cut from prior turns.",
+      "N, V, and T marked pass or fail with one line each, read from the want and so-that clauses.",
+      "I, E, and S marked not answerable here, or reasoned from scope with the basis named. Never pass from the sentence alone."
+    ],
+    "worked_example": "As a solo operator, I want one ranked next-thing-to-finish on my home screen, so that I stop re-deciding every Sunday. N pass, the want names an outcome and not a UI. V pass, the payoff lands on the operator. T pass, you can watch whether they open the app before reopening the notes file. I, E, S reasoned from scope, basis is one repo and one brief.",
+    "common_miss": "Rubber-stamping all six letters pass. Independent, Estimable, and Small are judgments about a backlog and a team, not about a sentence."
+  },
+  "MS06": {
+    "why_it_matters": "The ROI placement is what makes the v1 cut defensible next month. With return and effort unsaid, the version line gets re-argued every week.",
+    "kb_refs": ["roi_prioritization_matrix"],
+    "reads": [
+      { "atom": "MS02", "why": "the must-haves that set the floor for v1" },
+      { "atom": "MS03", "why": "the offense vector that carries the return side" },
+      { "atom": "MS04", "why": "the delighter decision that moves the effort side" },
+      { "atom": "MS05", "why": "the story whose chunk you are placing" }
+    ],
+    "complete_when": [
+      "Return, high or low, with the reason.",
+      "Effort, high or low, with the reason.",
+      "v1 or v1.1, said plainly.",
+      "One thing you moved to v1.1 to keep v1 in the low-effort corner, or a note that nothing needed moving."
+    ],
+    "worked_example": "Logging a repair in ten seconds is high return, it is the offense vector, and low effort, one form and one list. v1. Machine history search moves to v1.1, because the history is worth little until a month of logs exists.",
+    "common_miss": "Calling everything high return and low effort. If two chunks land in the same corner you have not compared them, you have approved them."
+  },
+  "MS12": {
+    "why_it_matters": "This gate locks MVP scope before UX work. Passing with unresolved Kano or ROI contradictions ships a prototype for the wrong feature set.",
+    "kb_refs": ["kano_model_categories"],
+    "reads": [
+      { "atom": "MS01", "why": "the incumbent the scope has to beat" },
+      { "atom": "MS02", "why": "the must-haves v1 has to match" },
+      { "atom": "MS04", "why": "the delighter call" },
+      { "atom": "MS05", "why": "the story those two have to support" },
+      { "atom": "MS06", "why": "the version cut you are gating" }
+    ],
+    "complete_when": [
+      "One of three: pass the gate, reopen a named section with the conflict you found, or record a blocking unknown.",
+      "If you pass, one sentence naming the bet you are making.",
+      "If you reopen, which earlier answer is wrong and what changed your mind."
+    ],
+    "worked_example": "Reopen the Kano section. The offense vector assumes the owner reads the report, but the persona quote says the shop lead reads it. Fix the must-have list before the story stands.",
+    "common_miss": "Passing the gate because every question has an answer. The gate asks whether the answers agree with each other, not whether the boxes are full."
+  },
+  "UX01": {
+    "why_it_matters": "The metaphor is the bottom of the iceberg, and every label and screen above it inherits it. Choose it late and you get a product that works but never feels like one thing.",
+    "kb_refs": ["ux_iceberg_layers.conceptual_design"],
+    "reads": [
+      { "atom": "C02", "why": "the persona whose vocabulary the metaphor should borrow" },
+      { "atom": "MS02", "why": "the must-haves the metaphor has to hold without strain" },
+      { "atom": "MS05", "why": "the story the metaphor has to make obvious" }
+    ],
+    "complete_when": [
+      "One metaphor, named in words the persona already uses.",
+      "One sentence on what it makes obvious.",
+      "One sentence on what it makes awkward, since every metaphor costs something."
+    ],
+    "worked_example": "A farm share pickup app is a punch card. Each week is one square, stamped when you collect your box. It makes the season visible at a glance and makes swapping a week awkward, so swaps get their own screen.",
+    "common_miss": "Naming a metaphor from software, such as dashboard or feed. Borrow the object the person already handles and the labels write themselves."
+  },
+  "UX02": {
+    "why_it_matters": "Information architecture decides what people can find without being taught. A first screen chosen by accident sends everyone to the least useful place in the product.",
+    "kb_refs": ["ux_iceberg_layers.information_architecture"],
+    "reads": [
+      { "atom": "MS02", "why": "the must-haves that each need somewhere to live" },
+      { "atom": "MS06", "why": "the v1 cut that says what needs no screen yet" },
+      { "atom": "UX01", "why": "the metaphor the labels come out of" }
+    ],
+    "complete_when": [
+      "The primary navigation, listed.",
+      "Where a returning person lands, named as one screen.",
+      "Where each must-have lives in that structure.",
+      "Anything you left with no home in v1, on purpose."
+    ],
+    "worked_example": "For the farm share app the navigation is This Week, Season, and Account. A returning member lands on This Week, showing the pickup window and the location. Swaps live inside This Week rather than in their own tab. Recipes have no home in v1.",
+    "common_miss": "Landing everyone on a home screen that summarizes. Land them on the thing they came to do, which is usually the current week or the next action."
+  },
+  "UX03": {
+    "why_it_matters": "The primary flow is what your test will measure. Written as a vague journey, the test cannot tell a confusing screen from a wrong idea.",
+    "kb_refs": ["ux_iceberg_layers.interaction_design"],
+    "reads": [
+      { "atom": "MS05", "why": "the story whose so-that clause the flow has to deliver" },
+      { "atom": "UX01", "why": "the metaphor the steps have to stay inside" },
+      { "atom": "UX02", "why": "the landing screen the flow starts from" }
+    ],
+    "complete_when": [
+      "The trigger that starts it, in the person's world rather than in the app.",
+      "The steps as actions, in order.",
+      "Every decision point where someone could go two ways.",
+      "The done state, stated as something they can see."
+    ],
+    "worked_example": "The trigger is a Tuesday text saying the box is ready. Open This Week, see the window and location, judge whether the time works, then either confirm or swap to Thursday, and land on a stamped square showing the next pickup date. Done state is the stamped square.",
+    "common_miss": "Listing screens instead of steps. Name what the person does at each step, so a test can ask them to do it rather than to look at it."
+  },
+  "UX04": {
+    "why_it_matters": "The test format decides what you can learn and what it costs. The wrong cell burns a week producing a number that cannot answer your question.",
+    "kb_refs": ["mvp_test_matrix_2x2"],
+    "reads": [
+      { "atom": "C06", "why": "the observation plan this test extends" },
+      { "atom": "MS06", "why": "the version cut that bounds what you can build for a test" },
+      { "atom": "UX03", "why": "the flow you need to watch someone attempt" }
+    ],
+    "complete_when": [
+      "Which quadrant, qualitative or quantitative, and marketing or product.",
+      "The specific format inside it, such as a clickable mockup or a landing page smoke test.",
+      "The one question the test is meant to settle.",
+      "What it will not tell you."
+    ],
+    "worked_example": "Qualitative product, a clickable mockup of the punch card. The question is whether members read the stamp without being told. It will not tell you whether anyone would pay, so pricing waits for a different test.",
+    "common_miss": "Reaching for a quantitative test before you know the flow makes sense. Numbers on a confusing flow measure the confusion."
+  },
+  "UX05": {
+    "why_it_matters": "The script is what keeps a test from turning into a demo. With no written task and no wrap-up question, you end up explaining the product and hearing that it is nice.",
+    "kb_refs": ["validation_metrics.sean_ellis_pmf"],
+    "reads": [
+      { "atom": "C02", "why": "the persona whose words the warm-up should use" },
+      { "atom": "UX03", "why": "the flow the single task comes from" },
+      { "atom": "UX04", "why": "the test format the script has to fit" }
+    ],
+    "complete_when": [
+      "A warm-up line that says the thing is rough and that criticism is safe.",
+      "One task, phrased as a goal, with no steps given.",
+      "The Sean Ellis question, worded for your product, with its answer choices.",
+      "One line reminding you not to help while they work."
+    ],
+    "worked_example": "The warm-up says this is a rough mockup, not mine to defend, and anything confusing is my problem to fix. The task is that it is Tuesday, your box is ready, and you cannot make the window, so do what you would do. The wrap-up asks how you would feel if you could no longer use this pickup app, with very disappointed, somewhat disappointed, or not disappointed as the choices.",
+    "common_miss": "Reading the task and then narrating the screen. The silence after the task is the data."
+  },
+  "UX12": {
+    "why_it_matters": "This gate locks the prototype and the test plan before you spend a week recruiting. Passing with a script that cannot answer your question wastes the sessions and the goodwill both.",
+    "kb_refs": ["ux_iceberg_layers"],
+    "reads": [
+      { "atom": "UX01", "why": "the metaphor everything above it inherits" },
+      { "atom": "UX02", "why": "the structure built on that metaphor" },
+      { "atom": "UX03", "why": "the flow the test has to exercise" },
+      { "atom": "UX04", "why": "the format that decides what you can learn" },
+      { "atom": "UX05", "why": "the script that has to produce it" }
+    ],
+    "complete_when": [
+      "One of three: pass the gate, reopen a named section with the conflict you found, or record a blocking unknown.",
+      "If you pass, one sentence naming the bet you are making.",
+      "If you reopen, which earlier answer is wrong and what changed your mind."
+    ],
+    "worked_example": "Pass. The bet is that five members of one farm share are enough to tell whether the punch card reads without explanation, and that the swap is the one flow worth testing first.",
+    "common_miss": "Passing without reading the task out loud against the flow steps. That check is the whole point of the gate."
+  },
+  "MT01": {
+    "why_it_matters": "The equation turns a hope into levers you can pull. Without it, every later metric is a number you watch rather than a number you can move.",
+    "kb_refs": ["visual_grounding_analogies.oprah_versus_spock"],
+    "reads": [
+      { "atom": "U05", "why": "the focus benefit the top metric should be a measure of" },
+      { "atom": "MS06", "why": "the v1 cut that says which levers exist yet" },
+      { "atom": "UX03", "why": "the flow whose steps become the conversion terms" }
+    ],
+    "complete_when": [
+      "One top metric, chosen and named.",
+      "That metric broken into levers you could change by doing something.",
+      "Each lever marked as a number you have or a number you do not."
+    ],
+    "worked_example": "For an invoicing tool for house cleaners, revenue per signup cohort equals trials started times trial-to-paid rate times price times months retained. Trials started is measured from the signup page. The other three are unknown until a first cohort exists.",
+    "common_miss": "Writing an equation out of terms you cannot act on, such as market size. A lever is something a week of your work could move."
+  },
+  "MT02": {
+    "why_it_matters": "LTV and CAC ranges decide whether the equation of the business is fundable. Guessing without assumptions hides a terminal ratio until after launch spend.",
+    "kb_refs": ["ltv_cac_ratio_bands"],
+    "reads": [
+      { "atom": "MT01", "why": "the levers your LTV and CAC numbers have to come out of" }
+    ],
+    "complete_when": [
+      "An LTV range with the revenue and retention assumptions behind it.",
+      "A CAC range with the channel and conversion assumptions behind it.",
+      "One line per number saying whether it is measured or inferred."
+    ],
+    "worked_example": "LTV $180 to $240, which is $15 a month held for twelve to sixteen months, the span implied by 70% month-three retention at two analog tools. CAC $40 to $60, content and trial funnel at 3% signup-to-paid, a hypothesis. Both ranges stay labeled until the first paid cohort.",
+    "common_miss": "Quoting industry benchmarks without tying them to your own levers or your actual price point."
+  },
+  "MT03": {
+    "why_it_matters": "The ratio is the verdict on whether the model survives paid growth. Read with no corrective action attached, a thin ratio becomes something you know and do nothing about.",
+    "kb_refs": ["ltv_cac_ratio_bands"],
+    "reads": [
+      { "atom": "MT01", "why": "the levers you would pull if the ratio comes out thin" },
+      { "atom": "MT02", "why": "the two ranges the ratio divides" }
+    ],
+    "complete_when": [
+      "The ratio, or a range of ratios, with the LTV and CAC numbers it came from.",
+      "Which band it lands in, terminal, unstable, or healthy.",
+      "If it is under 3, one corrective action naming the lever you would move first."
+    ],
+    "worked_example": "LTV $180 to $240 over CAC $40 to $60 gives 3.0 to 6.0, healthy across the whole range but sitting exactly on the line at the bottom. If the low end holds, raise months retained by fixing the first-invoice moment rather than cutting spend.",
+    "common_miss": "Reporting the ratio and stopping. Under 3, name the single lever you would move, because that decision is what the number exists to force."
+  },
+  "MT04": {
+    "why_it_matters": "One metric that matters most is what keeps a solo build from optimizing five things badly. Picked before retention holds, it sends your effort at the top of the funnel while the bottom leaks.",
+    "kb_refs": ["aarrr_framework", "mtmm_retention_first"],
+    "reads": [
+      { "atom": "UX03", "why": "the flow that tells you where activation ends" },
+      { "atom": "MT01", "why": "the equation whose terms map onto the funnel" },
+      { "atom": "MT03", "why": "the ratio verdict that points at which stage to fix" }
+    ],
+    "complete_when": [
+      "One line per stage, acquisition, activation, retention, referral, revenue, with the number or the word unknown.",
+      "One metric picked as the one that matters most right now.",
+      "The retention check, whether retention is good enough to earn spending on acquisition.",
+      "What you are not watching this month, on purpose."
+    ],
+    "worked_example": "For the invoicing tool, acquisition is 40 signups a month from a cleaners' forum, activation is 30% sending a first invoice, retention past month two is unknown, referral is unknown, revenue is $15 a month. The metric that matters most is a first invoice sent within a day, because retention cannot be read until people start.",
+    "common_miss": "Picking acquisition because it is the easiest number to move. If people do not come back, more of them arriving makes the leak bigger."
+  },
+  "MT05": {
+    "why_it_matters": "An experiment with no threshold cannot end. You need the number that would make you stop, or you will run the change forever and call it a rollout.",
+    "kb_refs": ["visual_grounding_analogies.silver_bullet_metric"],
+    "reads": [
+      { "atom": "MT01", "why": "the lever behind the metric you are moving" },
+      { "atom": "MT03", "why": "the corrective action this experiment is supposed to deliver" },
+      { "atom": "MT04", "why": "the one metric the experiment has to move" }
+    ],
+    "complete_when": [
+      "The one change you will make.",
+      "How it is split, an A/B or a throttle by cohort or by week.",
+      "The success threshold as a number, written down before you look.",
+      "How long it runs, and how many people it needs.",
+      "What you do if it fails."
+    ],
+    "worked_example": "Prefill the first invoice from the cleaner's existing client list. Throttle it to half of new signups, by week. Success is first invoice within a day moving from 30% to 45%. Four weeks or 80 signups, whichever comes second. If it fails the form is not the problem, so go watch three cleaners try to send one.",
+    "common_miss": "Deciding the threshold after seeing the numbers. Write the number down first, or every result will look like a small win."
+  },
+  "MT12": {
+    "why_it_matters": "This is the last gate, and it locks the plan you run on after launch. Passing with a metric plan that argues with the unit economics means optimizing hard in the wrong direction.",
+    "kb_refs": ["visual_grounding_analogies.local_maximum_hill"],
+    "reads": [
+      { "atom": "MT01", "why": "the equation the whole plan hangs on" },
+      { "atom": "MT02", "why": "the LTV and CAC ranges" },
+      { "atom": "MT03", "why": "the ratio verdict and its corrective action" },
+      { "atom": "MT04", "why": "the one metric you chose to watch" },
+      { "atom": "MT05", "why": "the experiment that has to move it" }
+    ],
+    "complete_when": [
+      "One of three: pass the gate, reopen a named section with the conflict you found, or record a blocking unknown.",
+      "If you pass, one sentence naming the bet you are making.",
+      "If you reopen, which earlier answer is wrong and what changed your mind."
+    ],
+    "worked_example": "Reopen the Analytics section. The ratio work says the weak lever is months retained, but the chosen metric is a first invoice sent, which is an activation number. Pick a metric on the retention side, or say plainly why activation comes first.",
+    "common_miss": "Passing the last gate because the module is finished. Read the experiment against the ratio verdict and check that both aim at the same lever."
+  }
+}

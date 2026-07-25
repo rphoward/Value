@@ -191,7 +191,7 @@
       "id": "MS05",
       "module": "mvp-scope",
       "asks": "Write one INVEST user story for the top MVP feature chunk (As a … I want … so that …).",
-      "accepts_summary": "Story plus brief INVEST pass/fail notes.",
+      "accepts_summary": "Story plus one INVEST result per letter, each pass, fail, not answerable here, or reasoned from scope with a named basis.",
       "unlocks": "MS06",
       "gate": false,
       "requires": ["MS04"],

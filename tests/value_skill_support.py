@@ -205,9 +205,7 @@ def run_script(script_name: str, *args: str, cwd: Path | None = None) -> subproc
 
 
 def import_session_helper():
-    sys.path.insert(0, str(SCRIPTS_DIR))
-    import _session
+    from tests.skill_session_loader import load_skill_session
 
-    _session.reset_atom_indexes()
-    return _session
+    return load_skill_session(SCRIPTS_DIR)
 

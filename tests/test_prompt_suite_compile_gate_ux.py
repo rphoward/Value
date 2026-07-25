@@ -54,17 +54,16 @@ def scaffold_draft(tmp: Path) -> Path:
 
 def gate_context(scripts_dir: Path, session_path: Path) -> tuple[str, str, str]:
     """Return (gate_id, module_id, canonical_pass) for the first module gate."""
-    if str(scripts_dir) not in sys.path:
-        sys.path.insert(0, str(scripts_dir))
-    from _session import (
-        MODULE_ATOMS,
-        MODULE_ORDER,
-        _build_atom_indexes,
-        canonical_gate_pass_text,
-        gate_atom_for_module,
-        load_session,
-        save_session,
-    )
+    from tests.skill_session_loader import load_skill_session
+
+    session_mod = load_skill_session(scripts_dir)
+    MODULE_ATOMS = session_mod.MODULE_ATOMS
+    MODULE_ORDER = session_mod.MODULE_ORDER
+    _build_atom_indexes = session_mod._build_atom_indexes
+    canonical_gate_pass_text = session_mod.canonical_gate_pass_text
+    gate_atom_for_module = session_mod.gate_atom_for_module
+    load_session = session_mod.load_session
+    save_session = session_mod.save_session
 
     _build_atom_indexes()
     module = MODULE_ORDER[0]

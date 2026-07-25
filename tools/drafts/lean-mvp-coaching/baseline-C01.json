@@ -1,0 +1,12 @@
+{
+  "atom_id": "C01",
+  "module": "customer-context",
+  "section": "Segment",
+  "asks": "Which target customer segment are you building for?",
+  "accepts_summary": "Names segment with exclusion or labels unknown.",
+  "soft": false,
+  "gate": false,
+  "gate_due": false,
+  "pacing_mode": "standard",
+  "position_status": "in_progress"
+}

@@ -25,9 +25,12 @@ def run_script(*args: str, cwd: Path | None = None) -> subprocess.CompletedProce
 
 def seed_ready_for_gate(session_path: Path, gate_id: str = "C12") -> None:
     """Mark all customer-context atoms before the gate as answered."""
-    if str(SCRIPTS_DIR) not in sys.path:
-        sys.path.insert(0, str(SCRIPTS_DIR))
-    from _session import load_atoms, load_session, save_session
+    from tests.skill_session_loader import load_skill_session
+
+    session_mod = load_skill_session(SCRIPTS_DIR)
+    load_atoms = session_mod.load_atoms
+    load_session = session_mod.load_session
+    save_session = session_mod.save_session
 
     session = load_session(session_path)
     atoms = load_atoms()

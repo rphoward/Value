@@ -35,11 +35,9 @@ def run_script(script_name: str, *args: str) -> subprocess.CompletedProcess[str]
 
 
 def import_session():
-    sys.path.insert(0, str(SCRIPTS_DIR))
-    import _session
+    from tests.skill_session_loader import load_skill_session
 
-    _session._atom_indexes_built = False
-    return _session
+    return load_skill_session(SCRIPTS_DIR)
 
 
 class ValueSessionIntegrityTests(unittest.TestCase):

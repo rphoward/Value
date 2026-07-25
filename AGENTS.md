@@ -13,6 +13,7 @@ Develop and distribute a Cursor agent skill from this GitHub repo. The layered s
 | `tools/prompt-suite-compile/` | Thin shims → `.cursor/skills/scripted-skill-from-doc/` |
 | `.cursor/skills/value/` | Same skill for Cursor while developing this repo |
 | `.cursor/skills/lean-mvp/` | Lean MVP skill for Cursor in this repo |
+| `.cursor/skills/story-generation-prompt/` | Evidence → story → generation prompt, INVEST-plus rubric (pairs with lean-mvp MS05) |
 | `.cursor/skills/scripted-skill-from-doc/` | Portable compile pack in standard skill layout (`scripts/`, `references/`, `assets/`) |
 | `src/value/` | Layered spoke product (retargeted at init) |
 | `tests/` | Unittest / pytest suite |

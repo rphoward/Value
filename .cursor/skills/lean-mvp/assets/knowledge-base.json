@@ -63,12 +63,30 @@
     "migration_rule": "Yesterday's delighters become today's performance features and tomorrow's must-haves."
   },
   "invest_user_story_rubric": {
-    "I": "Independent",
-    "N": "Negotiable",
-    "V": "Valuable",
-    "E": "Estimable",
-    "S": "Small",
-    "T": "Testable"
+    "I": {
+      "definition": "Independent. Overlap-free and implementable in any order.",
+      "check": "Needs the backlog and what ships before this story; the sentence alone cannot give a pass."
+    },
+    "N": {
+      "definition": "Negotiable. Not an explicit contract, so it stays open to discussion.",
+      "check": "Read the want clause and swap the implementation; if the sentence collapses, N fails."
+    },
+    "V": {
+      "definition": "Valuable. Delivers a clear benefit to the end user.",
+      "check": "Read the so-that clause; if the benefit lands on the team rather than the actor, V fails."
+    },
+    "E": {
+      "definition": "Estimable. Scope can be reasonably estimated by developers.",
+      "check": "Needs the estimating team and what it has built before; the sentence alone cannot give a pass."
+    },
+    "S": {
+      "definition": "Small. Short in scope, and large epics must be broken down.",
+      "check": "Needs the sprint length and team capacity; the sentence alone cannot give a pass."
+    },
+    "T": {
+      "definition": "Testable. Has clear acceptance criteria that confirm completion.",
+      "check": "Read the test hook; if no observation would settle it either way, T fails."
+    }
   },
   "opportunity_formulas": {
     "value_delivered": "Importance × Satisfaction",
@@ -100,5 +118,48 @@
     "terminal": "Ratio < 1.0 — losing money per customer",
     "unstable": "1.0 ≤ Ratio < 3.0 — unstable for SaaS",
     "healthy": "Ratio ≥ 3.0 — venture standard for scalability"
+  },
+  "adoption_lifecycle": {
+    "segments": [
+      "Innovators",
+      "Early adopters",
+      "Early majority",
+      "Late majority",
+      "Laggards"
+    ],
+    "action": "Name one segment as a hypothesis until purchase or adoption evidence confirms it; do not treat polite interest as proof of position."
+  },
+  "earlyvangelist_ladder": {
+    "rungs": [
+      "Has the problem",
+      "Is aware of the problem",
+      "Is actively searching for a solution",
+      "Has cobbled together a makeshift workaround",
+      "Has budget to pay for a solution"
+    ],
+    "action": "Treat each rung as yes, no, or unknown; a sympathetic listener who fails the money or workaround rungs is not an earlyvangelist buyer yet."
+  },
+  "roi_prioritization_matrix": {
+    "return_axis": "Low, medium, or high value created for the customer",
+    "effort_axis": "Low, medium, or high investment in developer-weeks or story points",
+    "bucket_1": "High return, low effort — top priority quick wins for v1",
+    "bucket_2_3": "High return medium effort or medium return low effort — secondary MVP candidates",
+    "bucket_8_9": "Low return, high effort — cut or defer; active waste",
+    "action": "Map each atomic feature chunk to a bucket, then draw the v1 cut versus v1.1 and v1.2 roadmap from that placement."
+  },
+  "aarrr_framework": {
+    "stages": [
+      "Acquisition",
+      "Activation",
+      "Retention",
+      "Revenue",
+      "Referral"
+    ],
+    "action": "List the metrics you would watch at each stage before picking a single optimization target."
+  },
+  "mtmm_retention_first": {
+    "definition": "Metric That Matters Most — one metric that gets all engineering and design effort for a cycle",
+    "retention_priority": "Optimize retention (the leak in the bucket) before spending on acquisition if cohort curves decay to zero",
+    "action": "Pick one MTMM based on upside and diminishing returns; brainstorm features to move only that metric until the next cycle."
   }
 }

@@ -29,6 +29,7 @@ metadata:
       (session-schema assets/session.schema.json)
       (atoms-index assets/atoms.json)
       (knowledge-base assets/knowledge-base.json)
+      (atom-coaching assets/atom-coaching.json)
       (value-bridge-map assets/value-bridge-map.json)
       (customer-context-template assets/customer-context.template.md)
       (underserved-needs-template assets/underserved-needs.template.md)
@@ -78,7 +79,14 @@ metadata:
   (protocol-3-turn-recipe
     (voice-recipe
       (shape "one paragraph, one primary question")
-      (import-hint "briefly acknowledge value-imported facts without atom IDs"))
+      (import-hint "briefly acknowledge value-imported facts without atom IDs")
+      (coaching-delivery
+        1 "when coaching is null, ask asks alone as today"
+        2 "otherwise ground the turn in ok priors without naming atom ids"
+        3 "state definition text from coaching.definitions"
+        4 "state what a complete answer contains from coaching.complete_when"
+        5 "ask asks as the single primary question"
+        6 "hold worked_example and common_miss until the human stalls"))
     (scripts-silent
       (run "import_value_context status next_question accept_answer")))
 
