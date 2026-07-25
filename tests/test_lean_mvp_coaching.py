@@ -254,6 +254,11 @@ class LeanMvpCoachingTests(unittest.TestCase):
 
             definitions = coaching.get("definitions") or []
             self.assertTrue(definitions, "MS05 coaching should resolve invest rubric")
+            self.assertIn(
+                "story-generation-prompt",
+                coaching.get("story_assist") or "",
+                "MS05 must surface story_assist so the turn can offer the story skill",
+            )
             for block in definitions:
                 text = block.get("text") or ""
                 self.assertNotEqual(

@@ -105,7 +105,7 @@ def coaching_for_atom(session: dict[str, Any], atom_id: str) -> dict[str, Any] |
         for prior in (_prior_for(session, read) for read in entry.get("reads") or [])
         if prior is not None
     ]
-    return {
+    block = {
         "why_it_matters": entry.get("why_it_matters", ""),
         "definitions": definitions,
         "complete_when": list(entry.get("complete_when") or []),
@@ -113,3 +113,7 @@ def coaching_for_atom(session: dict[str, Any], atom_id: str) -> dict[str, Any] |
         "common_miss": entry.get("common_miss", ""),
         "priors": priors,
     }
+    story_assist = entry.get("story_assist")
+    if isinstance(story_assist, str) and story_assist.strip():
+        block["story_assist"] = story_assist
+    return block
