@@ -1,9 +1,10 @@
 # Value skill — living state
 
-Last updated: 2026-07-20
+Last updated: 2026-07-25
 
 ## Shipped
 
+- **Product-spine journey guide** — phase + done-enough + claim/NotebookLM exit; guide-turn envelope + lean `/product-spine` bounce-back (UX mock PASS 2026-07-25); GitHub Product-Spine `f23e56b` base rewrite
 - **Value-map gate presentation** — Mock C inline stickies; expand Fit links or Differentiation on ask (`value-map-gate-review` in SKILL.md); see `handoff/VALUE-GATE-PRESENTATION-PASSED.md`
 - Peer Discord paste voice (who + freeze + what you get; so-what into daily relief) in export-lenses + `docs/values-discord-intro.md`; recorded on Value Design trail as V02 include + V03 pain reliever
 - Session helper package split (`scripts/_session/`) + thermos bugfixes (gaps module filter, atomic save, ADR sync, `--stay` / `--gate-pending`, save-before-export, milestone recovery) — Value `812ab13`, Values `879b2a5`
@@ -12,8 +13,17 @@ Last updated: 2026-07-20
 
 ## Open gates
 
-None.
+- (none)
+
+## Closed recently
+
+- **Story scenario suite** — PASS (S01–S08 all pass against story-generation-prompt); see `handoff/STORY-SCENARIO-SUITE-PASSED.md`
+- **Product-Spine Kai unhappy path** — PASS (coaching stress walk; express compression logged as stimulus; honest try-stage claim); see `handoff/PRODUCT-SPINE-KAI-UNHAPPY-PATH-PASSED.md`
+- **Maya happy path** — FAIL (compressed bulk-accept walk misdeclared PASS); see `handoff/PRODUCT-SPINE-MAYA-HAPPY-PATH-FAILED.md`
 
 ## Local only
 
 - `workproduct/value-proposition/value-design/` — untracked live session (leave as-is)
+- `workproduct/value-proposition/shiftswap/` (+ lean twin if present) — Maya evidence only
+- `workproduct/value-proposition/cashclaw/` (+ lean twin) — Kai unhappy-path evidence
+- `tools/drafts/story-scenario-suite/` — draft fixtures (walk PASS 2026-07-25; promote out of drafts only if desired)

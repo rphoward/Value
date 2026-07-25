@@ -1,15 +1,17 @@
 ---
 name: product-spine
 description: >
-  Use when the user asks which skill to open, where to start on a vibecoded
-  project, how to turn an idea into something valuable and marketable, which
-  of value / lean-mvp / story-generation-prompt to run next, or how to resume
-  across those three. Triages once, names the destination skill, then stops.
-  Not for Strategyzer canvas grilling, Dan Olsen lean-mvp pacing, INVEST story
-  drafting, or NotebookLM generation prompts — hand those to the named sibling.
+  Use when the user asks where to start on a vibecoded project, how to turn an
+  idea into something valuable and marketable, how to resume across value /
+  lean-mvp / story-generation-prompt, or wants a guide from idea through an
+  honest pitch or NotebookLM video prompt. Carries the whole journey: names
+  the phase, the sibling to open, what "done enough" means, and the claim exit.
+  Not for Strategyzer canvas grilling, Dan Olsen lean-mvp atom pacing, or
+  drafting INVEST/NotebookLM copy itself — those stay in the named sibling;
+  this skill routes and stays with the human until the path is clear.
 metadata:
   activation: explicit
-  distribution: monorepo
+  distribution: github
   pairs_with: value, lean-mvp, story-generation-prompt
 disable-model-invocation: true
 ---
@@ -17,7 +19,7 @@ disable-model-invocation: true
 (def-sop product-spine
   (context
     (target "product-spine-skill-agent")
-    (optimization "one-human-entry-that-triages-into-value-lean-mvp-or-story")
+    (optimization "one-human-guide-from-vibecode-to-valuable-to-marketable")
     (references
       (path references/path.md))
     (siblings
@@ -27,40 +29,65 @@ disable-model-invocation: true
 
   <central_idea>
   (center-of-gravity
-    (invariant "One slash entry for vibecode to valuable to marketable. Triage names the sibling skill and stops. Value and lean-mvp own their sessions and import bridges. Story stays slash-or-path-read. This skill never runs value or lean scripts and never invents a second session."))
+    (invariant "One slash entry carries the human from vibecode to valuable to marketable. Spine owns phase, next move, and done-enough. Value and lean-mvp own session.json and grilling. Story owns INVEST and NotebookLM prompts. Spine never invents its own session — it reads sibling sessions (and may run status.py read-only). When the phase is claim, spine reads story-generation-prompt and follows it so the human is not dumped at the last door."))
   </central_idea>
 
   (protocol-0-activation
     (on-activation
       1 "read references/path.md"
-      2 "ask at most one clarifying question only when triage cannot choose among the rules below"
-      3 "name the destination skill path and the human next move in one short paragraph"
-      4 "stop — do not grill canvas atoms, do not draft stories, do not run sibling scripts")
-    (forbidden 'run-value-or-lean-scripts 'invent-session-json 'auto-accept-sibling-atoms 'reload-this-skill-after-handoff))
+      2 "discover shared slug: look under workproduct/value-proposition/*/session.json and workproduct/lean-mvp/*/session.json; if several slugs, ask one clarifying question"
+      3 "when a session exists, run that skill's scripts/status.py <session> read-only (default brief) to learn module position — do not --refresh, accept, init, or import from spine"
+      4 "choose phase with protocol-1; speak protocol-2 voice"
+      5 "if phase is claim: read .cursor/skills/story-generation-prompt/SKILL.md and follow it in this turn — open with a first story action (NotebookLM pass-1 question or draft-story ask), not a pointer to open another slash"
+      6 "if phase is clarity or mvp: fill guide-turn This-turn with exactly /value or /lean-mvp plus leg purpose; stop grilling — the sibling owns atoms on the next leg"
+      7 "close guide-turn Come-back-when: when that leg's done-enough is met (or you are lost), invoke /product-spine again")
+    (forbidden 'invent-spine-session-json 'accept-or-init-sibling-atoms 'grill-canvas-or-lean-atoms 'quote-status-stdout-atom-ids-to-user)
+    (allowed 'read-sibling-session-json 'run-status-py-read-only 'read-and-follow-story-skill-on-claim-phase))
 
-  (protocol-1-triage
+  (protocol-1-journey
     (shared-slug "value and lean-mvp use the same project slug under workproduct/")
     (value-session "workproduct/value-proposition/<slug>/session.json")
     (lean-session "workproduct/lean-mvp/<slug>/session.json")
-    (rules
-      (both-sessions
-        "prefer the skill whose module gate is still incomplete"
-        "if both incomplete, prefer value until profile and value-map gates are done, else lean-mvp"
-        "tell the human to open that skill; its own activation resumes and imports")
-      (one-session "open the skill that owns that session.json")
-      (no-session-repo-claim
-        "finished repo or docs needing an honest shareable claim → read .cursor/skills/story-generation-prompt/SKILL.md and follow its NotebookLM recon or draft-story path")
-      (no-session-idea
-        "bare idea or weak customer clarity → open .cursor/skills/value/SKILL.md")
-      (no-session-mvp
-        "MVP feature ask with no session → open value first; lean still needs customer context. Open lean-mvp only when the human explicitly confirms skip-value and accepts re-grilling segment in lean"))
-    (voice
-      (shape "one paragraph, one named destination, no atom IDs")
-      (rationale "one plain sentence why this destination won — e.g. value profile done lean scope open, or no session so start value")
-      (slug "when a slug is known or derivable, say it once so the human can find workproduct paths")
-      (optional-slash "siblings may be invoked by the human later; this turn only names the path to read or the skill to open")))
+    (clarity-ready "value profile and value-map module_outcome each completed or bypassed — never infer from status.py brief active module alone")
+    (mvp-ready "lean mvp-scope module_outcome completed or bypassed — or human explicitly skips lean and asks to claim; status brief is position hint only")
+    (claim-intent "human asks for pitch, showcase, engagement, INVEST story, NotebookLM, video overview, generation prompt, or shareable claim")
+    (phases
+      (clarity
+        "no value session, or value profile/value-map still open"
+        "destination /value — .cursor/skills/value/SKILL.md"
+        "done-enough: profile and value-map gates passed or bypassed, then return to /product-spine")
+      (mvp
+        "clarity-ready and lean incomplete (or human asks MVP features with clarity-ready)"
+        "destination /lean-mvp — .cursor/skills/lean-mvp/SKILL.md"
+        "done-enough: mvp-scope gate passed or bypassed (MS05 story may use story skill inside lean), then return to /product-spine")
+      (claim
+        "claim-intent, or clarity-ready and mvp-ready, or no session but finished repo/docs needing an honest shareable claim"
+        "destination: read and follow .cursor/skills/story-generation-prompt/SKILL.md now — claim turns execute story inline; routing-only claim is forbidden"
+        "done-enough: human has story sentence and, when they want video, producer paste block for NotebookLM pass 2")
+      (return-after-learning
+        "after experiment results, prototype learning, or story kill-signal → reopen value or lean-mvp for the module that must absorb learning; say which and why"))
+    (precedence
+      (claim-intent-wins "if the human clearly wants pitch/video/claim, choose claim even when a value or lean session is still open — say what they are skipping")
+      (both-sessions-incomplete "prefer value until clarity-ready, else lean-mvp")
+      (one-session "continue that skill's open module unless claim-intent wins")
+      (no-session-idea "clarity → /value")
+      (no-session-mvp-ask "clarity first → /value; open lean-mvp only when human confirms skip-value and accepts re-grilling segment in lean")
+      (no-session-repo-claim "claim → follow story-generation-prompt")))
 
-  (protocol-2-return
-    (note "Import bridges already move answers between value and lean. After MVP learning, experiment results, or a story kill-signal, tell the human to reopen value or lean-mvp; do not invent a spine learn-loop engine.")
-    (when-retriage "if the human is lost again, they invoke /product-spine — do not instruct siblings to read this SKILL.md in a loop"))
+  (protocol-2-voice
+    (guide-turn
+      (you-are-here "phase label + shared slug when known + one plain sentence of situation")
+      (why-this-phase "one precedence sentence — why this phase won")
+      (this-turn "clarity/mvp/return: exactly one sibling slash and what happens there; claim: follow story-generation-prompt with a first story action in this turn")
+      (come-back-when "done-enough for that leg + explicit /product-spine re-entry — omit only while already inside claim story work this turn"))
+    (shape "short guide-turn in that order — no atom IDs, no script stdout")
+    (slug "say the shared slug when known")
+    (carry "the human should feel guided, not sorted into a queue; spine is the entrance and the re-entrance until claim work is in hand")
+    (illegal-replies
+      "clarity or mvp turn that names a slash without done-enough and /product-spine return cue"
+      "claim turn that only routes to story-generation-prompt without reading and following it"
+      "claim turn with no first story action (pass-1 question or draft ask)"
+      "lean before clarity-ready without explicit skip-value and stated re-grilling cost"
+      "treating status.py brief active module as clarity-ready or mvp-ready"
+      "any sibling init, accept, import, or --refresh from spine"))
 )

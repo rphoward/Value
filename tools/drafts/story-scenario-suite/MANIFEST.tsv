@@ -1,0 +1,9 @@
+id	band	axis	skill_entry	title
+S01	typical	evidence-to-try-story	story-generation-prompt	Observed workaround → try-stage INVEST sentence
+S02	typical	repo-pass1-first	story-generation-prompt	Repo-only evidence → NotebookLM pass-1 before draft
+S03	adversarial	funnel-inflate	story-generation-prompt	Inflated adopt/revenue so-that → cut to honest ceiling
+S04	adversarial	implementation-in-want	story-generation-prompt	Want names implementation → negotiable rewrite
+S05	adversarial	demographic-persona	story-generation-prompt	Everyone/rich-teens persona → actor in a moment
+S06	adversarial	prompt-to-story-gap	story-generation-prompt	Reverse prompt→story with missing cost → one question
+S07	boundary	invest-ies-empty	story-generation-prompt	No backlog/team → I/E/S not answerable or reasoned-from-scope
+S08	adversarial	hype-producer-paste	story-generation-prompt	Get-rich video ask → claim ceiling + do-not list

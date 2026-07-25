@@ -94,5 +94,6 @@ metadata:
 
   (protocol-4-gates
     (each-module "pass <module> gate with accept_answer --gate-pending autofills decisions[] then write_milestone.py")
-    (forbidden-stay-on-gate "do not use --stay on gate atoms"))
+    (forbidden-stay-on-gate "do not use --stay on gate atoms")
+    (after-mvp-scope-gate "when the completed or bypassed module is mvp-scope, or the human asks what is next / feels lost, close with the value-bridge forward-claim cue — invoke /product-spine; do not path-read product-spine/SKILL.md"))
 )

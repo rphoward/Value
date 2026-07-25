@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.1",
+  "project": {
+    "slug": "cashclaw",
+    "name": "CashClaw",
+    "created_at": "2026-07-25T20:21:44Z",
+    "updated_at": "2026-07-25T20:24:18Z"
+  },
+  "position": {
+    "module": "business-model",
+    "atom_id": "B01",
+    "status": "in_progress"
+  },
+  "answers": [
+    {
+      "atom_id": "P01",
+      "answer": "Broke teens and early-20s who already spam Discord make-money bots and TikTok hustle tips \u2014 not serious traders, not small businesses, not people who never tried an AI money tool.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:22:20Z"
+    },
+    {
+      "atom_id": "P03",
+      "answer": "Wake up to a small overnight cash result from an AI agent that ran a side hustle play while they slept \u2014 enough to feel 'it works' without day-trading or coding a bot from scratch.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:22:40Z"
+    },
+    {
+      "atom_id": "P11",
+      "answer": "Priority job: get one overnight money result from an AI side-hustle agent without learning to code or day-trade \u2014 the million-dollar dream is the fantasy ceiling, not the first progress.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:22:40Z"
+    },
+    {
+      "atom_id": "P12",
+      "answer": "Pass for now \u2014 I know who and the overnight money job; situation/pains/gains/alternatives are still guesswork. Kai wanted to skip to building; we passed with unknowns listed.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:23:17Z"
+    },
+    {
+      "atom_id": "V01",
+      "answer": "CashClaw overnight side-hustle agent: configure one play, sleep, wake to a small cash result + log. Not a full trading desk, not a multi-hustle empire dashboard, not set-and-forget millionaire.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:23:57Z"
+    },
+    {
+      "atom_id": "V08",
+      "answer": "Pass value map with thin map \u2014 offering boundary locked; pain relievers/gain creators/fit still unknown. Kai wanted pitch/video, not more stickies.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:24:17Z"
+    }
+  ],
+  "evidence": [],
+  "assumptions": [
+    {
+      "claim": "Teens already trying make-money AI tools will care about overnight results",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "P12"
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "pass profile gate",
+      "reason": "Express spine enough to name segment+job; situation/pains/gains/alternatives still unknown \u2014 Kai forced speed",
+      "source_atom": "P12",
+      "resulting_module": "value-map",
+      "resulting_atom": "V01",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "pass value-map gate",
+      "reason": "Express: offering named with exclusions; pain/gain/fit still thin unknowns \u2014 Kai pushed past map depth",
+      "source_atom": "V08",
+      "resulting_module": "business-model",
+      "resulting_atom": "B01",
+      "resulting_status": "in_progress"
+    }
+  ],
+  "unknowns": [
+    {
+      "question": "What concrete overnight situation triggers CashClaw use?",
+      "blocking": false
+    },
+    {
+      "question": "What pains/gains vs Discord bots and TikTok hustle tips?",
+      "blocking": false
+    },
+    {
+      "question": "What do they already try instead?",
+      "blocking": false
+    },
+    {
+      "question": "Which pains does overnight result actually relieve vs Discord bots?",
+      "blocking": false
+    },
+    {
+      "question": "Fit links between offering parts and jobs still unproven",
+      "blocking": false
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "customer-profile.md",
+      "status": "final"
+    },
+    {
+      "path": "value-map.md",
+      "status": "final"
+    },
+    {
+      "path": "CONTEXT.product.md",
+      "status": "final"
+    },
+    {
+      "path": "AGENTS.product.md",
+      "status": "final"
+    },
+    {
+      "path": "ui-copy.md",
+      "status": "final"
+    },
+    {
+      "path": "states-and-flows.md",
+      "status": "final"
+    },
+    {
+      "path": "first-value.md",
+      "status": "final"
+    },
+    {
+      "path": "north-star-blurb.md",
+      "status": "final"
+    },
+    {
+      "path": "value-trail.md",
+      "status": "final"
+    }
+  ],
+  "pacing_mode": "express",
+  "ledger": {
+    "phase": "Evolve",
+    "active_module": "business-model",
+    "completion_pct": 55,
+    "validation_milestone": "Product-Market Fit",
+    "unvalidated_bombs": [
+      "Teens already trying make-money AI tools will care about overnight results"
+    ]
+  }
+}

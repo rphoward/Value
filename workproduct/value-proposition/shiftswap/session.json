@@ -1,0 +1,289 @@
+{
+  "schema_version": "1.1",
+  "project": {
+    "slug": "shiftswap",
+    "name": "ShiftSwap",
+    "created_at": "2026-07-25T20:02:21Z",
+    "updated_at": "2026-07-25T20:02:24Z"
+  },
+  "position": {
+    "module": "business-model",
+    "atom_id": "B01",
+    "status": "in_progress"
+  },
+  "answers": [
+    {
+      "atom_id": "P01",
+      "answer": "Restaurant servers on hourly schedules who need to trade a shift tonight; exclude managers, corporate HQ schedulers, and full-time salaried staff.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:02:21Z"
+    },
+    {
+      "atom_id": "P02",
+      "answer": "Trigger: a coworker texts or posts in the group chat that they need coverage for tonight or tomorrow because of illness, childcare, or a better tip night elsewhere.",
+      "kind": "fact",
+      "accepted_at": "2026-07-25T20:02:21Z"
+    },
+    {
+      "atom_id": "P03",
+      "answer": "Get a trusted coworker to cover my shift so I keep my job standing and the floor stays staffed.",
+      "kind": "fact",
+      "accepted_at": "2026-07-25T20:02:21Z"
+    },
+    {
+      "atom_id": "P04",
+      "answer": "Want managers and peers to see them as reliable teammates who handle coverage without drama \u2014 not flaky.",
+      "kind": "inference",
+      "accepted_at": "2026-07-25T20:02:21Z"
+    },
+    {
+      "atom_id": "P05",
+      "answer": "Want to feel relieved and in control, not anxious that the shift will fall through or that they will get written up.",
+      "kind": "inference",
+      "accepted_at": "2026-07-25T20:02:22Z"
+    },
+    {
+      "atom_id": "P06",
+      "answer": "Buying: check who is already scheduled and available. Co-creating: confirm swap details with the cover. Transferring: tell the manager or update the schedule once coverage is locked.",
+      "kind": "fact",
+      "accepted_at": "2026-07-25T20:02:22Z"
+    },
+    {
+      "atom_id": "P07",
+      "answer": "Group-chat chaos (scroll, @everyone noise, nobody commits). Risk of double-booking or no-show. Fear of looking flaky to the manager. Time spent chasing replies while already on the floor.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:02:22Z"
+    },
+    {
+      "atom_id": "P08",
+      "answer": "A confirmed cover in one place. Clear who is taking which hours. Manager notified without a second chase. Faster yes/no so they can stop refreshing the chat.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:02:22Z"
+    },
+    {
+      "atom_id": "P09",
+      "answer": "Group chat + DMs, paper schedule board, calling coworkers one by one, or skipping the trade and working tired / calling out.",
+      "kind": "fact",
+      "accepted_at": "2026-07-25T20:02:22Z"
+    },
+    {
+      "atom_id": "P10",
+      "answer": "Friends already built ad-hoc swap spreadsheets and keep asking for a cleaner way; one asked Maya to ship something this weekend.",
+      "kind": "fact",
+      "accepted_at": "2026-07-25T20:02:22Z"
+    },
+    {
+      "atom_id": "P11",
+      "answer": "Priority job: get a trusted coworker to cover my shift tonight without group-chat chaos \u2014 high importance, immediate trigger, current alternatives leave them dissatisfied.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:02:23Z"
+    },
+    {
+      "atom_id": "P12",
+      "answer": "Pass \u2014 segment, priority job, pains, gains, alternatives, and evidence labels are good enough to design against.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:02:23Z"
+    },
+    {
+      "atom_id": "V01",
+      "answer": "ShiftSwap: a lightweight same-restaurant shift trade request + confirm flow for servers. Exclude full payroll, multi-location franchise HQ tools, and tip-pooling features.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:02:23Z"
+    },
+    {
+      "atom_id": "V02",
+      "answer": "Included: post a shift trade request with time window; see eligible coworkers; confirm/decline; notify requester + cover; optional manager ping when locked. Not included: auto-scheduling AI, payroll.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:02:23Z"
+    },
+    {
+      "atom_id": "V03",
+      "answer": "Post+confirm replaces noisy group-chat threads (chaos pain). Confirm+notify reduces no-show / double-book risk. Manager ping cuts the second chase and flaky-look fear. Structured request cuts floor-time chasing replies.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:02:23Z"
+    },
+    {
+      "atom_id": "V04",
+      "answer": "Confirm flow creates a single clear yes/no and named cover (desired gain). Manager ping creates notified-without-chase. Eligible-coworker list creates faster resolution so they stop refreshing chat.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:02:24Z"
+    },
+    {
+      "atom_id": "V05",
+      "answer": "Post request \u2192 priority job (get cover). Confirm/decline \u2192 chaos + commitment pains. Manager ping \u2192 social/emotional jobs and notify gain. Eligible list \u2192 faster yes/no gain. No unmatched items.",
+      "kind": "inference",
+      "accepted_at": "2026-07-25T20:02:24Z"
+    },
+    {
+      "atom_id": "V06",
+      "answer": "No orphan candidates \u2014 every listed item maps to an accepted job, pain, or gain.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:02:24Z"
+    },
+    {
+      "atom_id": "V07",
+      "answer": "Unlike group chat and one-by-one calls, ShiftSwap gives a single request with explicit confirm and a manager ping when locked \u2014 so coverage is a commitment, not a scroll of maybes.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-25T20:02:24Z"
+    },
+    {
+      "atom_id": "V08",
+      "answer": "Pass \u2014 offering boundary, products, pain/gain links, fit, empty orphans, and alternative distinction are explicit enough to take into MVP.",
+      "kind": "decision",
+      "accepted_at": "2026-07-25T20:02:24Z"
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Same-night coverage asks start in group chat or DMs",
+      "kind": "fact",
+      "source": "Maya weekend vibecode interviews with two server friends",
+      "strength": "moderate"
+    },
+    {
+      "claim": "Servers rely on group chat and one-by-one calls today",
+      "kind": "fact",
+      "source": "Maya observation + friend reports",
+      "strength": "moderate"
+    },
+    {
+      "claim": "Early action: improvising spreadsheets and requesting a tool",
+      "kind": "fact",
+      "source": "Maya friend requests",
+      "strength": "moderate"
+    }
+  ],
+  "assumptions": [
+    {
+      "claim": "Group-chat chaos is the top extreme pain for same-night trades",
+      "criticality": "high",
+      "evidence_status": "partial",
+      "source_atom": "P07"
+    },
+    {
+      "claim": "Structured confirm reduces group-chat chaos and no-show risk",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "V03"
+    },
+    {
+      "claim": "Confirm + manager ping create the named gains",
+      "criticality": "medium",
+      "evidence_status": "unsupported",
+      "source_atom": "V04"
+    },
+    {
+      "claim": "Explicit confirm beats group-chat ambiguity for same-night trades",
+      "criticality": "high",
+      "evidence_status": "unsupported",
+      "source_atom": "V07"
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "accepted segment boundary",
+      "reason": "Hourly servers with same-night trades are the wedge; managers and HQ are out of scope.",
+      "source_atom": "P01",
+      "resulting_module": "profile",
+      "resulting_atom": "P02",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "selected priority job",
+      "reason": "Same-night coverage is urgent, painful, and already triggering workarounds.",
+      "source_atom": "P11",
+      "resulting_module": "profile",
+      "resulting_atom": "P12",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "pass profile gate",
+      "reason": "Bounded hourly-server segment, priority same-night cover job, pains/gains/alternatives explicit with labeled evidence.",
+      "source_atom": "P12",
+      "resulting_module": "profile",
+      "resulting_atom": "P12",
+      "resulting_status": "gate_pending"
+    },
+    {
+      "decision": "accepted offering boundary",
+      "reason": "Wedge is peer trade confirm, not restaurant ops suite.",
+      "source_atom": "V01",
+      "resulting_module": "value-map",
+      "resulting_atom": "V02",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "park named orphan candidates",
+      "reason": "Empty set \u2014 V05 matched every item.",
+      "source_atom": "V06",
+      "resulting_module": "value-map",
+      "resulting_atom": "V07",
+      "resulting_status": "in_progress"
+    },
+    {
+      "decision": "pass value-map gate",
+      "reason": "Coherent design hypothesis for ShiftSwap same-night trade confirm vs group chat.",
+      "source_atom": "V08",
+      "resulting_module": "value-map",
+      "resulting_atom": "V08",
+      "resulting_status": "gate_pending"
+    }
+  ],
+  "unknowns": [],
+  "artifacts": [
+    {
+      "path": "customer-profile.md",
+      "status": "final"
+    },
+    {
+      "path": "value-map.md",
+      "status": "final"
+    },
+    {
+      "path": "CONTEXT.product.md",
+      "status": "final"
+    },
+    {
+      "path": "AGENTS.product.md",
+      "status": "final"
+    },
+    {
+      "path": "ui-copy.md",
+      "status": "final"
+    },
+    {
+      "path": "states-and-flows.md",
+      "status": "final"
+    },
+    {
+      "path": "first-value.md",
+      "status": "final"
+    },
+    {
+      "path": "north-star-blurb.md",
+      "status": "final"
+    },
+    {
+      "path": "value-trail.md",
+      "status": "final"
+    },
+    {
+      "path": "docs/adr/0001-accepted-segment-boundary.md",
+      "status": "final"
+    },
+    {
+      "path": "docs/adr/0002-park-named-orphan-candidates.md",
+      "status": "final"
+    }
+  ],
+  "ledger": {
+    "phase": "Evolve",
+    "active_module": "business-model",
+    "completion_pct": 53,
+    "validation_milestone": "Product-Market Fit",
+    "unvalidated_bombs": [
+      "Structured confirm reduces group-chat chaos and no-show risk",
+      "Explicit confirm beats group-chat ambiguity for same-night trades"
+    ]
+  }
+}

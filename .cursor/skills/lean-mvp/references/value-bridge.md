@@ -1,5 +1,5 @@
 (def-ref value-bridge
-  (linked-from protocol-1 protocol-2)
+  (linked-from protocol-1 protocol-2 protocol-4)
 
   (section shared-slug
     (rule "lean-mvp and value skills use the same project slug under workproduct/")
@@ -33,11 +33,15 @@
       (never "overwrite user-accepted lean answers with value imports")))
 
   (section artifacts
-  (read "workproduct/value-proposition/<slug>/customer-profile.md for human-readable context only — do not treat as canonical over session.json")
-  (write "workproduct/lean-mvp/<slug>/customer-context.md at customer-context gate"))
-
-  (check value-read-only "value skill files and Values repo are never modified by lean-mvp activation"))
+    (read "workproduct/value-proposition/<slug>/customer-profile.md for human-readable context only — do not treat as canonical over session.json")
+    (write "workproduct/lean-mvp/<slug>/customer-context.md at customer-context gate"))
 
   (section sibling-bridge
     (reverse "value skill reads lean via its own assets/lean-bridge-map.json and scripts/import_lean_context.py — see value references/lean-bridge.md")
-    (never "lean-mvp never writes workproduct/value-proposition paths or modifies value skill files")))
+    (never "lean-mvp never writes workproduct/value-proposition paths or modifies value skill files"))
+
+  (section forward-claim
+    (after-mvp-scope "when mvp-scope gate is passed or bypassed, tell the human to invoke /product-spine for claim (INVEST + NotebookLM) or the next journey step — lean does not own the shareable pitch")
+    (whole-path "when the human asks which skill, where to start, what is next, or feels lost on the vibecode-to-market path, tell them to invoke /product-spine — do not read product-spine/SKILL.md in a loop"))
+
+  (check value-read-only "value skill files and Values repo are never modified by lean-mvp activation"))
