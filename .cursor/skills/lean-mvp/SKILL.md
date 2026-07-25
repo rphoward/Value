@@ -88,7 +88,7 @@ metadata:
         5 "ask asks as the single primary question"
         6 "hold worked_example and common_miss until the human stalls")
       (ms05-story-offer
-        "when focus atom is MS05, offer reading .cursor/skills/story-generation-prompt/SKILL.md per references/mvp-scope.md stories-assist — before or with the primary question, not only if the human asks"))
+        "when focus atom is MS05 and coaching includes story_assist, state that offer; otherwise follow references/mvp-scope.md stories-assist — do not duplicate the assist text here"))
     (scripts-silent
       (run "import_value_context status next_question accept_answer")))
 

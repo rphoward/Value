@@ -12,6 +12,7 @@ Develop and distribute a Cursor agent skill from this GitHub repo. The layered s
 | `skills/lean-mvp/` | Lean MVP skill (pairs with value; dev in monorepo) |
 | `tools/prompt-suite-compile/` | Thin shims → `.cursor/skills/scripted-skill-from-doc/` |
 | `.cursor/skills/product-spine/` | Human entry for vibecode → valuable → marketable: invoke `/product-spine` to triage into the deep tools below |
+| `skills/product-spine/` | Ship-tree mirror of product-spine (digest-matched to `.cursor/skills/product-spine/`) |
 | `.cursor/skills/value/` | Same skill for Cursor while developing this repo |
 | `.cursor/skills/lean-mvp/` | Lean MVP skill for Cursor in this repo |
 | `.cursor/skills/story-generation-prompt/` | Evidence → story → generation prompt, INVEST-plus rubric (pairs with lean-mvp MS05) |

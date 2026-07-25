@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import re
 import unittest
 from pathlib import Path
@@ -21,6 +22,9 @@ SIBLING_SKILL_PATHS = (
     ".cursor/skills/lean-mvp/SKILL.md",
     ".cursor/skills/story-generation-prompt/SKILL.md",
 )
+
+SHIP_MIRROR_ROOT = ROOT / "skills" / "product-spine"
+SYNC_IGNORE_NAMES = {".DS_Store", "Thumbs.db"}
 
 ALLOWED_FRONTMATTER_KEYS = {
     "name",
@@ -49,6 +53,17 @@ def balanced_block(text: str, head: str) -> str:
             if depth == 0:
                 return text[start : index + 1]
     raise AssertionError(f"Unbalanced parentheses after {head!r} in SKILL.md")
+
+
+def iter_skill_files(root: Path) -> list[Path]:
+    return sorted(
+        path
+        for path in root.rglob("*")
+        if path.is_file()
+        and path.name not in SYNC_IGNORE_NAMES
+        and "__pycache__" not in path.parts
+        and path.suffix != ".pyc"
+    )
 
 
 class ProductSpineSkillTests(unittest.TestCase):
@@ -147,6 +162,27 @@ class ProductSpineSkillTests(unittest.TestCase):
                     text,
                     f"{label} mentions product-spine but not the slash entry",
                 )
+
+    def test_ship_tree_mirrors_cursor_tree(self) -> None:
+        """Guards shipped skills pointing at /product-spine while the skill is missing from skills/."""
+        self.assertTrue(SHIP_MIRROR_ROOT.is_dir(), "skills/product-spine/ missing")
+        cursor_files = iter_skill_files(SKILL_ROOT)
+        mismatches: list[str] = []
+        for cursor_path in cursor_files:
+            relative = cursor_path.relative_to(SKILL_ROOT)
+            ship_path = SHIP_MIRROR_ROOT / relative
+            if not ship_path.is_file():
+                mismatches.append(f"missing ship mirror {relative.as_posix()}")
+                continue
+            if hashlib.sha256(cursor_path.read_bytes()).hexdigest() != hashlib.sha256(
+                ship_path.read_bytes()
+            ).hexdigest():
+                mismatches.append(f"digest mismatch {relative.as_posix()}")
+        for ship_path in iter_skill_files(SHIP_MIRROR_ROOT):
+            relative = ship_path.relative_to(SHIP_MIRROR_ROOT)
+            if not (SKILL_ROOT / relative).is_file():
+                mismatches.append(f"extra ship file {relative.as_posix()}")
+        self.assertEqual(mismatches, [])
 
 
 if __name__ == "__main__":

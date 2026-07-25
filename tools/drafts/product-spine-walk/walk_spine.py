@@ -21,30 +21,6 @@ LEAN_SCRIPTS = REPO / ".cursor" / "skills" / "lean-mvp" / "scripts"
 STORY_SKILL = REPO / ".cursor" / "skills" / "story-generation-prompt" / "SKILL.md"
 SPINE_SKILL = REPO / ".cursor" / "skills" / "product-spine" / "SKILL.md"
 
-# Minimal answers to reach value profile + value-map gates (P12, V12).
-VALUE_THROUGH_VALUE_MAP: tuple[tuple[str, str, str], ...] = (
-    ("P01", "Solo vibecoders shipping side projects, excluding funded teams.", "hypothesis"),
-    ("P02", "Sunday night before they paste a Discord showcase link.", "hypothesis"),
-    ("P03", "Get peers to understand the project without opening the repo.", "hypothesis"),
-    ("P04", "Jobs stay problem-space: explain, share, decide whether to try.", "decision"),
-    ("P05", "Importance high: without a clear share, the project dies unread.", "inference"),
-    ("P06", "Frequency weekly when shipping; severity is wasted evenings.", "inference"),
-    ("P07", "Peers bounce after the README; poster rewrites the pitch each time.", "fact"),
-    ("P08", "A short overview peers can watch before cloning.", "hypothesis"),
-    ("P09", "Raw README paste, long demo video, silence.", "fact"),
-    ("P10", "Evidence from three Discord threads where READMEs went unread.", "fact"),
-    ("P11", "Priority job: get one peer to understand before opening the repo.", "decision"),
-    ("P12", "pass profile gate", "decision"),
-    ("V01", "One short overview from repo facts, not a full marketing site.", "decision"),
-    ("V02", "Cuts the rewrite-the-pitch pain.", "hypothesis"),
-    ("V03", "Creates a watchable overview gain.", "hypothesis"),
-    ("V04", "Overview <- peer understands without clone.", "decision"),
-    ("V05", "No orphan parts in v1 box.", "decision"),
-    ("V06", "Fit is conditional on honest repo facts.", "inference"),
-    ("V07", "Beats raw README paste on time-to-understanding.", "hypothesis"),
-    ("V12", "pass value-map gate", "decision"),
-)
-
 LEAN_THROUGH_MS05: tuple[tuple[str, str, str], ...] = (
     ("C01", "Solo operators shipping a first paid product alone.", "hypothesis"),
     ("C02", "The Lone Shipper. Twelve half-built things, no finish order.", "hypothesis"),
@@ -69,11 +45,6 @@ LEAN_GATES = {
     "C12": "customer-context",
     "U12": "underserved-needs",
     "MS12": "mvp-scope",
-}
-
-VALUE_GATES = {
-    "P12": "profile",
-    "V12": "value-map",
 }
 
 
@@ -188,7 +159,8 @@ def triage(
     if any(w in ask for w in ("repo", "readme", "overview", "discord", "claim", "notebooklm")):
         return "story-generation-prompt"
     if any(w in ask for w in ("mvp", "feature set", "kano", "scope")):
-        return "lean-mvp"
+        # Match product-spine: MVP ask with no session goes to value first.
+        return "value"
     return "value"
 
 
@@ -565,20 +537,20 @@ def case_mvp_ask_no_session(work: Path) -> CaseResult:
         triage=choice,
         human_steps=[
             "Invoke /product-spine",
-            "Triage names lean-mvp",
-            "Open /lean-mvp; missing-session name+consent",
-            "Start C01 with no value import (empty value tree)",
+            "Triage names value first (no session; lean still needs customer context)",
+            "Open /value; missing-session name+consent",
+            "After profile/value-map, offer lean-mvp for MVP scope",
         ],
     )
-    if choice != "lean-mvp":
+    if choice != "value":
         result.script_ok = False
     result.bottlenecks.append(
         Bottleneck(
-            "high",
+            "medium",
             result.name,
-            "Spine trusts 'customer clarity enough' on self-report",
-            "Human can skip value entirely. Lean C01 still grills segment from scratch. Feels like the spine lied about a shortcut.",
-            "no-session-mvp rule has no evidence check",
+            "MVP ask still needs an explicit skip-value to reach lean immediately",
+            "Spine no longer trusts self-reported clarity. Faster lean entry requires the human to confirm skip-value.",
+            "no-session-mvp prefers value unless explicit skip-value",
         )
     )
     return result
@@ -623,30 +595,8 @@ def main() -> int:
     failed = [r for r in results if not r.script_ok]
     print(f"\nCases: {len(results)}  script failures: {len(failed)}")
     print(f"Bottlenecks: {len(bottlenecks)}")
-    out = REPO / "tools" / "drafts" / "product-spine-walk" / "last-walk.json"
-    out.write_text(
-        json.dumps(
-            {
-                "results": [
-                    {
-                        "name": r.name,
-                        "triage": r.triage,
-                        "ok": r.script_ok,
-                        "steps": r.human_steps,
-                        "notes": r.notes,
-                    }
-                    for r in results
-                ],
-                "bottlenecks": [b.__dict__ for b in bottlenecks],
-            },
-            indent=2,
-        ),
-        encoding="utf-8",
-    )
-    print(f"Wrote {out.relative_to(REPO)}")
     return 1 if failed else 0
 
 
 if __name__ == "__main__":
-    # fix shebang typo if any — actual entry:
     raise SystemExit(main())
