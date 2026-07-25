@@ -283,7 +283,8 @@
       "I, E, and S marked not answerable here, or reasoned from scope with the basis named. Never pass from the sentence alone."
     ],
     "worked_example": "As a solo operator, I want one ranked next-thing-to-finish on my home screen, so that I stop re-deciding every Sunday. N pass, the want names an outcome and not a UI. V pass, the payoff lands on the operator. T pass, you can watch whether they open the app before reopening the notes file. I, E, S reasoned from scope, basis is one repo and one brief.",
-    "common_miss": "Rubber-stamping all six letters pass. Independent, Estimable, and Small are judgments about a backlog and a team, not about a sentence."
+    "common_miss": "Rubber-stamping all six letters pass. Independent, Estimable, and Small are judgments about a backlog and a team, not about a sentence.",
+    "story_assist": "Offer to read .cursor/skills/story-generation-prompt/SKILL.md for drafting or sharpening the INVEST sentence. The human pastes the one sentence back; never auto-accept."
   },
   "MS06": {
     "why_it_matters": "The ROI placement is what makes the v1 cut defensible next month. With return and effort unsaid, the version line gets re-argued every week.",

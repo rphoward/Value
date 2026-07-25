@@ -95,6 +95,8 @@ At MS05, lean-mvp asks for one INVEST user story for the top MVP chunk. Run the 
 
 This skill does not write `session.json`. An agent may read this skill when you ask, but it may not auto-accept the atom. You read the card, you decide, you paste.
 
+After you emit the card or prompt, remind the operator of that paste step. If the claim exposed a customer gap, offer the value skill. If they are lost on which tool is next, they can invoke `/product-spine` to re-triage.
+
 The derived readings work the same way in reverse. Rows you left in step 3 get their real answers inside the session, where the questions arrive one at a time in the middle of the work rather than as a form to fill in. Bring those answers back and they replace the derived wording as confirmed grounding. Nothing here is meant to pre-empt that conversation; it exists so a codebase with no marketing in it can still produce one honest sentence today.
 
 ## Release notes and other non-story claims

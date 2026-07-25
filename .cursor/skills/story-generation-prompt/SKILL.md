@@ -120,7 +120,11 @@ disable-model-invocation: true
       (prompt-to-story "Reconstructed story → Unknowns → INVEST-plus → Questions for the operator"))
     (voice "Generation prompt: imperative, producer-facing. Story card: product-facing.")
     (sections "omit empty optional blocks")
-    (examples references/examples.md))
+    (examples references/examples.md)
+    (after-emit
+      "Remind the human to paste the one sentence into lean-mvp MS05 when that atom is open"
+      "If the claim exposed a customer gap, offer opening the value skill"
+      "Optional re-triage via /product-spine — do not read product-spine/SKILL.md in a loop"))
 
   (protocol-6-notebooklm-recon
     (when "the project's facts live in a repo or doc set — operator names a repo, mentions NotebookLM, asks for the recon question, or pastes pass-1 ledger output")

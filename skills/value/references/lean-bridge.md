@@ -29,4 +29,8 @@
     (read "workproduct/lean-mvp/<slug>/customer-context.md for human-readable context only — do not treat as canonical over session.json")
     (never "write lean-mvp paths from the value skill"))
 
+  (section forward-mvp
+    (after-gates "after profile and value-map gates pass or bypass, offer lean-mvp as the MVP feature wedge — open .cursor/skills/lean-mvp/SKILL.md for the same slug")
+    (whole-path "when the human asks which skill, where to start, or the whole vibecode-to-market path, tell them to invoke /product-spine — do not read product-spine/SKILL.md in a loop"))
+
   (check lean-read-only "lean-mvp skill files are never modified by value activation"))

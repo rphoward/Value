@@ -183,6 +183,8 @@ metadata:
       (note "write_milestone also refreshes the build pack including north-star-blurb.md")
       (surface-north-star "after milestone refresh, quote ## Blurb and ## Install from north-star-blurb.md once in chat — paste-ready, not a path scavenger hunt; add one short line naming which value-trail section titles grew")
       (surface-strip "run scripts/status.py --sections and show that one strip line to the user")
+      (after-value-map-gate "when the completed module is value-map, offer lean-mvp for the same slug as the MVP wedge — see references/lean-bridge.md forward-mvp")
+      (whole-path-ask "when the human asks which skill or the whole vibecode-to-market path, tell them to invoke /product-spine — do not read product-spine/SKILL.md every turn")
       (outcome "derive completed from gate decision plus final milestone artifact"))
     (completion-briefs
       (gate-prerequisite "profile, value-map, business-model, and experiments must each be completed or explicitly bypassed")

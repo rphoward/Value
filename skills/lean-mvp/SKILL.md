@@ -86,7 +86,9 @@ metadata:
         3 "state definition text from coaching.definitions"
         4 "state what a complete answer contains from coaching.complete_when"
         5 "ask asks as the single primary question"
-        6 "hold worked_example and common_miss until the human stalls"))
+        6 "hold worked_example and common_miss until the human stalls")
+      (ms05-story-offer
+        "when focus atom is MS05, offer reading .cursor/skills/story-generation-prompt/SKILL.md per references/mvp-scope.md stories-assist — before or with the primary question, not only if the human asks"))
     (scripts-silent
       (run "import_value_context status next_question accept_answer")))
 

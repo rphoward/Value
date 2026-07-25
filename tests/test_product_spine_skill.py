@@ -1,0 +1,153 @@
+"""Package contract for .cursor/skills/product-spine/ and sibling handoffs."""
+
+from __future__ import annotations
+
+import re
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+SKILL_ROOT = ROOT / ".cursor" / "skills" / "product-spine"
+SKILL_MD = SKILL_ROOT / "SKILL.md"
+REFERENCES_DIR = SKILL_ROOT / "references"
+PATH_REF = REFERENCES_DIR / "path.md"
+MVP_SCOPE = ROOT / ".cursor" / "skills" / "lean-mvp" / "references" / "mvp-scope.md"
+VALUE_SKILL = ROOT / ".cursor" / "skills" / "value" / "SKILL.md"
+LEAN_SKILL = ROOT / ".cursor" / "skills" / "lean-mvp" / "SKILL.md"
+STORY_SKILL = ROOT / ".cursor" / "skills" / "story-generation-prompt" / "SKILL.md"
+
+SIBLING_SKILL_PATHS = (
+    ".cursor/skills/value/SKILL.md",
+    ".cursor/skills/lean-mvp/SKILL.md",
+    ".cursor/skills/story-generation-prompt/SKILL.md",
+)
+
+ALLOWED_FRONTMATTER_KEYS = {
+    "name",
+    "description",
+    "paths",
+    "disable-model-invocation",
+    "metadata",
+}
+
+FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---", re.DOTALL)
+TOP_LEVEL_KEY_RE = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*):", re.MULTILINE)
+PROTOCOL_HEAD_RE = re.compile(r"^\s*\((protocol-\d+)-[a-z0-9-]+", re.MULTILINE)
+LINKED_FROM_RE = re.compile(r"\(linked-from\s+([^)]*)\)")
+SKILL_PATH_RE = re.compile(r"(?:references|assets|scripts)/[^\s)]+")
+
+
+def balanced_block(text: str, head: str) -> str:
+    """Return the s-expression starting at ``head``, parentheses balanced."""
+    start = text.index(head)
+    depth = 0
+    for index in range(start, len(text)):
+        if text[index] == "(":
+            depth += 1
+        elif text[index] == ")":
+            depth -= 1
+            if depth == 0:
+                return text[start : index + 1]
+    raise AssertionError(f"Unbalanced parentheses after {head!r} in SKILL.md")
+
+
+class ProductSpineSkillTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.skill_text = SKILL_MD.read_text(encoding="utf-8")
+
+    def test_frontmatter_keys_and_name_match_the_skill_folder(self) -> None:
+        """Guards a skill Cursor silently refuses to load or index."""
+        match = FRONTMATTER_RE.match(self.skill_text)
+        self.assertIsNotNone(match, "SKILL.md must open with a frontmatter block")
+        block = match.group(1)
+        keys = set(TOP_LEVEL_KEY_RE.findall(block))
+        self.assertEqual(
+            keys - ALLOWED_FRONTMATTER_KEYS,
+            set(),
+            "Frontmatter carries keys outside the skill-authoring allowlist",
+        )
+        name = re.search(r"^name:\s*(\S+)$", block, re.MULTILINE)
+        self.assertIsNotNone(name, "SKILL.md must declare a name")
+        self.assertEqual(name.group(1), SKILL_ROOT.name)
+
+    def test_disable_model_invocation_is_true(self) -> None:
+        """Guards intent thrashing with value and lean-mvp on overlapping phrases."""
+        match = FRONTMATTER_RE.match(self.skill_text)
+        self.assertIsNotNone(match)
+        block = match.group(1)
+        flag = re.search(
+            r"^disable-model-invocation:\s*(true|false)\s*$",
+            block,
+            re.MULTILINE,
+        )
+        self.assertIsNotNone(flag, "product-spine must declare disable-model-invocation")
+        self.assertEqual(flag.group(1), "true")
+
+    def test_declared_references_exist_on_disk(self) -> None:
+        """Guards dangling pointers: activation reads a path that is not there."""
+        declared = SKILL_PATH_RE.findall(balanced_block(self.skill_text, "(references"))
+        self.assertTrue(declared, "SKILL.md declares no references")
+        missing = [path for path in declared if not (SKILL_ROOT / path).is_file()]
+        self.assertEqual(missing, [])
+
+    def test_path_ref_links_to_protocols_that_exist(self) -> None:
+        """Guards drift: a renumbered body orphans the reference pointing at it."""
+        protocols = set(PROTOCOL_HEAD_RE.findall(self.skill_text))
+        self.assertTrue(protocols, "SKILL.md declares no protocols")
+        text = PATH_REF.read_text(encoding="utf-8")
+        self.assertTrue(text.lstrip().startswith("(def-ref"))
+        link = LINKED_FROM_RE.search(text)
+        self.assertIsNotNone(link, "path.md is a def-ref without a linked-from line")
+        dangling = [
+            named for named in link.group(1).split() if named not in protocols
+        ]
+        self.assertEqual(dangling, [])
+
+    def test_sibling_skill_paths_are_named_and_exist(self) -> None:
+        """Guards a spine that routes into a skill that is not on disk."""
+        missing_mentions = [
+            path for path in SIBLING_SKILL_PATHS if path not in self.skill_text
+        ]
+        self.assertEqual(missing_mentions, [])
+        missing_files = [
+            path for path in SIBLING_SKILL_PATHS if not (ROOT / path).is_file()
+        ]
+        self.assertEqual(missing_files, [])
+
+    def test_lean_mvp_scope_proactively_offers_story_skill(self) -> None:
+        """Guards MS05 waiting for the human to invent the story-assist ask."""
+        text = MVP_SCOPE.read_text(encoding="utf-8")
+        self.assertIn("MS05", text)
+        self.assertIn(".cursor/skills/story-generation-prompt/SKILL.md", text)
+        self.assertIn("when-ms05-focus", text)
+        self.assertTrue(STORY_SKILL.is_file())
+
+    def test_spine_does_not_instruct_self_reload(self) -> None:
+        """Guards circular handoffs that bounce the agent back into /product-spine forever."""
+        self.assertNotIn("read .cursor/skills/product-spine", self.skill_text)
+
+    def test_siblings_use_slash_not_path_read_for_spine(self) -> None:
+        """Guards siblings loading spine SKILL.md every turn instead of slash re-triage."""
+        path_read = "read .cursor/skills/product-spine/SKILL.md"
+        for label, path in (
+            ("value", VALUE_SKILL),
+            ("lean-mvp", LEAN_SKILL),
+            ("story-generation-prompt", STORY_SKILL),
+        ):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn(
+                path_read,
+                text,
+                f"{label} must not path-read product-spine/SKILL.md",
+            )
+            if "product-spine" in text:
+                self.assertIn(
+                    "/product-spine",
+                    text,
+                    f"{label} mentions product-spine but not the slash entry",
+                )
+
+
+if __name__ == "__main__":
+    unittest.main()
