@@ -2,9 +2,6 @@
 
 Start a new project from the Twins layout without copying the full codebase.
 
-**EliotWF note:** In *this* repo, Eliot lives at root `eliotapp/` + `workproduct/`. Scaffold
-still creates `src/<slug>/` for **non-Eliot** products. See [INIT.md](INIT.md) and ADR 005.
-
 ## What you copy
 
 Copy only `.cursor/` into an empty folder. You do not copy `src/`, `tests/`, or `pyproject.toml` — AI scaffolds those next.

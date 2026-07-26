@@ -2,10 +2,6 @@
 
 Start a new repo from the Twins layout without copying the full codebase.
 
-**This repository (EliotWF):** Eliot code lives at root `eliotapp/` and data at
-`workproduct/` — not under `src/`. Scaffold init still fills `src/<slug>/` for **non-Eliot**
-products copied from this layout. Do not retarget Eliot into `src/`.
-
 ## Workflow
 
 1. Copy `.cursor/` into an empty folder (exclude `.cursor/plans/` if you do not need plan files).

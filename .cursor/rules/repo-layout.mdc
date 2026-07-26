@@ -15,7 +15,7 @@ alwaysApply: true
 
   (protocol-0-write-path-gate
     (note "Path-scoped rules inject on glob match; literal globs — retarget at scaffold init. Injection does not enforce placement.")
-    (note "Legacy src/value/ and src/value_skills/ are evacuate-only until deleted — not permanent Eliot homes.")
+    (note "Legacy src/value_skills/ is evacuate-only until deleted — not a permanent home.")
     (before (Write StrReplace EditNotebook)
       (resolve eliot_home from protocol-1c)
       (resolve product_home from protocol-1)
@@ -26,12 +26,13 @@ alwaysApply: true
           (progn (halt-generation) (forbidden 'eliot-implementation-under-src)))
       (if (implementation-code-or-layer-tree? target-path)
           (if (and (not (under? target-path eliot_home))
+                   (not (under? target-path product_home))
                    (not (under? target-path tests/))
                    (not (evacuate-only-legacy-src-path? target-path)))
               (progn
                 (halt-generation)
                 (forbidden 'write-outside-eliot-or-allowed-homes)
-                (write-only-under eliot_home 'tests/ 'or evacuate-only-legacy-src)))))
+                (write-only-under eliot_home product_home 'tests/ 'or evacuate-only-legacy-src)))))
     (forbidden-root-level-dirs
       'core 'application 'infrastructure 'presentation 'value 'app 'lib 'server 'api 'backend 'frontend)
     (note "Do not add eliotapp to forbidden-root-level-dirs; layers live under eliotapp/.")
@@ -43,8 +44,10 @@ alwaysApply: true
       (product_home "src/value/")
       (import_package "value")
       (repo_folder "value")
-      (note "Scaffold default for a generic finished product under src/<slug>/. Not Eliot's home. After evacuation this tree is an empty husk — do not put Eliot under src/."))
+      (layers "src/<slug>/core/ application/ infrastructure/ presentation/")
+      (note "Scaffold default for a finished product under src/<slug>/. A blank project starts with exactly those four layer folders; scaffold init retargets <slug>. See core-domain.mdc, application-layer.mdc, infrastructure-wiring.mdc, presentation-surface.mdc — their globs are src/value/<layer>/**."))
     (enforce (non-eliot-scaffold-product-under product-home :when scaffolded))
+    (enforce (four-layer-tree-under product_home :when scaffolded))
     (forbidden (treating-product_home-as-eliot-permission))
     (portable-default "repo-root/<project-slug>/ when slug-named folder is the product home in other repos"))
 

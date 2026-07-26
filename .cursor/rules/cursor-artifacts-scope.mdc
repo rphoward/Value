@@ -14,6 +14,6 @@ alwaysApply: true
   </central_idea>
 
   (protocol-0-allowed-outside-workspace-writes
-    (canvas_mirror "~/.cursor/projects/c-Projects-EliotWF/canvases/")
+    (canvas_mirror "~/.cursor/projects/c-Projects-value/canvases/")
     (allowed-files-only "*.canvas.tsx" "*.canvas.data.json")
     (forbidden 'canvas-subfolders 'any-other-path-under-canvas_mirror 'broad-~/.cursor/projects/**-writes)))

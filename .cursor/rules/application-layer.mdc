@@ -1,7 +1,7 @@
 ---
 description: USE WHEN editing use cases, commands, queries, or repository port interfaces.
 alwaysApply: false
-globs: eliotapp/application/**,src/value/application/**
+globs: src/value/application/**
 ---
 
 (def-sop application-layer

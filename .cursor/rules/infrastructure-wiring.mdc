@@ -1,7 +1,7 @@
 ---
 description: USE WHEN editing infrastructure spokes, persistence gateways, outbound connectors, or process-host wiring.
 alwaysApply: false
-globs: eliotapp/infrastructure/**,src/value/infrastructure/**
+globs: src/value/infrastructure/**
 ---
 
 (def-sop infrastructure-wiring

@@ -1,33 +1,19 @@
 # Plans index
 
-Cursor plan files for EliotWF. **Living state:** `handoff/STATE.md`. Completed plans are in [archive/](archive/README.md).
+Cursor plan files for Value. **Living state:** `handoff/STATE.md`.
 
-Last indexed: 2026-07-17.
+Last indexed: 2026-07-26.
 
 ## Active
 
 | Plan | Role |
 |------|------|
 | [prompt-suite-to-skill/](prompt-suite-to-skill/overview.md) | Portable doc → paced scripted skill compiler + poteto runbook |
-
-## Deferred (no active plan file)
-
-| Item | Record |
-|------|--------|
-| UI/UX wave (Canvas restyle + invent surfaces) | `handoff/CLIMB-SIGNAL-INTERROGATE-HANDOFF.md` protocol-4; keep consumer contracts + scores-write lock |
-| Soft-fail Canvas on corrupt accept | Intent-repair out-of-scope migrate; `handoff/CLIMB-SIGNAL-INTENT-REPAIR-PASSED.md` |
-| Delete flat `accept_*` dual-write | Same migrate wave after Canvas sole-reads `accept_decision` |
-| Source ingest (EPUB/PDF) | `handoff/EPUB to Markdown.md` |
-| Invent UI polish | Optional; `handoff/PIPELINE-UI-CATALOG.md` |
-
-## Archived tracks
-
-See [archive/README.md](archive/README.md) for climb-signal, full-workflow webapp, eliotapp peel, invent seeds, hooks/SDK climb, workflow build, thermos `.cursor` fixes, reverse-engineering, preference, scorer v2, Web UI v2, and hillclimb.
-
-## Historical (not plans)
-
-| Path | Role |
-|------|------|
-| `handoff/PLAN.md` | Original phased build order from the pre-scaffold planning chat |
-| `handoff/ARCHITECTURE.md` | Skill vs subagent vs automation decisions |
-| `handoff/WORKFLOW.md` | Pipeline in the owner's words |
+| [coaching_out-of-scope](coaching_out-of-scope_3862e411.plan.md) | Isolate per-skill `_session` imports, then fill the eight lean-mvp coaching atoms with empty `kb_refs` |
+| [purge_eliot_remnants](purge_eliot_remnants_693d9a18.plan.md) | Remove dead ELIOT machinery from `.cursor/`; the `repo-layout.mdc` write gate is deferred |
+| [ship_gate_presentation](ship_gate_presentation_0e7e1766.plan.md) | Ship inline gate presentation into the Value skill package and pass V08 on the live session |
+| [value_skill_dag_pacing](value_skill_dag_pacing_f9ed875e.plan.md) | Replace linear atom sequencing with a prerequisite DAG and section-based draft-map-gap-fill |
+| [value_skill_ide_export_pack](value_skill_ide_export_pack.plan.md) | Sift `session.json` into IDE-standard files via export lenses |
+| [value_skill_recovery](value_skill_recovery_9a2270ec.plan.md) | Restore Strategyzer cargo into skill references and add stdlib scripts that own session progress |
+| [value_skill_user_voice_fresh](value_skill_user_voice_fresh.plan.md) | Separate operator telemetry from user-facing coach voice |
+| [values_skill_five_upgrades](values_skill_five_upgrades_04b15844.plan.md) | Ship the five Value Design–driven skill upgrades and sync both skill trees |

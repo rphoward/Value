@@ -37,21 +37,6 @@ def main() -> int:
         print(result.stderr, file=sys.stderr)
         print(f"observe: pytest failed (exit {result.returncode})", file=sys.stderr)
 
-    progress_path = root / "tools" / "runs" / ".sdk-climb-last.json"
-    if progress_path.is_file():
-        try:
-            payload = json.loads(progress_path.read_text(encoding="utf-8"))
-            if isinstance(payload, dict) and payload.get("slug"):
-                iteration = payload.get("iteration_count", "?")
-                action = payload.get("next_action", "?")
-                print(
-                    f"observe: sdk-climb run {payload['slug']!r} "
-                    f"iteration {iteration}; next_action={action!r}",
-                    file=sys.stderr,
-                )
-        except (OSError, json.JSONDecodeError):
-            pass
-
     return 0
 
 

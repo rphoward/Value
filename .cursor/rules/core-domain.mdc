@@ -1,7 +1,7 @@
 ---
 description: USE WHEN editing core domain logic, calculation truth, types, or teaching subdomain.
 alwaysApply: false
-globs: eliotapp/core/**,src/value/core/**
+globs: src/value/core/**
 ---
 
 (def-sop core-domain

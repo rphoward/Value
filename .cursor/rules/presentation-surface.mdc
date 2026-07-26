@@ -1,7 +1,7 @@
 ---
 description: USE WHEN editing presentation edges, views, client adapters, or browser-facing assets.
 alwaysApply: false
-globs: eliotapp/presentation/**,src/value/presentation/**
+globs: src/value/presentation/**
 ---
 
 (def-sop presentation-surface

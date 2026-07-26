@@ -4,28 +4,28 @@ overview: Remove the dead ELIOT-project machinery left in .cursor/ (agents, comm
 todos:
   - id: delete-agents-command
     content: Delete all ten .cursor/agents/*.md files and .cursor/commands/hillclimb.md
-    status: pending
+    status: completed
   - id: hooks
     content: Delete .cursor/hooks/validate_skills_module.py, remove its afterFileEdit entry from .cursor/hooks.json, and strip the sdk-climb block (lines 40-53) from run_tests_on_stop.py
-    status: pending
+    status: completed
   - id: canvas-path
     content: Fix the canvas mirror path in cursor-artifacts-scope.mdc from c-Projects-EliotWF to c-Projects-value
-    status: pending
+    status: completed
   - id: layer-globs
     content: Drop the eliotapp/<layer>/** prefix from the globs in core-domain, application-layer, infrastructure-wiring, and presentation-surface
-    status: pending
+    status: completed
   - id: plans
     content: Delete .cursor/plans/archive/ plus proto_shell_chrome and studio_chat_file_ui, then rewrite .cursor/plans/README.md to index the seven surviving Value plans
-    status: pending
+    status: completed
   - id: scaffold-docs
     content: Remove the EliotWF paragraph from .cursor/scaffold/INIT.md and the EliotWF note from .cursor/scaffold/README.md
-    status: pending
+    status: completed
   - id: stray-tree
     content: Pause for explicit approval, then delete tools/start-eliotwf.ps1 and the duplicate src/eliotwf/ tree
-    status: pending
+    status: completed
   - id: verify
     content: Run python -m pytest tests/ -q, then manually copy .cursor/ to a temp folder and read the rules as a fresh repo would; report both
-    status: pending
+    status: completed
 isProject: false
 ---
 
