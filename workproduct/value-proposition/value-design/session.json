@@ -4,7 +4,7 @@
     "slug": "value-design",
     "name": "Value Design",
     "created_at": "2026-07-18T21:18:48Z",
-    "updated_at": "2026-07-20T04:32:39Z"
+    "updated_at": "2026-07-26T03:17:52Z"
   },
   "position": {
     "module": "business-model",
@@ -171,6 +171,62 @@
       "accepted_at": "2026-07-20T04:13:53Z",
       "reopen": true,
       "conflict_note": "Gate presentation skill fix shipped; supersede reopen for presentation failure."
+    },
+    {
+      "atom_id": "P01",
+      "answer": "Cursor Discord builders who ship personal projects and want them valuable to someone else (peers outside just-for-me), not only self-amusement. Excluded: novelty-first / shock / absurd builds where outward value is not the point.",
+      "kind": "decision",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
+    },
+    {
+      "atom_id": "P03",
+      "answer": "Go from another silent demo to a shareable project that names who it is for and what progress that person needs \u2014 with decisions saved so the next build turn does not start from zero.",
+      "kind": "inference",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
+    },
+    {
+      "atom_id": "P07",
+      "answer": "Severe: cannot position outward value in plain words (often felt as no marketing skills) \u2014 can vibe-code but freezes on who/why for peers. Secondary: confusing handoffs/file-hunt at claim; grill friction ok when progress is visible.",
+      "kind": "inference",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
+    },
+    {
+      "atom_id": "P11",
+      "answer": "Priority job: outward clarity for the current build \u2014 who it is for and what practical progress they need \u2014 so a claim can be pasted without inventing traction. Autonomy stays important context for vibecoding but is not the product center for this map.",
+      "kind": "decision",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
+    },
+    {
+      "atom_id": "V01",
+      "answer": "Offering: Product-Spine \u2014 installable Cursor skill pack guiding vibecode \u2192 value clarity \u2192 optional lean MVP \u2192 honest claim. Exclusion: not an autonomy coach, not a viral-video product, not a general marketing course.",
+      "kind": "decision",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
+    },
+    {
+      "atom_id": "V02",
+      "answer": "Included: (1) /product-spine guide-turn with claim note handoff and progress-so-far re-entry; (2) /value grill with workproduct session memory; (3) /lean-mvp for honest MVP scope; (4) /story-generation-prompt INVEST + short NotebookLM Box A/B how-to; (5) peer Discord paste voice on north-star posts.",
+      "kind": "fact",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
+    },
+    {
+      "atom_id": "V03",
+      "answer": "Pain relievers (lived/hypothesis): guide-turn + claim evidence handoff; mid-session value grill; saved workproduct notes; progress-so-far on re-entry; short NotebookLM how-to; peer Discord paste voice.",
+      "kind": "hypothesis",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
+    },
+    {
+      "atom_id": "V07",
+      "answer": "vs start-another-project / chase-model / polish-chrome: stays on current build, asks outward-value questions, saves answers, exits with honest try-stage claim \u2014 not hype or spit-vibecode-into-gold.",
+      "kind": "inference",
+      "accepted_at": "2026-07-26T03:17:52Z",
+      "source": "owner-locked-refresh-2026-07-25"
     }
   ],
   "evidence": [

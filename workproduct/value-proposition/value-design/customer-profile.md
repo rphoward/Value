@@ -1,44 +1,48 @@
 # Customer profile
 
-Fill from accepted session state for the profile module. Label each entry with its evidence kind: fact, inference, hypothesis, decision, or unknown.
+Owner-locked refresh (2026-07-25) from lived Product-Spine build + honest claim review — replaces hasty dogfood wording. Label each entry with its evidence kind: fact, inference, hypothesis, decision, or unknown.
 
 ## Segment
 
-- (decision) Cursor users in Discord who ship personal projects but struggle to make them valuable to people outside the group; they build what interests them rather than what others might value. Excluded: vibecoders whose primary goal is self-amusement through absurd, shocking, or novelty-first builds where outward value is not the point.
+- (decision) Cursor Discord builders who ship personal projects and want them valuable to someone else (peers outside “just for me”), not only self-amusement. Excluded: novelty-first / shock / absurd builds where outward value is not the point.
 
 
 ## Situation
 
-- (fact) Situation: Discord friends post personal projects to the group showcase. Trigger: after repeatedly shipping and posting varied projects (throwing stuff against the wall), none gain meaningful traction or clicks. Fact: observed pattern of low or no engagement across multiple showcase posts. Inference: they accept not every project will appeal widely but expected at least some to stick.
+- (fact) Situation: they post personal projects to a Discord showcase (or similar peer channel). Trigger: after several ship-and-post cycles, posts get little or no traction. Fact: repeated low/no engagement is observed. Inference: they expected at least some posts to stick.
 
 
 ## Jobs
 
-- (inference) Go from scattered try-post-and-hope showcase cycles to seeing a clear direction: understand what they enjoy building from past attempts, what others respond to, and focus on the overlap where their strengths match something others actually value.
-- (inference) Audience: Discord group peers in the showcase. Desired impression: seen as encouraging builders toward small successes — helping each other turn a hobby into something functional and valued, not just self-amusement; mutual respect, kindness, and social glue in the group.
-- (inference) Want to feel accepted and part of the group when putting work out — normal encouragement (a pat on the back) after trying. Avoid feeling like they do not fit in when showcase posts get no feedback at all.
-- (fact) Buying: compare and adopt dev tools (especially Cursor) while token costs rise and rate limits tighten — stay value-conscious on spend vs capability. Co-creating: peer-teach newcomers how Cursor and the interface work; group tries to be helpful, but showcase feedback and reviews are weak. Transferring: walk away or pivot from projects before they should — not because the build is bad, but because they could not communicate outward value in terms others care about (inference from observed abandon-after-no-traction pattern).
-- (decision) Priority job (elevated): Autonomy — safe space to create freely with AI (also named creativity, liberty, freedom). Why highest: huge attraction of AI work and vibe coding; traditional developers are autonomy-starved so it is valuable there too; listed as a human need under names like autonomy/creativity/liberty/freedom. Competence is nearly equal and usually follows. Only after autonomy and competence are felt do they turn to others' needs and creating value for close Discord friends.
+- (inference) Functional: go from another silent demo to a shareable project that names who it is for and what progress that person needs — with decisions saved so the next build turn does not start from zero.
+- (inference) Social: be seen by Discord peers as a builder who ships something others can understand and respect — not only a feature dump or chrome demo.
+- (inference) Emotional: feel competent and still part of the group after posting; avoid the quiet that follows zero feedback.
+- (fact) Supporting: buying — compare Cursor and related tools under token/rate-limit pressure; co-creating — peer-help on Cursor; transferring — abandon or pivot projects when they cannot say why someone else would care (inference from abandon-after-silence pattern).
+- (decision) Priority job: outward clarity for the current build — who it is for and what practical progress they need — so a claim can be pasted without inventing traction. Autonomy/creativity stays important context for vibecoding, but it is not the product center for this map.
 
 
 ## Pains
 
-- (inference) Extreme: lack of marketing skills — group can program, vibe-code, and create but cannot articulate or position outward value; observed main bottleneck to showcase traction and differentiation from other vibe-coding communities. (User labeled severity severe/extreme.)
+- (inference) Severe: cannot position outward value in plain words (often felt as “I have no marketing skills”) — can vibe-code, but freezes on who/why for peers. Secondary: file-hunt and confusing handoffs when tools dump them at the last door; grill friction is acceptable when progress is visible, not when the path feels amnesiac.
 
 
 ## Gains
 
-- (hypothesis) Gains for Cursor Discord friends who ship personal projects: (unexpected/delight) self-doubt turns into felt competence; (expected) emojis, likes, and chat interactions on showcase posts; (desired extension) recognition that carries beyond the showcase into the Discord general chat; (unexpected/delight) recognition by community leaders / ambassadors.
+- (hypothesis) Expected: peers can restate who the project is for. Desired: some showcase replies (emoji/chat). Delight (unproven): felt competence from an honest claim; recognition beyond the showcase channel. Do not treat Discord fame or video virality as proven gains.
 
 
 ## Alternatives
 
-- (fact) Usual: start another project (throw-more-at-the-wall). Sometimes: abandon Cursor and chase more expensive models (Anthropic, Codex) hoping the model leap closes the gap. Big temptation: evolve into fancy UIs and colorful pictures with unexplained mechanics behind a polished presentation — novelty/chrome instead of outward value.
+- (fact) Usual: start another project (throw more at the wall). Sometimes: chase a bigger model hoping the model closes the gap. Temptation: polish UI/chrome without explaining the job. Also: skip value work and ask for a pitch/video first.
 
 
 ## Evidence
 
-- (fact) Strongest observed signal is absence: after weak or no showcase traction, they quit interacting with the group (go quiet) rather than iterating on outward value. Source: owner observation of Discord showcase/group behavior. Strength: moderate — pattern of non-interaction is visible; motives inferred.
+- (fact) Strongest observed signal is absence: after weak showcase traction, people go quiet rather than iterating on outward value. Source: owner observation of Discord showcase behavior. Strength: moderate.
+- (fact) Product evidence (this pack): installable Product-Spine / Values / lean-mvp / story skills on GitHub; claim handoff that opens saved notes; short NotebookLM Box A/B how-to; re-entry “progress so far”; scenario suite and spine walks exercised the path. Strength: strong for “pack exists and is runnable,” not for market traction.
 
 
 ## Unknowns
+
+- (unknown) Whether peers actually engage more after using the pack (unvalidated).
+- (unknown) Whether NotebookLM video improves outcomes beyond the INVEST sentence (optional path only).
