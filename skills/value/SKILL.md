@@ -238,7 +238,7 @@ metadata:
 
   (protocol-7-authoring
     (follow 'skill-authoring.mdc)
-    (scripts-exception "package-local scripts/_session/ is stdlib-only; skill ship surface exception to skills-repo eliotapp import rule")
+    (scripts-exception "package-local scripts/_session/ is stdlib-only; matches skills-repo package-local helper rule — no separate engine import home")
     (contract references/session-contract.md)
     (schema assets/session.schema.json)
     (atoms assets/atoms.json)))

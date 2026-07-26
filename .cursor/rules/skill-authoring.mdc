@@ -61,11 +61,10 @@ globs: .cursor/skills/**,.agents/skills/**,tools/drafts/skills/**
     (references-form '(def-ref ...) "or artifacts per protocol-3b; imperative markdown forbidden in references/")
     (structure (def-sop-protocols-or-numbered-steps) (output-format-if-any))
     (optional-dirs
-      (scripts/ "executable helpers; reference with relative paths from skill root")
+      (scripts/ "executable helpers and package-local _session modules; reference with relative paths from skill root")
       (references/ "on-demand deep docs")
       (assets/ "templates static files"))
-    (modules-home "eliotapp/" (follow 'skills-repo.mdc) (scripts-import 'eliotapp))
-    (note "src/eliotwf_skills/ is legacy evacuate-only — not a destination for new modules."))
+    (scripts-home "package-local scripts/" (follow 'skills-repo.mdc) (stdlib-and-_session) (session-data-under 'workproduct/))
     (category-subfolders-allowed ".cursor/skills/<category>/<name>/SKILL.md" :identity-is-folder-containing-skill-md)
     (forbidden 'duplicating-conduct-safety-thermonuclear 'pasting-entire-style-guides))
 

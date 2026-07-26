@@ -1,56 +1,52 @@
 ---
-description: USE WHEN creating or editing skill packages, skill scripts, or Python modules that back skills under eliotapp/.
+description: USE WHEN creating or editing skill packages, skill scripts, or session helpers under .cursor/skills/ or tools/drafts/skills/.
 alwaysApply: false
-globs: .cursor/skills/**,tools/drafts/skills/**,src/eliotwf_skills/**
+globs: .cursor/skills/**,tools/drafts/skills/**
 ---
 
 (def-sop skills-repo
   (context
     (target "agent-editing-skill-packages-or-skill-support-python")
-    (optimization "skill-prose-separate-from-eliotapp-engine-layers"))
+    (optimization "skill-prose-and-package-local-scripts-separate-from-product-home"))
 
   <central_idea>
   (center-of-gravity
-    (invariant "Skill prose and thin scripts stay under .cursor/skills/. Importable Eliot engine Python that backs skills lives under eliotapp/ (core + infrastructure layers). src/eliotwf_skills/ is legacy evacuate-only — never a destination for new modules. src/eliotwf/ is not the Eliot HTTP product."))
+    (invariant "Skill prose and scripts stay under .cursor/skills/<name>/. Domain helpers for a skill live in that skill's own scripts/ (often scripts/_session/), stdlib-only unless pyproject already lists the dep. Session and progress data live under workproduct/. Root skills/ is an informal this-repo ship mirror — write-allowed via repo-layout, not a second skill-home protocol."))
   </central_idea>
 
   (protocol-0-homes
     (skill-home ".cursor/skills/<name>/")
-    (modules-home "eliotapp/" :role "engine layers that back skills — core + infrastructure")
-    (eliot-data "workproduct/")
-    (legacy-modules-home "src/eliotwf_skills/" :role "evacuate-only until deleted")
-    (forbidden 'new-modules-under-src-eliotwf_skills)
-    (forbidden 'describing-src-eliotwf-as-eliot-http-product)
-    (forbidden 'engine-prose-in-src 'hillclimb-loop-in-presentation))
+    (session-data "workproduct/")
+    (ship-mirror "skills/" :role "informal this-repo digest mirror of .cursor/skills/ — not a portable product_home")
+    (forbidden 'python-under-workproduct)
+    (forbidden 'skill-engine-python-under-src-as-second-home)
+    (forbidden 'engine-prose-in-src))
 
   (protocol-1-skill-package-layout
     (per-skill-tree
       (SKILL.md "entry, triggers, workflow steps, links to references")
       (references/ "engine text, output templates, rubrics, examples — progressive disclosure")
-      (scripts/ "thin CLI entrypoints; stdlib-only unless pyproject already lists the dep")
+      (scripts/ "CLI entrypoints plus package-local helpers (e.g. scripts/_session/); stdlib-only unless pyproject already lists the dep")
       (assets/ "optional templates and static fixtures"))
     (skill-body-authoring (follow 'skill-authoring.mdc))
-    (scripts-call-modules (import-from 'eliotapp) (forbidden 'fat-scripts-with-domain-logic)))
+    (scripts-stay-local (helpers-under 'scripts/) (forbidden 'fat-cross-skill-engine-packages-under-src)))
 
-  (protocol-2-modules-in-eliotapp
-    (import-package "eliotapp")
-    (note "Layer rules own eliotapp/** injection — do not glob-attach skills-repo to eliotapp/** (no-bleed).")
+  (protocol-2-package-local-helpers
+    (note "Helpers belong beside the skill that owns them — e.g. .cursor/skills/<name>/scripts/_session/.")
     (organize
-      (core/ "pure shapes, progression, climb metrics — no Path")
-      (infrastructure/ "workproduct store, fixture I/O, adapters")
-      (application/ "inspect compose, hillclimb commands, wizard use cases")
-      (cli/ "operator/SDK hillclimb step entrypoints"))
-    (mirror-names "module areas match .cursor/skills/<name>/ when they pair")
-    (thermonuclear-applies (note "eliotapp/** is in thermonuclear.mdc globs")))
+      (scripts/*.py "thin CLI entrypoints — parse args, call local helpers, print JSON, exit non-zero on fail")
+      (scripts/_session/ "stdlib session/catalog/runtime helpers shared inside that skill package"))
+    (session-writes (under 'workproduct/<skill-area>/<slug>/) (follow 'repo-layout.mdc protocol-1b-workproduct))
+    (thermonuclear-note "Skill script Python is not in thermonuclear globs; keep stdlib-thin and halt rather than guess."))
 
   (protocol-3-agents-and-hooks
-    (agents ".cursor/agents/<name>.md" :role "fresh-context workers, e.g. cold drift audit")
-    (hooks ".cursor/hooks.json and .cursor/hooks/" :role "automation drivers for loop commands")
+    (agents ".cursor/agents/<name>.md" :role "fresh-context workers when the skill needs isolation")
+    (hooks ".cursor/hooks.json and .cursor/hooks/" :role "automation drivers")
     (drafts "tools/drafts/agents/ and tools/drafts/hooks/ before check-in")
     (forbidden 'embedding-hook-scripts-in-skill-md 'subagent-logic-in-skill-packages))
 
   (protocol-4-boundaries
-    (skill-script-may (parse-args 'call-eliotapp 'print-json 'exit-nonzero-on-fail))
-    (eliotapp-may (define-types 'parse-fixtures 'compare-scores 'run-loop-step))
-    (presentation-may (call-use-cases 'render-results 'serve-routes))
-    (forbidden 'presentation-imports-engine-directly-from-routes :route-through-application)))
+    (skill-script-may (parse-args 'call-package-local-helpers 'print-json 'exit-nonzero-on-fail 'read-write-workproduct-session))
+    (product-home-may (own-spoke-layers-under 'src/value/))
+    (forbidden 'skill-session-python-under-workproduct)
+    (forbidden 'new-skill-backing-packages-under-src)))

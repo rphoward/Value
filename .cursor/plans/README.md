@@ -11,6 +11,7 @@ Last indexed: 2026-07-26.
 | [prompt-suite-to-skill/](prompt-suite-to-skill/overview.md) | Portable doc → paced scripted skill compiler + poteto runbook |
 | [coaching_out-of-scope](coaching_out-of-scope_3862e411.plan.md) | Isolate per-skill `_session` imports, then fill the eight lean-mvp coaching atoms with empty `kb_refs` |
 | [purge_eliot_remnants](purge_eliot_remnants_693d9a18.plan.md) | Remove dead ELIOT machinery from `.cursor/`; the `repo-layout.mdc` write gate is deferred |
+| [value-shape_rules_rewrite](value-shape_rules_rewrite_c138c6e2.plan.md) | Drop Eliot/`eliotapp` layout contracts; Value product home + workproduct session data + package-local skills |
 | [ship_gate_presentation](ship_gate_presentation_0e7e1766.plan.md) | Ship inline gate presentation into the Value skill package and pass V08 on the live session |
 | [value_skill_dag_pacing](value_skill_dag_pacing_f9ed875e.plan.md) | Replace linear atom sequencing with a prerequisite DAG and section-based draft-map-gap-fill |
 | [value_skill_ide_export_pack](value_skill_ide_export_pack.plan.md) | Sift `session.json` into IDE-standard files via export lenses |

@@ -1,43 +1,39 @@
 ---
-description: USE WHEN creating, moving, or placing files; Eliot home is eliotapp/ + workproduct/; src/ has no Eliot.
+description: USE WHEN creating, moving, or placing files; product home is src/value/; skill session data is workproduct/; skills live under .cursor/skills/ (ship mirror skills/).
 alwaysApply: true
 ---
 
 (def-sop repo-layout
   (context
     (target "any-agent-working-in-this-workspace")
-    (optimization "one-named-eliot-home-plus-portable-scaffold-product-home"))
+    (optimization "one-named-product-home-plus-skills-and-workproduct-session-data"))
 
   <central_idea>
   (center-of-gravity
-    (invariant "Eliot code lives only under eliotapp/ (import eliotapp). Eliot data lives only under workproduct/. src/ stays clean of Eliot. Scaffold product_home src/<slug>/ is for non-Eliot products — not Eliot's home. The repo root is workspace shell plus supporting trees."))
+    (invariant "Scaffold product code lives under product_home src/value/ (import value). Skill prose and scripts live under .cursor/skills/ with an informal ship mirror at skills/. Skill session and progress data live under workproduct/ — no Python there. The repo root is workspace shell plus supporting trees."))
   </central_idea>
 
   (protocol-0-write-path-gate
     (note "Path-scoped rules inject on glob match; literal globs — retarget at scaffold init. Injection does not enforce placement.")
-    (note "Legacy src/value_skills/ is evacuate-only until deleted — not a permanent home.")
     (before (Write StrReplace EditNotebook)
-      (resolve eliot_home from protocol-1c)
       (resolve product_home from protocol-1)
       (if (python-under-workproduct? target-path)
           (progn (halt-generation) (forbidden 'python-under-workproduct)))
-      (if (and (new-eliot-implementation? target-path)
-               (under? target-path src/))
-          (progn (halt-generation) (forbidden 'eliot-implementation-under-src)))
       (if (implementation-code-or-layer-tree? target-path)
-          (if (and (not (under? target-path eliot_home))
-                   (not (under? target-path product_home))
+          (if (and (not (under? target-path product_home))
                    (not (under? target-path tests/))
-                   (not (evacuate-only-legacy-src-path? target-path)))
+                   (not (under? target-path tools/))
+                   (not (under? target-path .cursor/))
+                   (not (under? target-path workproduct/))
+                   (not (under? target-path skills/)))
               (progn
                 (halt-generation)
-                (forbidden 'write-outside-eliot-or-allowed-homes)
-                (write-only-under eliot_home product_home 'tests/ 'or evacuate-only-legacy-src)))))
+                (forbidden 'write-outside-allowed-homes)
+                (write-only-under product_home 'tests/ 'tools/ '.cursor/ 'workproduct/ 'skills/)))))
     (forbidden-root-level-dirs
       'core 'application 'infrastructure 'presentation 'value 'app 'lib 'server 'api 'backend 'frontend)
-    (note "Do not add eliotapp to forbidden-root-level-dirs; layers live under eliotapp/.")
-    (forbidden 'parallel-package-tree-at-repo-root-without-skills_home-or-eliot_home-declaration)
-    (exception (declared eliot_home from protocol-1c)))
+    (note "Root skills/ is the informal ship mirror — not a forbidden-root-level-dir and not a portable product_home.")
+    (note "DDD layer folders stay under src/<slug>/; do not recreate bare core/application/… at repo root."))
 
   (protocol-1-product-home
     (value
@@ -46,40 +42,30 @@ alwaysApply: true
       (repo_folder "value")
       (layers "src/<slug>/core/ application/ infrastructure/ presentation/")
       (note "Scaffold default for a finished product under src/<slug>/. A blank project starts with exactly those four layer folders; scaffold init retargets <slug>. See core-domain.mdc, application-layer.mdc, infrastructure-wiring.mdc, presentation-surface.mdc — their globs are src/value/<layer>/**."))
-    (enforce (non-eliot-scaffold-product-under product-home :when scaffolded))
-    (enforce (four-layer-tree-under product_home :when scaffolded))
-    (forbidden (treating-product_home-as-eliot-permission))
+    (enforce (scaffold-product-under product-home :when scaffolded))
+    (enforce (four-layer-tree-under product-home :when scaffolded))
     (portable-default "repo-root/<project-slug>/ when slug-named folder is the product home in other repos"))
 
-  (protocol-1b-skills-modules-home
+  (protocol-1b-workproduct
     (value
-      (skills_home "src/value_skills/")
-      (import_package "eliotwf_skills")
-      (note "Legacy path — evacuate only. New skill-backing Python goes under eliotapp/ (see skills-repo.mdc)."))
-    (forbidden (new-modules-under skills_home))
-    (forbidden (skill-engine-python-as-second-eliot-home)))
-
-  (protocol-1c-eliot-home
-    (value
-      (eliot_home "eliotapp/")
-      (import_package "eliotapp")
       (workproduct_root "workproduct/")
-      (workproduct_contains 'runs 'style-blocks 'catalog.json)
-      (note "Sole Eliot code home. Layer folders (core/application/infrastructure/presentation) plus cli/ are packaging for a workproduct engine + thin Starlette shell — not day-one Protocol/ports DDD."))
-    (enforce (all-eliot-python-under eliot_home))
-    (enforce (all-eliot-data-under workproduct_root))
-    (forbidden 'eliot-implementation-under-src)
+      (role "skill session and progress state — e.g. workproduct/<skill-area>/<slug>/")
+      (note "Agents may create workproduct/<skill-area>/<slug>/ trees without asking. Not ship-output junk."))
+    (enforce (all-skill-session-data-under workproduct_root))
     (forbidden 'python-under-workproduct))
 
   (protocol-2-root-staging-yard
     (allow (user-drops-docs 'experiments 'temporary-junk-manually-into-root))
-    (forbidden (agent-creating-junk 'build-artifacts 'ship-output 'generated-files-in-root-without-explicit-permission)))
+    (allow (skill-session-trees-under workproduct/))
+    (allow (ship-mirror-edits-under skills/))
+    (forbidden (agent-creating-junk 'build-artifacts 'generated-files-in-root-without-explicit-permission)))
 
   (protocol-3-supporting-trees
-    (enforce (supporting-material-in-named-subfolders-not-mixed-into-eliot-home))
+    (enforce (supporting-material-in-named-subfolders-not-mixed-into-product-home))
     (roles
-      (eliotapp/ "sole Eliot Python — engine + thin HTTP shell + cli/")
-      (workproduct/ "sole Eliot data — runs/, style-blocks/, catalog.json; no Python")
+      (src/value/ "optional four-layer spoke product — import value")
+      (workproduct/ "skill session and progress data; no Python")
+      (skills/ "informal this-repo ship mirror of .cursor/skills/ — write-allowed, not a portable product_home declaration")
       (docs/ "human-facing prose when present")
       (CONTEXT.md "domain language at repo root")
       (tests/ "verification at repo root; see pyproject for pythonpath")
@@ -95,5 +81,7 @@ alwaysApply: true
     (absent-here (Planner/ assets/ DocTools/ Docs/ — do not create without explicit user request)))
 
   (protocol-4-explicit-permission-gate
-    (if (would-place-generated-or-ship-output-at-repo-root)
+    (if (and (would-place-generated-or-ship-output-at-repo-root)
+             (not (under? target-path workproduct/))
+             (not (under? target-path skills/)))
         (progn (halt) (ask-user-explicit-permission) (wait-for-resolution)))))

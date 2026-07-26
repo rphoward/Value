@@ -1,7 +1,7 @@
 ---
-description: USE WHEN writing Python under eliotapp/, legacy src paths, tests/, or tools/; subtract complexity, halt rather than guess.
+description: USE WHEN writing Python under tests/ or tools/; subtract complexity, halt rather than guess.
 alwaysApply: false
-globs: eliotapp/**,tests/**,tools/**/*.py,src/value/**,src/value_skills/**
+globs: tests/**,tools/**/*.py
 ---
 
 (def-sop thermo-nuclear-implementation
@@ -9,15 +9,11 @@ globs: eliotapp/**,tests/**,tools/**/*.py,src/value/**,src/value_skills/**
     (target "autonomous-agent")
     (optimization "maximum-determinism-temporal-alignment")
     (apply-body-when
-      (or (paths-under 'repo-layout.mdc eliot_home)
-          (paths-under 'repo-layout.mdc product-home)
-          (paths-under 'repo-layout.mdc skills_home)
-          (paths-matching "tests/test_*.py")
+      (or (paths-matching "tests/test_*.py")
           (paths-matching "tools/**/*.py")))
     (forbidden (apply-body-to 'docs '.cursor/plans 'mdc-rules 'handoff))
-    (note "Eliot Python = eliotapp/**. src/value/** and src/value_skills/** stay in globs only until evacuation finishes — legacy leftover coverage, not a second Eliot home.")
-    (note "All Python in this repo goes through this bar — including tools/**/*.py. Placement still follows repo-layout (eliot_home for shipped Eliot; tools/ for local scripts only).")
-    (note "Domain truth and data-shape discipline live in core-domain.mdc (eliotapp/core only)."))
+    (note "Thermonuclear covers tests/ and tools/**/*.py. Placement of product code follows repo-layout product_home; skill scripts follow skills-repo.mdc under .cursor/skills/.")
+    (note "Domain truth and data-shape discipline for the spoke live in core-domain.mdc (src/value/core only)."))
 
   <central_idea>
   (center-of-gravity
