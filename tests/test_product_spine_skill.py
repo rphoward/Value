@@ -156,6 +156,27 @@ class ProductSpineSkillTests(unittest.TestCase):
         self.assertIn("notebooklm-directions", self.skill_text)
         self.assertIn("Box A", path_text + self.skill_text)
 
+    def test_reentry_you_are_here_carries_progress_so_far(self) -> None:
+        """Guards amnesiac re-entry: progress so far in you-are-here, not a fifth beat or status dump."""
+        path_text = PATH_REF.read_text(encoding="utf-8")
+        combined = f"{self.skill_text}\n{path_text}"
+        for needle in (
+            "progress so far",
+            "--sections",
+            "you-are-here",
+            "why-this-phase",
+            "this-turn",
+            "come-back-when",
+            "quote-status-stdout",
+        ):
+            self.assertIn(needle, combined, f"missing re-entry progress wiring: {needle}")
+        self.assertIn(
+            "quoting status.py stdout, --brief, or section-strip symbols",
+            self.skill_text,
+        )
+        self.assertIn("progress so far", path_text)
+        self.assertIn("not a fifth beat", path_text)
+
     def test_spine_does_not_instruct_self_reload(self) -> None:
         """Guards circular handoffs that bounce the agent back into /product-spine forever."""
         self.assertNotIn("read .cursor/skills/product-spine", self.skill_text)

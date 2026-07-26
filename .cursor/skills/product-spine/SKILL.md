@@ -36,7 +36,7 @@ disable-model-invocation: true
     (on-activation
       1 "read references/path.md"
       2 "discover project slug: look under workproduct/value-proposition/*/session.json and workproduct/lean-mvp/*/session.json; prefer a value slug when claiming; if several value slugs, ask one clarifying question (name the project in plain words)"
-      3 "when a session exists, run that skill's scripts/status.py <session> read-only (default brief) to learn module position — do not --refresh, accept, init, or import from spine"
+      3 "when a session exists, run that skill's scripts/status.py <session> --sections read-only for progress-so-far wording; keep readiness from session.json / milestone files — optional brief is agent-internal only; do not --refresh, accept, init, or import from spine"
       4 "choose phase with protocol-1; speak protocol-2 voice"
       5 "if phase is claim: run protocol-3 claim-evidence-handoff — read the slug's saved notes from disk, list every path in the guide-turn, then read .cursor/skills/story-generation-prompt/SKILL.md and follow it in this turn using those files as evidence — open with a first story action, not a pointer to another slash and not a request that the human hunt or paste the notes"
       6 "if phase is clarity or mvp: fill guide-turn This-turn with exactly /value or /lean-mvp plus leg purpose; stop grilling — the sibling owns atoms on the next leg"
@@ -76,12 +76,12 @@ disable-model-invocation: true
 
   (protocol-2-voice
     (guide-turn
-      (you-are-here "phase label + project slug when known + one plain sentence of situation")
+      (you-are-here "phase label + project slug when known + one plain sentence of situation; when a session exists, that sentence includes progress so far in plain words translated from --sections section names — e.g. profile done; still on value-map pains; no session means no fake progress line; claim may add at most one short readiness clause such as notes ready for pitch")
       (why-this-phase "one precedence sentence — why this phase won")
       (files-im-using "claim only: bullet the exact relative paths you opened — say you are using the notes already saved; the human does not hunt folders or paste files")
       (this-turn "clarity/mvp/return: exactly one sibling slash and what happens there; claim: follow story-generation-prompt with a first story action in this turn, drafted from Files-im-using")
       (come-back-when "done-enough for that leg + explicit /product-spine re-entry — omit only while already inside claim story work this turn"))
-    (shape "short guide-turn in that order — no atom IDs, no script stdout; keep words simple enough for a first-time vibecoder")
+    (shape "short guide-turn in that order — no atom IDs, no script stdout, no section-strip symbols; keep words simple enough for a first-time vibecoder")
     (slug "say the project slug when known")
     (carry "the human should feel guided, not sorted into a queue; spine is the entrance and the re-entrance until claim work is in hand")
     (notebooklm-directions "when claim emits video/NotebookLM steps, follow story-generation-prompt Human how-to: numbered Do this — one upload folder, Chat box = Box A, Video/Studio = Box B; forbidden: long essays or two upload plans")
@@ -94,6 +94,7 @@ disable-model-invocation: true
       "claim turn that explains NotebookLM in a long essay instead of numbered Do this + Box A + Box B"
       "lean before clarity-ready without explicit skip-value and stated re-grilling cost"
       "treating status.py brief active module as clarity-ready or mvp-ready"
+      "quoting status.py stdout, --brief, or section-strip symbols to the user as the guide-turn answer"
       "any sibling init, accept, import, or --refresh from spine"))
 
   (protocol-3-claim-evidence-handoff

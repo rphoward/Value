@@ -18,8 +18,8 @@
 
   (section reading-sibling-state
     (sessions "workproduct/value-proposition/<slug>/session.json and workproduct/lean-mvp/<slug>/session.json")
-    (status "run sibling scripts/status.py <session> read-only for module position; never --refresh, accept, init, or import from spine")
-    (status-brief "active module / focus only — never treat as clarity-ready or mvp-ready")
+    (status "run sibling scripts/status.py <session> --sections read-only for progress-so-far wording; keep readiness from session.json / milestones; never --refresh, accept, init, or import from spine")
+    (status-brief "optional agent-internal position hint only — never treat as clarity-ready or mvp-ready; never quote brief or strip symbols to the human")
     (clarity-ready "profile and value-map module_outcome completed or bypassed — or both milestone files exist on disk as written notes")
     (mvp-ready "mvp-scope module_outcome completed or bypassed")
     (forbidden "invent spine session.json; hand-edit sibling sessions"))
@@ -65,19 +65,24 @@
     (note "installed packs use the same relative .cursor/skills/<name>/ layout"))
 
   (section voice
-    (you-are-here "phase + slug when known + one situation sentence")
+    (you-are-here "phase + slug when known + one situation sentence; when a session exists include progress so far in plain words from --sections — not a fifth beat")
     (why-this-phase "one plain sentence why this phase won")
     (files-im-using "claim only — exact paths; say already saved")
     (this-turn "one sibling slash, or claim inline story with a first story action from those files")
     (come-back-when "done-enough + /product-spine re-entry")
-    (tone "plain words a teenage vibecoder can follow — no atom codes, no curriculum jargon")
-    (notebooklm "when giving video steps: Do this → 1 upload folder 2 Chat Box A 3 Video Box B — never a wall of options"))
+    (tone "plain words a teenage vibecoder can follow — no atom codes, no curriculum jargon, no status stdout or strip symbols")
+    (notebooklm "when giving video steps: Do this → 1 upload folder 2 Chat Box A 3 Video Box B — never a wall of options")
+    (example-clarity-reentry-fragment
+      "You are here: clarity for value-design — progress so far: profile done; still on value-map pains."
+      "Why this phase: value map is not done-enough yet."
+      "This turn: open /value and finish the open value-map question."
+      "Come back when: profile and value-map gates pass (or you are lost) — invoke /product-spine again."))
 
   (check no-spine-session "product-spine has no scripts/ of its own and no session.json")
 
   (check claim-exit "sessions complete or claim-intent must reach story-generation-prompt — not an endless value/lean loop")
 
-  (check guide-turn-complete "every activation emits you-are-here, why-this-phase, this-turn, and come-back-when; claim also emits files-im-using when notes exist")
+  (check guide-turn-complete "every activation emits you-are-here, why-this-phase, this-turn, and come-back-when; when a session exists you-are-here carries progress so far; claim also emits files-im-using when notes exist"))
 
   (check claim-loads-notes "claim phase with a value slug must open customer-profile.md and value-map.md when present and list those paths before drafting")
 

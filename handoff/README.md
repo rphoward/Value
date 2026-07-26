@@ -7,6 +7,9 @@
 | [STORY-SCENARIO-SUITE-OPEN.md](STORY-SCENARIO-SUITE-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-STORY-SCENARIO-SUITE.md](NEW-CHAT-PROMPT-STORY-SCENARIO-SUITE.md) | Paste block for fresh session |
 | [decision-trails/story-scenario-suite.tsv](decision-trails/story-scenario-suite.tsv) | Friction log (suite walk) |
+| [PRODUCT-SPINE-COLD-RESTART-OPEN.md](PRODUCT-SPINE-COLD-RESTART-OPEN.md) | Open — cold-restart progress-so-far walk |
+| [NEW-CHAT-PROMPT-PRODUCT-SPINE-COLD-RESTART.md](NEW-CHAT-PROMPT-PRODUCT-SPINE-COLD-RESTART.md) | Paste block for cold-restart walk |
+| [decision-trails/product-spine-cold-restart.tsv](decision-trails/product-spine-cold-restart.tsv) | Friction log (cold restart) |
 | [PRODUCT-SPINE-KAI-UNHAPPY-PATH-PASSED.md](PRODUCT-SPINE-KAI-UNHAPPY-PATH-PASSED.md) | Closed — Kai unhappy path PASS (coaching stress) |
 | [PRODUCT-SPINE-KAI-UNHAPPY-PATH-OPEN.md](PRODUCT-SPINE-KAI-UNHAPPY-PATH-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-PRODUCT-SPINE-KAI-UNHAPPY-PATH.md](NEW-CHAT-PROMPT-PRODUCT-SPINE-KAI-UNHAPPY-PATH.md) | Paste block (Kai unhappy path — historical) |
