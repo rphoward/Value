@@ -4,7 +4,7 @@ The human pointed you at this file. Follow it. Do not invent a different process
 
 ## What they want
 
-They want a paced Cursor skill built from one prompt-suite markdown file. Mechanical extract and scaffold use the CLIs under **this skill’s `scripts/`**. Curriculum atoms and voice use poteto-mode judgment. Do not touch a skill named `value`, and do not write into `skills/value/` or `.cursor/skills/value/`.
+They want a paced Cursor skill built from one prompt-suite markdown file. Mechanical extract and scaffold use the CLIs under **this skill’s `scripts/`**. Curriculum expansion follows **references/curriculum-synthesis.md** (poteto-mode optional if installed). Do not touch a skill named `value`, and do not write into `skills/value/` or `.cursor/skills/value/`.
 
 ## Pack location
 
@@ -22,7 +22,7 @@ Legacy shims under `tools/prompt-suite-compile/` forward to `scripts/` if presen
 
 ## Steps
 
-1. Confirm `/poteto-mode` (or poteto style) is active for curriculum work.
+1. Read `references/curriculum-synthesis.md` before expanding atoms (optional: `/poteto-mode` if installed).
 2. From the target repo root, run scaffold:
 
 ```text
@@ -30,7 +30,7 @@ python .cursor/skills/scripted-skill-from-doc/scripts/compile.py scaffold --sour
 ```
 
 3. Read the draft `COMPILE-NOTES.md` and `ir.json`.
-4. Expand stub atoms (`S##` / `G##`) into a real curriculum under `assets/atoms.json`. Update `section-map.json`, templates, and module references. Keep one primary question per atom.
+4. Expand seeded or stub atoms into a shippable curriculum under `assets/atoms.json` per curriculum-synthesis. Update `section-map.json`, templates, and module references. Keep one primary question per atom. Promote refuses stub-ask placeholders.
 5. Run:
 
 ```text

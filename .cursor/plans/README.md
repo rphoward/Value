@@ -8,7 +8,8 @@ Last indexed: 2026-07-26.
 
 | Plan | Role |
 |------|------|
-| [prompt-suite-to-skill/](prompt-suite-to-skill/overview.md) | Portable doc → paced scripted skill compiler + poteto runbook |
+| [standalone_curriculum_seed](standalone_curriculum_seed_acd62279.plan.md) | Seed refs/atoms in compile.py, curriculum-synthesis runbook, promote stub fence — no pstack required |
+| [prompt-suite-to-skill/](prompt-suite-to-skill/overview.md) | Portable doc → paced scripted skill compiler + optional poteto runbook |
 | [coaching_out-of-scope](coaching_out-of-scope_3862e411.plan.md) | Isolate per-skill `_session` imports, then fill the eight lean-mvp coaching atoms with empty `kb_refs` |
 | [purge_eliot_remnants](purge_eliot_remnants_693d9a18.plan.md) | Remove dead ELIOT machinery from `.cursor/`; the `repo-layout.mdc` write gate is deferred |
 | [value-shape_rules_rewrite](value-shape_rules_rewrite_c138c6e2.plan.md) | Drop Eliot/`eliotapp` layout contracts; Value product home + workproduct session data + package-local skills |

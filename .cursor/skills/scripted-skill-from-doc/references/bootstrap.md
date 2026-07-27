@@ -23,6 +23,6 @@ Expect `"ok": true`.
 }
 ```
 
-4. Open `references/for-agents.md` and give the agent a source path plus a skill slug (never `value`). Prefer `/poteto-mode`.
+4. Open `references/for-agents.md` and give the agent a source path plus a skill slug (never `value`). Follow `references/curriculum-synthesis.md` for atoms.
 
 More detail: `references/readme.md` and `references/tutorial.md`.

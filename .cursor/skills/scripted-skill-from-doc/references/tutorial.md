@@ -37,11 +37,11 @@ python .cursor/skills/scripted-skill-from-doc/scripts/compile.py scaffold --sour
 
 Open `tools/drafts/skills/demo-suite/`. You should see `SKILL.md`, `assets/`, `scripts/`, `references/`, `COMPILE-NOTES.md`, and `ir.json`.
 
-Stub atoms use ids like `S01` and `G01`. They are placeholders. They are good enough for audit and smoke. They are not a finished curriculum.
+Seeded atoms come from prompt structure where possible. Stub asks remain when the prompt is too thin. They are good enough for audit and smoke. They are not promote-ready until you expand them per `references/curriculum-synthesis.md`.
 
 ## Step 4. Expand the curriculum
 
-Point Cursor at `references/for-agents.md`. Activate `/poteto-mode` if you have it. Ask the agent to replace stub atoms with real questions, soft and hard labels, unlocks, and module voice.
+Point Cursor at `references/for-agents.md` and `references/curriculum-synthesis.md`. Optional: activate `/poteto-mode` if installed. Ask the agent to replace any stub asks, tune soft and hard labels, unlocks, and module voice.
 
 Keep one primary question per atom. Do not invent answers for pressure tests.
 
@@ -71,4 +71,4 @@ If that slug already exists under `.cursor/skills/`, add `--force --overwrite-sl
 
 ## What this pack does not do
 
-It does not write finished judgment for you. Soft versus hard atoms, question wording, and skill voice stay human or poteto-mode work. It also does not replace an existing Values skill named `value`.
+It does not write finished judgment for you. Soft versus hard atoms, question wording, and skill voice stay human or agent synthesis work (`curriculum-synthesis.md`). It also does not replace an existing Values skill named `value`.

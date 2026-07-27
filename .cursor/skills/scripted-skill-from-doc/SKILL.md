@@ -4,8 +4,8 @@ description: >
   Use when the user asks to compile a prompt-suite markdown into a paced
   scripted Cursor skill, scaffold a skill from a book doc, or run
   prompt-suite-compile. Portable harness pack under this skill folder
-  (scripts/, references/, assets/). Requires poteto-mode for curriculum atoms.
-  Not for editing a protected golden skill named value, and not for Slack
+  (scripts/, references/, assets/). Seeded atoms plus references/curriculum-synthesis.md
+  for curriculum expansion; poteto-mode optional. Not for editing a protected golden skill named value, and not for Slack
   automations.
 metadata:
   activation: intent
@@ -21,7 +21,8 @@ metadata:
       (for-agents references/for-agents.md)
       (readme references/readme.md)
       (tutorial references/tutorial.md)
-      (bootstrap references/bootstrap.md))
+      (bootstrap references/bootstrap.md)
+      (curriculum-synthesis references/curriculum-synthesis.md))
     (assets
       (session-runtime assets/session-runtime/)
       (sample-fixture assets/fixtures/sample-prompt-suite.md)
@@ -36,13 +37,13 @@ metadata:
 
   <central_idea>
   (center-of-gravity
-    (invariant "This skill uses the standard scripts/references/assets layout. Read references/for-agents.md. Run scripts from scripts/. Use poteto-mode for atoms and voice. Never overwrite a skill named value."))
+    (invariant "This skill uses the standard scripts/references/assets layout. Read references/for-agents.md. Run scripts from scripts/. Expand curriculum via references/curriculum-synthesis.md. Never overwrite a skill named value."))
   </central_idea>
 
   (protocol-0-entry
     1 "read references/for-agents.md and references/readme.md"
     2 "require source path and slug from the user (slug must not be value)"
-    3 "prefer /poteto-mode for the rest of the run")
+    3 "read references/curriculum-synthesis.md when expanding atoms (optional: /poteto-mode if installed)")
 
   (protocol-1-mechanical
     (cwd "repo root preferred so drafts/ and workproduct/ land correctly")

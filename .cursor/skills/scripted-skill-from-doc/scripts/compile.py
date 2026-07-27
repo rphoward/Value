@@ -29,6 +29,11 @@ KB_HEADING_RE = re.compile(
 )
 FENCE_JSON_RE = re.compile(r"```json\s*\n(.*?)```", re.DOTALL)
 FENCE_MD_RE = re.compile(r"```markdown\s*\n(.*?)```", re.DOTALL)
+HEADING3_RE = re.compile(r"^###\s+(.+)$")
+HEADING2_RE = re.compile(r"^##\s+(.+)$")
+NUMBERED_RE = re.compile(r"^\s*\d+[\.)]\s+(.+)$")
+STUB_ASK_PREFIX = "What is the first concrete fact for"
+CANDIDATE_CAP_PER_MODULE = 4
 
 
 def slugify(text: str) -> str:
@@ -135,44 +140,177 @@ def assert_safe_out(out: Path, slug: str) -> None:
         )
 
 
-def stub_atoms(modules: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Minimal chain: entry + gate per module so scripts can smoke before agent fills."""
+def extract_atom_candidates(prompt_markdown: str) -> list[tuple[str, str]]:
+    """Return up to CANDIDATE_CAP_PER_MODULE (section_label, ask_text) from prompt structure."""
+    if not prompt_markdown.strip():
+        return []
+    seen: set[str] = set()
+    out: list[tuple[str, str]] = []
+    current_section = "Start"
+
+    def add(section: str, text: str) -> None:
+        if len(out) >= CANDIDATE_CAP_PER_MODULE:
+            return
+        key = text.strip().lower()[:120]
+        if not key or key in seen:
+            return
+        seen.add(key)
+        out.append((section, text.strip()[:500]))
+
+    for line in prompt_markdown.splitlines():
+        h3 = HEADING3_RE.match(line)
+        if h3:
+            current_section = h3.group(1).strip()
+            add(current_section, f"What should we establish for: {current_section}?")
+            continue
+        h2 = HEADING2_RE.match(line)
+        if h2:
+            current_section = h2.group(1).strip()
+            continue
+        num = NUMBERED_RE.match(line)
+        if num:
+            add(current_section, num.group(1).strip())
+            continue
+        if "?" in line and line.strip():
+            add(current_section, line.strip())
+
+    return out
+
+
+def seed_atoms(modules: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Linear paced chain: seeded or stub entry atoms plus one gate per module."""
     atoms: list[dict[str, Any]] = []
     prev_gate: str | None = None
+    s_idx = 0
+    g_idx = 0
+
     for mi, mod in enumerate(modules):
         mid = mod["id"]
-        entry_id = f"S{mi + 1:02d}"
-        gate_id = f"G{mi + 1:02d}"
-        requires = [prev_gate] if prev_gate else []
-        atoms.append(
-            {
-                "id": entry_id,
-                "module": mid,
-                "asks": f"What is the first concrete fact for {mod['title']}?",
-                "accepts_summary": "States a concrete fact or labels unknown.",
-                "unlocks": gate_id,
-                "gate": False,
-                "requires": requires,
-                "section": "Start",
-                "soft": False,
-            }
-        )
-        next_entry = f"S{mi + 2:02d}" if mi + 1 < len(modules) else None
+        candidates = extract_atom_candidates(mod.get("prompt_markdown") or "")
+        entries: list[dict[str, Any]] = []
+
+        if not candidates:
+            s_idx += 1
+            entries.append(
+                {
+                    "id": f"S{s_idx:02d}",
+                    "module": mid,
+                    "asks": f"{STUB_ASK_PREFIX} {mod['title']}?",
+                    "accepts_summary": "States a concrete fact or labels unknown.",
+                    "gate": False,
+                    "section": "Start",
+                    "soft": False,
+                }
+            )
+        else:
+            for section, ask_text in candidates:
+                s_idx += 1
+                entries.append(
+                    {
+                        "id": f"S{s_idx:02d}",
+                        "module": mid,
+                        "asks": ask_text,
+                        "accepts_summary": "Answers the prompt-derived question or labels unknown.",
+                        "gate": False,
+                        "section": section,
+                        "soft": False,
+                        "seeded": True,
+                    }
+                )
+
+        g_idx += 1
+        gate_id = f"G{g_idx:02d}"
+        next_first: str | None = None
+        if mi + 1 < len(modules):
+            next_first = f"S{s_idx + 1:02d}"
+
+        for i, entry in enumerate(entries):
+            if i == 0:
+                entry["requires"] = [prev_gate] if prev_gate else []
+            else:
+                entry["requires"] = [entries[i - 1]["id"]]
+            entry["unlocks"] = entries[i + 1]["id"] if i + 1 < len(entries) else gate_id
+
+        last_entry_id = entries[-1]["id"]
+        atoms.extend(entries)
         atoms.append(
             {
                 "id": gate_id,
                 "module": mid,
                 "asks": f"Review {mod['title']}. Pass the gate, reopen, or record unknowns.",
                 "accepts_summary": f"Pass with 'pass {mid} gate', reopen, or blocking unknowns.",
-                "unlocks": next_entry,
+                "unlocks": next_first,
                 "gate": True,
-                "requires": [entry_id],
+                "requires": [last_entry_id],
                 "section": "Gate",
                 "soft": False,
             }
         )
         prev_gate = gate_id
+
+    if atoms and atoms[-1].get("gate"):
+        atoms[-1]["unlocks"] = None
+
     return atoms
+
+
+def module_atoms(atoms: list[dict[str, Any]], module_id: str) -> list[dict[str, Any]]:
+    return [a for a in atoms if a.get("module") == module_id]
+
+
+def h2_headings_from_prompt(prompt_markdown: str) -> list[str]:
+    headings: list[str] = []
+    for line in (prompt_markdown or "").splitlines():
+        m = HEADING2_RE.match(line)
+        if m:
+            headings.append(m.group(1).strip())
+    return headings
+
+
+def write_module_ref(mod: dict[str, Any], slug: str, source: str) -> str:
+    mid = mod["id"]
+    prompt = (mod.get("prompt_markdown") or "").strip()
+    cargo = prompt if prompt else "(empty prompt in source suite)"
+    return (
+        f"(def-ref {mid}\n"
+        f"  (linked-from protocol-2)\n"
+        f"  (source \"{source} — {mod['title']}\")\n\n"
+        f"  (section module\n"
+        f"    (name {mid})\n"
+        f"    (artifact {mid}.md)\n"
+        f"    (template assets/{mid}.template.md))\n\n"
+        f"  (section gate-pass\n"
+        f"    (canonical \"pass {mid} gate\"))\n\n"
+        f"  (section cargo\n"
+        f"    (prompt-markdown\n"
+        f"{cargo}\n"
+        f"    )))\n"
+    )
+
+
+def milestone_template(mod: dict[str, Any], slug: str) -> str:
+    h2s = h2_headings_from_prompt(mod.get("prompt_markdown") or "")
+    body_parts = [f"# {mod['title']}\n", f"> Draft from accepted {slug} session state.\n"]
+    if h2s:
+        for h in h2s:
+            body_parts.append(f"\n## {h}\n\n")
+    else:
+        body_parts.append("\n## Start\n\n")
+    body_parts.append("\n## Unknowns\n\n\n## Decisions\n")
+    return "".join(body_parts)
+
+
+def build_milestone_section_map(
+    mod_atoms: list[dict[str, Any]], prompt_markdown: str
+) -> dict[str, list[str]]:
+    entries = [a for a in mod_atoms if not a.get("gate")]
+    h2s = h2_headings_from_prompt(prompt_markdown)
+    if h2s:
+        section_map: dict[str, list[str]] = {h: [] for h in h2s}
+        if entries:
+            section_map[h2s[0]] = [a["id"] for a in entries]
+        return section_map
+    return {"Start": [a["id"] for a in entries]}
 
 
 def build_skill_config(slug: str, modules: list[dict[str, Any]], atoms: list[dict[str, Any]]) -> dict[str, Any]:
@@ -180,15 +318,19 @@ def build_skill_config(slug: str, modules: list[dict[str, Any]], atoms: list[dic
     entry = atoms[0]["id"] if atoms else "S01"
     express_spine: dict[str, list[str]] = {}
     express_requires: dict[str, list[str]] = {}
-    for mi, mid in enumerate(module_ids):
-        e = f"S{mi + 1:02d}"
-        g = f"G{mi + 1:02d}"
-        express_spine[mid] = [e, g]
-        express_requires[g] = [e]
-        if mi == 0:
-            express_requires[e] = []
-        else:
-            express_requires[e] = [f"G{mi:02d}"]
+    prev_gate: str | None = None
+    for mid in module_ids:
+        mod_atoms = module_atoms(atoms, mid)
+        entry_atoms = [a for a in mod_atoms if not a.get("gate")]
+        gate_atoms = [a for a in mod_atoms if a.get("gate")]
+        if not entry_atoms or not gate_atoms:
+            continue
+        first_entry = entry_atoms[0]["id"]
+        gate_id = gate_atoms[0]["id"]
+        express_spine[mid] = [first_entry, gate_id]
+        express_requires[gate_id] = [first_entry]
+        express_requires[first_entry] = [prev_gate] if prev_gate else []
+        prev_gate = gate_id
     return {
         "skill_slug": slug,
         "workproduct_root": f"workproduct/{slug}",
@@ -245,7 +387,7 @@ metadata:
 
   <central_idea>
   (center-of-gravity
-    (invariant "Teach with DAG-paced atoms. Canonical state lives in workproduct/{slug}/<project-slug>/session.json. Scripts run silently; one human question per turn. Stub atoms are placeholders — complete curriculum via FOR_AGENTS before shipping."))
+    (invariant "Teach with DAG-paced atoms. Canonical state lives in workproduct/{slug}/<project-slug>/session.json. Scripts run silently; one human question per turn. Seeded atoms are drafts — complete curriculum via references/curriculum-synthesis.md before promote."))
   </central_idea>
 
   (protocol-0-philosophy
@@ -292,7 +434,7 @@ def scaffold(ir: dict[str, Any], slug: str, out_dir: Path) -> Path:
     if keep.is_file():
         keep.unlink()
 
-    atoms = stub_atoms(modules)
+    atoms = seed_atoms(modules)
     config = build_skill_config(slug, modules, atoms)
     kb = ir.get("knowledge_base") or {}
     if "phase_module_map" not in kb:
@@ -310,33 +452,19 @@ def scaffold(ir: dict[str, Any], slug: str, out_dir: Path) -> Path:
     )
 
     section_map: dict[str, Any] = {"milestones": {}, "design_briefs": {}}
-    for mi, mod in enumerate(modules):
+    for mod in modules:
         mid = mod["id"]
-        section_map["milestones"][mid] = {
-            "Start": [f"S{mi + 1:02d}"],
-        }
-        template = (
-            f"# {mod['title']}\n\n"
-            f"> Draft from accepted {slug} session state.\n\n"
-            f"## Start\n\n"
-            f"## Unknowns\n\n"
-            f"## Decisions\n"
+        mod_atoms_list = module_atoms(atoms, mid)
+        section_map["milestones"][mid] = build_milestone_section_map(
+            mod_atoms_list, mod.get("prompt_markdown") or ""
         )
-        (out_dir / "assets" / f"{mid}.template.md").write_text(template, encoding="utf-8")
-        ref = (
-            f"(def-ref {mid}\n"
-            f"  (linked-from protocol-2)\n"
-            f"  (source \"{ir.get('source', '')} — {mod['title']}\")\n\n"
-            f"  (section module\n"
-            f"    (name {mid})\n"
-            f"    (artifact {mid}.md)\n"
-            f"    (template assets/{mid}.template.md))\n\n"
-            f"  (section gate-pass\n"
-            f"    (canonical \"pass {mid} gate\"))\n\n"
-            f"  (section stub-note\n"
-            f"    (note \"Prompt cargo lives in the source suite; expand atoms via FOR_AGENTS\")))\n"
+        (out_dir / "assets" / f"{mid}.template.md").write_text(
+            milestone_template(mod, slug), encoding="utf-8"
         )
-        (out_dir / "references" / f"{mid}.md").write_text(ref, encoding="utf-8")
+        (out_dir / "references" / f"{mid}.md").write_text(
+            write_module_ref(mod, slug, ir.get("source", "")),
+            encoding="utf-8",
+        )
 
     (out_dir / "assets" / "section-map.json").write_text(
         json.dumps(section_map, indent=2) + "\n", encoding="utf-8"
@@ -410,7 +538,7 @@ def scaffold(ir: dict[str, Any], slug: str, out_dir: Path) -> Path:
         "# Compile notes\n\n"
         "This draft was scaffolded by `prompt-suite-compile`.\n\n"
         "- Knowledge base JSON extracted from the source suite.\n"
-        "- Stub atoms (S## / G##) are placeholders. Expand via FOR_AGENTS under poteto-mode.\n"
+        "- Draft atoms are seeded from prompt structure where possible; finish curriculum via references/curriculum-synthesis.md before promote.\n"
         "- Run `python .cursor/skills/scripted-skill-from-doc/scripts/audit_dag.py <this-skill-dir>` before promote.\n"
         "- Do not promote over `value`.\n",
         encoding="utf-8",

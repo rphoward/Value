@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+import re
 import shutil
 import subprocess
 import sys
@@ -13,6 +15,8 @@ from _paths import SCRIPTS_DIR, find_repo_root
 
 # Never install or overwrite these live skills via promote.
 ALWAYS_FORBIDDEN = frozenset({"value", "scripted-skill-from-doc"})
+
+STUB_ASK_RE = re.compile(r"^What is the first concrete fact for\b", re.IGNORECASE)
 
 IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc", "ir.json")
 
@@ -77,6 +81,17 @@ def main() -> int:
     print(audit.stdout)
     if audit.returncode != 0:
         return _refuse("Promote blocked: audit_dag failed")
+
+    atoms_path = draft / "assets" / "atoms.json"
+    if atoms_path.is_file():
+        data = json.loads(atoms_path.read_text(encoding="utf-8"))
+        for atom in data.get("atoms") or []:
+            asks = atom.get("asks") or ""
+            if STUB_ASK_RE.match(asks.strip()):
+                return _refuse(
+                    "Promote blocked: atoms.json still contains stub-ask placeholders. "
+                    "Expand curriculum per references/curriculum-synthesis.md."
+                )
 
     repo = (args.repo or find_repo_root()).resolve()
     dest = repo / ".cursor" / "skills" / slug

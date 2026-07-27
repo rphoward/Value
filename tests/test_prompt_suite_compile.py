@@ -72,6 +72,28 @@ class PromptSuiteCompileTests(unittest.TestCase):
             self.assertTrue(report["ok"])
             self.assertEqual(report["standard"]["missing_hard"], [])
 
+            both = run([str(AUDIT), str(draft), "--mode", "both"])
+            self.assertEqual(both.returncode, 0, both.stdout + both.stderr)
+
+            need_ref = draft / "references" / "need-prioritizer.md"
+            self.assertTrue(need_ref.is_file())
+            self.assertIn("Need-Prioritizer", need_ref.read_text(encoding="utf-8"))
+            self.assertIn("section cargo", need_ref.read_text(encoding="utf-8"))
+
+            atoms = json.loads((draft / "assets" / "atoms.json").read_text(encoding="utf-8"))[
+                "atoms"
+            ]
+            non_gate = [a for a in atoms if not a.get("gate")]
+            self.assertGreater(len(non_gate), 4)
+            need_atoms = [a for a in atoms if a.get("module") == "need-prioritizer"]
+            self.assertGreater(len([a for a in need_atoms if not a.get("gate")]), 1)
+            for a in need_atoms:
+                if not a.get("gate"):
+                    self.assertFalse(
+                        (a.get("asks") or "").startswith("What is the first concrete fact for")
+                    )
+                    self.assertFalse(a.get("soft"))
+
             bad = run(
                 [
                     str(COMPILE),
@@ -138,7 +160,7 @@ class PromptSuiteCompileTests(unittest.TestCase):
                     str(COMPILE),
                     "scaffold",
                     "--source",
-                    str(PACK / "assets" / "fixtures" / "sample-prompt-suite.md"),
+                    str(LEAN_DOC),
                     "--slug",
                     "promo-safe",
                     "--out",
@@ -173,6 +195,49 @@ class PromptSuiteCompileTests(unittest.TestCase):
             )
             self.assertEqual(ok.returncode, 0, ok.stderr + ok.stdout)
             self.assertTrue((live / "SKILL.md").is_file())
+
+    def test_promote_refuses_stub_asks(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "drafts"
+            scaffold = run(
+                [
+                    str(COMPILE),
+                    "scaffold",
+                    "--source",
+                    str(PACK / "assets" / "fixtures" / "sample-prompt-suite.md"),
+                    "--slug",
+                    "stub-only",
+                    "--out",
+                    str(out),
+                ]
+            )
+            self.assertEqual(scaffold.returncode, 0, scaffold.stderr)
+            draft = out / "stub-only"
+            root = Path(tmp)
+            (root / ".cursor" / "skills").mkdir(parents=True)
+            proc = run([str(PROMOTE), str(draft), "--repo", str(root)])
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertIn("stub-ask", proc.stderr.lower())
+
+    def test_scaffold_sample_fixture_still_audits(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "drafts"
+            proc = run(
+                [
+                    str(COMPILE),
+                    "scaffold",
+                    "--source",
+                    str(PACK / "assets" / "fixtures" / "sample-prompt-suite.md"),
+                    "--slug",
+                    "sample-seed",
+                    "--out",
+                    str(out),
+                ]
+            )
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            draft = out / "sample-seed"
+            audit = run([str(AUDIT), str(draft), "--mode", "standard"])
+            self.assertEqual(audit.returncode, 0, audit.stdout + audit.stderr)
 
     def test_audit_both_fails_when_express_spine_missing(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

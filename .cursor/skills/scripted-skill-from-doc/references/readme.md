@@ -8,7 +8,7 @@ It turns a prompt-suite markdown file into a draft paced Cursor skill. You expan
 
 - Python 3.10 or newer on your PATH
 - A prompt-suite markdown file, or use `assets/fixtures/sample-prompt-suite.md`
-- Cursor for `/scripted-skill-from-doc` and `/poteto-mode` curriculum work
+- Cursor for `/scripted-skill-from-doc` (optional `/poteto-mode` for extra review habits)
 
 Stdlib only. No pip packages.
 
@@ -32,7 +32,7 @@ Never scaffold or promote a skill named `value` or `scripted-skill-from-doc`. Ov
 
 ## Agent entry
 
-Open `references/for-agents.md`. Prefer `/poteto-mode` for expanding atoms.
+Open `references/for-agents.md`. Use `references/curriculum-synthesis.md` for curriculum expansion.
 
 More detail: `references/bootstrap.md` and `references/tutorial.md`.
 
