@@ -3,6 +3,7 @@
 | File | Role |
 |------|------|
 | [STATE.md](STATE.md) | Living snapshot |
+| [SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md](SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md) | Closed — installed assets + promote_context.py + durable protocols |
 | [STORY-SCENARIO-SUITE-PASSED.md](STORY-SCENARIO-SUITE-PASSED.md) | Closed — story scenario suite S01–S08 PASS |
 | [STORY-SCENARIO-SUITE-OPEN.md](STORY-SCENARIO-SUITE-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-STORY-SCENARIO-SUITE.md](NEW-CHAT-PROMPT-STORY-SCENARIO-SUITE.md) | Paste block for fresh session |

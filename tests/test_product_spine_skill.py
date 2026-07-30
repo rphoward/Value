@@ -257,6 +257,26 @@ class ProductSpineSkillTests(unittest.TestCase):
         self.assertTrue(SHIP_MIRROR_ROOT.is_dir(), "skills/product-spine/ missing")
         self.assertEqual(mirror_mismatches(SKILL_ROOT, SHIP_MIRROR_ROOT), [])
 
+    def test_agents_fragment_asset_is_installed(self) -> None:
+        """Guards npx install missing the AGENTS paste block under assets/."""
+        fragment = SKILL_ROOT / "assets" / "AGENTS.fragment.md"
+        self.assertTrue(fragment.is_file(), "product-spine assets/AGENTS.fragment.md missing")
+        self.assertIn("Product-Spine and Values notes", fragment.read_text(encoding="utf-8"))
+
+    def test_vernacular_protocol_mentions_promote_and_seed_paths(self) -> None:
+        """Guards consumer vernacular lift regressing to docs-only chat cues."""
+        path_text = PATH_REF.read_text(encoding="utf-8")
+        combined = f"{self.skill_text}\n{path_text}"
+        for needle in (
+            "CONTEXT.product.md",
+            "promote_context.py",
+            "protocol-4-vernacular",
+            "AGENTS.fragment.md",
+            "when-bmg-or-lean-without-seed",
+            "profile segment",
+        ):
+            self.assertIn(needle, combined, f"missing vernacular wiring: {needle}")
+
     def test_bmg_ship_tree_mirrors_cursor_tree(self) -> None:
         """Guards the declared BMG ship mirror from silently drifting."""
         self.assertTrue(BMG_SHIP_ROOT.is_dir(), "skills/bmg/ missing")

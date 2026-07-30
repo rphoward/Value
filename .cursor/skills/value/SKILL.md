@@ -29,6 +29,7 @@ metadata:
       (lean-bridge-map assets/lean-bridge-map.json)
       (context-product-template assets/CONTEXT.product.template.md)
       (agents-product-template assets/AGENTS.product.template.md)
+      (agents-fragment assets/AGENTS.fragment.md)
       (ui-copy-template assets/ui-copy.template.md)
       (states-and-flows-template assets/states-and-flows.template.md)
       (first-value-template assets/first-value.template.md)
@@ -55,7 +56,8 @@ metadata:
       (pacing scripts/set_pacing_mode.py)
       (milestone scripts/write_milestone.py)
       (briefs scripts/write_design_briefs.py)
-      (build-pack scripts/write_build_pack.py)))
+      (build-pack scripts/write_build_pack.py)
+      (promote-context scripts/promote_context.py)))
 
   <central_idea>
   (center-of-gravity
@@ -182,6 +184,7 @@ metadata:
       (run "scripts/write_milestone.py --module <module>")
       (note "write_milestone also refreshes the build pack including north-star-blurb.md")
       (surface-north-star "after milestone refresh, quote ## Blurb and ## Install from north-star-blurb.md once in chat — paste-ready, not a path scavenger hunt; add one short line naming which value-trail section titles grew")
+      (surface-promote "after build-pack refresh, name workproduct/value-proposition/<slug>/CONTEXT.product.md once and offer python .cursor/skills/value/scripts/promote_context.py workproduct/value-proposition/<slug>/session.json --dry-run (default); one-shot offer only — not ad-lib; human runs --apply when ready to merge into root CONTEXT.md")
       (surface-strip "run scripts/status.py --sections and show that one strip line to the user")
       (after-value-map-gate "when the completed module is value-map, offer lean-mvp for the same slug as the MVP wedge — see references/lean-bridge.md forward-mvp")
       (whole-path-ask "when the human asks which skill or the whole vibecode-to-market path, tell them to invoke /product-spine — do not read product-spine/SKILL.md every turn")
@@ -191,6 +194,7 @@ metadata:
       (run "scripts/write_design_briefs.py — always writes product-design-brief.md, ux-brief.md, app-design-brief.md")
       (run "scripts/write_build_pack.py — CONTEXT.product.md, AGENTS.product.md, ui-copy.md, states-and-flows.md, first-value.md, north-star-blurb.md, value-trail.md, docs/adr/")
       (surface-north-star "quote ## Blurb and ## Install from north-star-blurb.md once in chat when the pack is written; add one short line naming which value-trail section titles grew")
+      (surface-promote "after build-pack refresh, name workproduct/value-proposition/<slug>/CONTEXT.product.md once and offer python .cursor/skills/value/scripts/promote_context.py workproduct/value-proposition/<slug>/session.json --dry-run (default); one-shot offer only — not ad-lib; human runs --apply when ready to merge into root CONTEXT.md")
       (lenses references/export-lenses.md)
       (inputs-only "accepted facts, labeled inferences, explicit decisions, unresolved assumptions")
       (forbidden 'invent-precision 'convert-unknown-to-inference 'bypass-ceremony-as-content)))
@@ -228,7 +232,8 @@ metadata:
       (trigger "user says break, pause, stop for now, or close")
       (run "scripts/status.py --sections then scripts/write_build_pack.py --force")
       (speak "one human sentence naming what endured and where we left off — section name, not atom IDs; show the one --sections strip line; do not list every output path")
-      (then "quote ## Blurb and ## Install from the refreshed north-star-blurb.md in chat so paste does not require opening the file or a canvas; add one short line naming which value-trail section titles grew — do not paste the full trail"))
+      (then "quote ## Blurb and ## Install from the refreshed north-star-blurb.md in chat so paste does not require opening the file or a canvas; add one short line naming which value-trail section titles grew — do not paste the full trail")
+      (surface-promote "name workproduct/value-proposition/<slug>/CONTEXT.product.md once and offer python .cursor/skills/value/scripts/promote_context.py workproduct/value-proposition/<slug>/session.json --dry-run (default); one-shot offer only"))
     (missing-session
       "ask what the user is working on (display name only); derive slug silently; wait for consent; then scripts/init_session.py --name ..."
       (defer "phase-jump, bypass, and satisfy-prerequisite offers until after session.json exists"))

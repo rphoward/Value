@@ -34,7 +34,9 @@
     (must-open-if-present
       "workproduct/value-proposition/<slug>/customer-profile.md"
       "workproduct/value-proposition/<slug>/value-map.md"
-      "workproduct/value-proposition/<slug>/north-star-blurb.md")
+      "workproduct/value-proposition/<slug>/north-star-blurb.md"
+      "workproduct/value-proposition/<slug>/CONTEXT.product.md")
+    (must-read-note "when AGENTS.product.md exists beside the value session, honor Always / Ask first / Never product walls")
     (optional-lean-same-slug
       "workproduct/lean-mvp/<slug>/customer-context.md"
       "workproduct/lean-mvp/<slug>/underserved-needs.md"
@@ -60,6 +62,12 @@
       "Send the human into Explorer to find these files"
       "Ask them to copy-paste profile or map when the files exist"
       "Skip reading existing customer-profile.md or value-map.md for the chosen slug"))
+
+  (section vernacular-promote
+    (seed "workproduct/value-proposition/<slug>/CONTEXT.product.md — Values build pack only in v1")
+    (promote-script "python .cursor/skills/value/scripts/promote_context.py <session-or-CONTEXT.product.md> — dry-run default; --apply merges into repo-root CONTEXT.md")
+    (agents-fragment ".cursor/skills/product-spine/assets/AGENTS.fragment.md — or .cursor/skills/value/assets/AGENTS.fragment.md for solo Values install")
+    (when-seed-missing-but-bmg-or-lean "name the gap; say what the human does next (/value same slug, profile segment + trigger, then one pause) and what they get back (CONTEXT.product.md to promote) — no BMG or lean glossary emitter in v1")
 
   (section dual-session-precedence
     (claim-intent "pitch, showcase, NotebookLM, video, INVEST, shareable claim → claim phase wins; name what is skipped")

@@ -52,8 +52,8 @@ Those files are the seed. They are not yet your repo’s root glossary.
 ### What to put in *your* repo
 
 1. **Keep `workproduct/`.** That is the durable session record.
-2. **Promote language when it stabilizes.** Copy or tighten terms from `CONTEXT.product.md` into root `CONTEXT.md` (Term / _Avoid_ form). That is how vernacular grows the same way this pack’s own CONTEXT grew from the skill journey.
-3. **Point `AGENTS.md` at the path.** Add a short “Product-Spine / Values work” section so agents look at the notes and the glossary. Paste from [AGENTS.fragment.md](AGENTS.fragment.md) if you want a ready block.
+2. **Promote language when it stabilizes.** Run `python .cursor/skills/value/scripts/promote_context.py workproduct/value-proposition/<slug>/session.json` (dry-run default) to draft Term / _Avoid_ lines; pass `--apply` when ready to merge into root `CONTEXT.md`.
+3. **Point `AGENTS.md` at the path.** Add a short “Product-Spine / Values work” section so agents look at the notes and the glossary. After install, paste from `.cursor/skills/product-spine/assets/AGENTS.fragment.md` (or `.cursor/skills/value/assets/AGENTS.fragment.md` for a solo Values install). The ship-repo copy lives at [AGENTS.fragment.md](AGENTS.fragment.md) for human reading only.
 4. **Do not treat `workproduct/` as implementation.** It is customer and product language; code still lives in your normal source tree.
 
 ### Tiny checklist

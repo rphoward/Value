@@ -819,6 +819,172 @@ class ValueSkillScriptSmokeTests(unittest.TestCase):
                 any("Extreme" in item or "no-shows" in item for item in board["targets"])
             )
 
+    def test_promote_context_dry_run_prints_terms_without_writing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            work_root = repo / "workproduct" / "value-proposition" / "demo"
+            work_root.mkdir(parents=True)
+            seed = work_root / "CONTEXT.product.md"
+            seed.write_text(
+                "# Demo\n\n## Offering\n\n"
+                "- (decision) ShiftSwap: a lightweight shift trade flow for servers.\n",
+                encoding="utf-8",
+            )
+            context_path = repo / "CONTEXT.md"
+            result = run_script(
+                "promote_context.py",
+                str(seed),
+                cwd=repo,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("**ShiftSwap**:", result.stdout)
+            self.assertIn("_Avoid_:", result.stdout)
+            self.assertFalse(context_path.is_file(), "dry-run must not write CONTEXT.md")
+
+            flagged = run_script(
+                "promote_context.py",
+                str(seed),
+                "--dry-run",
+                cwd=repo,
+            )
+            self.assertEqual(
+                flagged.returncode,
+                0,
+                "surface-promote cites --dry-run; flag must be accepted",
+            )
+            self.assertIn("**ShiftSwap**:", flagged.stdout)
+            self.assertFalse(context_path.is_file())
+
+    def test_promote_context_apply_writes_context_md(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            work_root = repo / "workproduct" / "value-proposition" / "demo"
+            work_root.mkdir(parents=True)
+            seed = work_root / "CONTEXT.product.md"
+            seed.write_text(
+                "# Demo\n\n## Offering\n\n"
+                "- (decision) ShiftSwap: a lightweight shift trade flow for servers.\n",
+                encoding="utf-8",
+            )
+            context_path = repo / "CONTEXT.md"
+            dry = run_script("promote_context.py", str(seed), cwd=repo)
+            self.assertEqual(dry.returncode, 0, dry.stderr)
+            self.assertFalse(context_path.is_file())
+
+            applied = run_script(
+                "promote_context.py",
+                str(seed),
+                "--apply",
+                cwd=repo,
+            )
+            self.assertEqual(applied.returncode, 0, applied.stderr)
+            self.assertTrue(context_path.is_file())
+            text = context_path.read_text(encoding="utf-8")
+            self.assertIn("## Language", text)
+            self.assertIn("**ShiftSwap**:", text)
+
+    def test_promote_context_missing_seed_exits_nonzero(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            session = repo / "workproduct" / "value-proposition" / "demo" / "session.json"
+            session.parent.mkdir(parents=True)
+            session.write_text("{}", encoding="utf-8")
+            result = run_script("promote_context.py", str(session), cwd=repo)
+            self.assertNotEqual(result.returncode, 0)
+
+    def test_promote_context_dedupes_repeated_bullets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            work_root = repo / "workproduct" / "value-proposition" / "demo"
+            work_root.mkdir(parents=True)
+            seed = work_root / "CONTEXT.product.md"
+            seed.write_text(
+                "# Demo\n\n## Context\n\n"
+                "- (decision) ShiftSwap: same-restaurant shift trade.\n\n"
+                "## Offering\n\n"
+                "- (decision) ShiftSwap: same-restaurant shift trade.\n",
+                encoding="utf-8",
+            )
+            result = run_script("promote_context.py", str(seed), cwd=repo)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.count("**ShiftSwap**:"), 1)
+
+    def test_promote_context_apply_preserves_existing_terms(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            work_root = repo / "workproduct" / "value-proposition" / "demo"
+            work_root.mkdir(parents=True)
+            seed = work_root / "CONTEXT.product.md"
+            seed.write_text(
+                "# Demo\n\n## Offering\n\n"
+                "- (decision) ShiftSwap: a lightweight shift trade flow for servers.\n",
+                encoding="utf-8",
+            )
+            context_path = repo / "CONTEXT.md"
+            context_path.write_text(
+                "# Project\n\n## Language\n\n"
+                "**ShiftSwap**:\n"
+                "existing definition kept\n"
+                "_Avoid_: old\n",
+                encoding="utf-8",
+            )
+            applied = run_script(
+                "promote_context.py",
+                str(seed),
+                "--apply",
+                cwd=repo,
+            )
+            self.assertEqual(applied.returncode, 0, applied.stderr)
+            text = context_path.read_text(encoding="utf-8")
+            self.assertIn("existing definition kept", text)
+            self.assertEqual(text.count("**ShiftSwap**:"), 1)
+
+    def test_promote_context_agents_writes_without_apply(self) -> None:
+        """--agents is its own write gate; it must not require --apply."""
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            work_root = repo / "workproduct" / "value-proposition" / "demo"
+            work_root.mkdir(parents=True)
+            seed = work_root / "CONTEXT.product.md"
+            seed.write_text(
+                "# Demo\n\n## Offering\n\n"
+                "- (decision) ShiftSwap: a lightweight shift trade flow for servers.\n",
+                encoding="utf-8",
+            )
+            agents_path = repo / "AGENTS.md"
+            result = run_script(
+                "promote_context.py",
+                str(seed),
+                "--agents",
+                cwd=repo,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(agents_path.is_file())
+            self.assertIn("Product-Spine and Values notes", agents_path.read_text(encoding="utf-8"))
+            self.assertFalse((repo / "CONTEXT.md").is_file())
+
+    def test_promote_context_dry_run_wins_over_apply_and_agents(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            work_root = repo / "workproduct" / "value-proposition" / "demo"
+            work_root.mkdir(parents=True)
+            seed = work_root / "CONTEXT.product.md"
+            seed.write_text(
+                "# Demo\n\n## Offering\n\n"
+                "- (decision) ShiftSwap: a lightweight shift trade flow for servers.\n",
+                encoding="utf-8",
+            )
+            result = run_script(
+                "promote_context.py",
+                str(seed),
+                "--dry-run",
+                "--apply",
+                "--agents",
+                cwd=repo,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse((repo / "CONTEXT.md").is_file())
+            self.assertFalse((repo / "AGENTS.md").is_file())
 
 
 if __name__ == "__main__":

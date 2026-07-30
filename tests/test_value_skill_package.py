@@ -475,6 +475,16 @@ class ValueSkillPackageTests(unittest.TestCase):
             "Template contract failures:\n" + "\n".join(offenders),
         )
 
+    def test_agents_fragment_asset_exists(self) -> None:
+        fragment = ASSETS_DIR / "AGENTS.fragment.md"
+        self.assertTrue(fragment.is_file(), "value assets/AGENTS.fragment.md missing")
+        self.assertIn("Product-Spine and Values notes", fragment.read_text(encoding="utf-8"))
+
+    def test_skill_declares_surface_promote_protocol(self) -> None:
+        self.assertIn("surface-promote", self.skill_text)
+        self.assertIn("promote_context.py", self.skill_text)
+        self.assertIn("CONTEXT.product.md", self.skill_text)
+
 
 if __name__ == "__main__":
     unittest.main()

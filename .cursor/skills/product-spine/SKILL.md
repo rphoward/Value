@@ -115,7 +115,9 @@ disable-model-invocation: true
     (must-read-if-present
       "workproduct/value-proposition/<slug>/customer-profile.md"
       "workproduct/value-proposition/<slug>/value-map.md"
-      "workproduct/value-proposition/<slug>/north-star-blurb.md")
+      "workproduct/value-proposition/<slug>/north-star-blurb.md"
+      "workproduct/value-proposition/<slug>/CONTEXT.product.md")
+    (must-read-note "when AGENTS.product.md exists beside the session, honor Always / Ask first / Never product walls")
     (optional-lean-if-present
       "workproduct/lean-mvp/<slug>/customer-context.md"
       "workproduct/lean-mvp/<slug>/underserved-needs.md"
@@ -129,4 +131,14 @@ disable-model-invocation: true
     (missing-profile-or-map "if neither customer-profile.md nor value-map.md exists, say so in plain words and either open /value first or draft from what the human just typed — never pretend the notes exist")
     (hand-to-story "pass the file contents into story-generation-prompt as evidence; story must not ask the human to re-paste those files")
     (see references/path.md section claim-evidence-handoff))
+
+  (protocol-4-vernacular
+    (when-seed-exists
+      "clarity-ready return or any guide-turn when workproduct/value-proposition/<slug>/CONTEXT.product.md exists on disk"
+      (emit "one short vernacular line: seed glossary is saved; dry-run promote with python .cursor/skills/value/scripts/promote_context.py workproduct/value-proposition/<slug>/session.json; optional AGENTS fragment at .cursor/skills/product-spine/assets/AGENTS.fragment.md or .cursor/skills/value/assets/AGENTS.fragment.md for solo Values install")
+      (forbidden 'silent-root-CONTEXT-write 'invent-stack-terms))
+    (when-bmg-or-lean-without-seed
+      "bmg or lean-mvp session has progress for the slug but CONTEXT.product.md is missing"
+      (emit "gap note: canvas and lean sessions save notes under workproduct/, but no customer-language seed yet. Open /value for this same slug, answer the profile segment + one trigger atom, then pause once (or let the gate pass) to write CONTEXT.product.md. Come back to /product-spine after and we will promote those terms into root CONTEXT.md. No fake BMG or lean glossary in v1.")
+      (forbidden 'invent-CONTEXT-product-from-canvas-or-lean-alone)))
 )

@@ -1,9 +1,10 @@
 # Value skill — living state
 
-Last updated: 2026-07-25
+Last updated: 2026-07-30
 
 ## Shipped
 
+- **Consumer-repo vernacular lift** — installed `AGENTS.fragment.md` assets, `surface-promote` + `protocol-4-vernacular`, `promote_context.py`; Product-Spine `360af16`, Values `e721eb8`; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
 - **Product-spine journey guide** — phase + done-enough + claim/NotebookLM exit; guide-turn envelope + lean `/product-spine` bounce-back (UX mock PASS 2026-07-25); GitHub Product-Spine `f23e56b` base rewrite
 - **Value-map gate presentation** — Mock C inline stickies; expand Fit links or Differentiation on ask (`value-map-gate-review` in SKILL.md); see `handoff/VALUE-GATE-PRESENTATION-PASSED.md`
 - Peer Discord paste voice (who + freeze + what you get; so-what into daily relief) in export-lenses + `docs/values-discord-intro.md`; recorded on Value Design trail as V02 include + V03 pain reliever
@@ -13,9 +14,11 @@ Last updated: 2026-07-25
 
 ## Open gates
 
-- (none)
+(none)
 
 ## Closed recently
+
+- **Skill-pack consumer vernacular** — PASS; installed assets + promote_context.py + durable protocols; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
 
 - **Story scenario suite** — PASS (S01–S08 all pass against story-generation-prompt); see `handoff/STORY-SCENARIO-SUITE-PASSED.md`
 - **Product-Spine Kai unhappy path** — PASS (coaching stress walk; express compression logged as stimulus; honest try-stage claim); see `handoff/PRODUCT-SPINE-KAI-UNHAPPY-PATH-PASSED.md`
