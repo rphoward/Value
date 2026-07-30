@@ -10,7 +10,7 @@ Develop and distribute a Cursor agent skill from this GitHub repo. The layered s
 |------|------|
 | `skills/value/` | Ship package for `npx skills add rphoward/Values` |
 | `skills/lean-mvp/` | Lean MVP skill (pairs with value; dev in monorepo) |
-| `skills/bmg/` | Business Model Generation skill (pairs with product-spine business phase; digest-matched to `.cursor/skills/bmg/`) |
+| `skills/bmg/` | Ship package for `npx skills add rphoward/BMG` (digest-matched to `.cursor/skills/bmg/`) |
 | `tools/prompt-suite-compile/` | Thin shims → `.cursor/skills/scripted-skill-from-doc/` |
 | `.cursor/skills/product-spine/` | Human guide for vibecode → valuable → marketable: invoke `/product-spine` to carry phase, next sibling, and claim/NotebookLM exit |
 | `skills/product-spine/` | Ship-tree mirror of product-spine (digest-matched to `.cursor/skills/product-spine/`) |
