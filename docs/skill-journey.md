@@ -227,3 +227,14 @@ npx skills add rphoward/Product-Spine --skill '*' -a cursor -y
 6. Come back to `/product-spine` when the path has another leg — or stay in one skill if that was enough.
 
 Small ideas first. Same words all the way up.
+
+---
+
+## Standalone install and your own repo
+
+`npx skills add rphoward/Product-Spine --skill '*' -a cursor -y` works without this monorepo. Progress saves under **your** project’s `workproduct/` folders.
+
+Skills do **not** auto-write root `CONTEXT.md` or `AGENTS.md`. Values can emit `CONTEXT.product.md` and `AGENTS.product.md` into the session folder; you promote stable terms into the repo glossary so coding agents keep the same vernacular.
+
+See [for-your-repo.md](for-your-repo.md) and the paste-ready [AGENTS.fragment.md](AGENTS.fragment.md).
+
