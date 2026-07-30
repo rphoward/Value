@@ -2,7 +2,9 @@
 
 ## Purpose
 
-Develop and distribute a Cursor agent skill from this GitHub repo. The layered spoke under `src/` is the optional host app; the skill package is the primary ship surface.
+Develop and distribute Cursor agent skills from this GitHub repo. The layered spoke under `src/` is the optional host app; the skill packages are the primary ship surface.
+
+**Human start guide:** [docs/skill-journey.md](docs/skill-journey.md) (nomenclature, entry, and how the skills stack).
 
 ## Layout
 
