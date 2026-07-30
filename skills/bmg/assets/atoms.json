@@ -1,0 +1,301 @@
+{
+  "atoms": [
+    {
+      "id": "C01",
+      "module": "canvas-mapper",
+      "asks": "For the person you serve first, what do they see and hear in their world today?",
+      "accepts_summary": "Empathy sticky notes for See and Hear, or unknown.",
+      "gate": false,
+      "section": "Empathy",
+      "soft": false,
+      "requires": [],
+      "unlocks": "C02"
+    },
+    {
+      "id": "C02",
+      "module": "canvas-mapper",
+      "asks": "What do they think and feel, say and do, and what are the top pain and gain sticky notes?",
+      "accepts_summary": "Think/Feel, Say/Do, Pain, Gain as sticky notes (max ~10 words each), or unknown.",
+      "gate": false,
+      "section": "Empathy",
+      "soft": false,
+      "requires": ["C01"],
+      "unlocks": "C03"
+    },
+    {
+      "id": "C03",
+      "module": "canvas-mapper",
+      "asks": "Which Customer Segment type is this (Mass, Niche, Segmented, Diversified, or Multi-Sided), and who specifically?",
+      "accepts_summary": "Segment type plus named segment sticky notes, or unknown.",
+      "gate": false,
+      "section": "Customer Segments",
+      "soft": false,
+      "requires": ["C02"],
+      "unlocks": "C04"
+    },
+    {
+      "id": "C04",
+      "module": "canvas-mapper",
+      "asks": "What Value Proposition sticky notes solve their problems, and which value drivers apply?",
+      "accepts_summary": "VP sticky notes with driver labels (Price, Performance, Design, Convenience, etc.), or unknown.",
+      "gate": false,
+      "section": "Value Propositions",
+      "soft": false,
+      "requires": ["C03"],
+      "unlocks": "C05"
+    },
+    {
+      "id": "C05",
+      "module": "canvas-mapper",
+      "asks": "How does this segment move through Awareness, Evaluation, Purchase, Delivery, and After-Sales?",
+      "accepts_summary": "Channel sticky notes per phase, with gaps labeled hypothesis or unknown.",
+      "gate": false,
+      "section": "Channels",
+      "soft": false,
+      "requires": ["C04"],
+      "unlocks": "C06"
+    },
+    {
+      "id": "C06",
+      "module": "canvas-mapper",
+      "asks": "What Customer Relationship type must you maintain with this segment (Personal, Dedicated, Self-Service, Automated, Communities, or Co-Creation)?",
+      "accepts_summary": "Relationship category plus sticky notes, or unknown.",
+      "gate": false,
+      "section": "Customer Relationships",
+      "soft": false,
+      "requires": ["C05"],
+      "unlocks": "C07"
+    },
+    {
+      "id": "C07",
+      "module": "canvas-mapper",
+      "asks": "How does cash arrive for each paying segment (revenue type and fixed vs dynamic pricing)?",
+      "accepts_summary": "Revenue stream types, pricing mechanism, and who pays, or unknown.",
+      "gate": false,
+      "section": "Revenue Streams",
+      "soft": false,
+      "requires": ["C06"],
+      "unlocks": "C08"
+    },
+    {
+      "id": "C08",
+      "module": "canvas-mapper",
+      "asks": "Which Key Resources (Physical, Intellectual, Human, Financial) are indispensable to deliver this Value Proposition?",
+      "accepts_summary": "Resource sticky notes by category, or unknown.",
+      "gate": false,
+      "section": "Key Resources",
+      "soft": false,
+      "requires": ["C07"],
+      "unlocks": "C09"
+    },
+    {
+      "id": "C09",
+      "module": "canvas-mapper",
+      "asks": "Which Key Activities (Production, Problem Solving, or Platform/Network) must the company perform?",
+      "accepts_summary": "Activity sticky notes by category, or unknown.",
+      "gate": false,
+      "section": "Key Activities",
+      "soft": false,
+      "requires": ["C08"],
+      "unlocks": "C10"
+    },
+    {
+      "id": "C10",
+      "module": "canvas-mapper",
+      "asks": "Which Key Partnerships make this model work, and why (scale, risk reduction, or missing resources)?",
+      "accepts_summary": "Partner sticky notes with motivation, or none/unknown.",
+      "gate": false,
+      "section": "Key Partnerships",
+      "soft": false,
+      "requires": ["C09"],
+      "unlocks": "C11"
+    },
+    {
+      "id": "C11",
+      "module": "canvas-mapper",
+      "asks": "Is the Cost Structure cost-driven or value-driven, and what are the principal fixed and variable costs?",
+      "accepts_summary": "Cost class plus principal cost sticky notes, or unknown.",
+      "gate": false,
+      "section": "Cost Structure",
+      "soft": false,
+      "requires": ["C10"],
+      "unlocks": "C12"
+    },
+    {
+      "id": "C12",
+      "module": "canvas-mapper",
+      "asks": "Does the left canvas (KP, KA, KR, C$) efficiently support the right canvas (VP, CS, CR, CH, R$), and where is the worst misalignment?",
+      "accepts_summary": "Coherence judgment plus one misalignment sticky note or explicit none.",
+      "gate": false,
+      "section": "Left-Right Audit",
+      "soft": false,
+      "requires": ["C11"],
+      "unlocks": "CG"
+    },
+    {
+      "id": "CG",
+      "module": "canvas-mapper",
+      "asks": "Does this nine-block canvas pass its gate now?",
+      "accepts_summary": "Pass with 'pass canvas-mapper gate', reopen with target atom, or blocking unknowns.",
+      "gate": true,
+      "section": "Gate",
+      "soft": false,
+      "requires": ["C12"],
+      "unlocks": "P01"
+    },
+    {
+      "id": "P01",
+      "module": "pattern-innovator",
+      "asks": "Which innovation epicenter will you disturb first: Resource, Offer, Customer, Finance, or Multiple?",
+      "accepts_summary": "Chosen epicenter with one sentence why, or unknown.",
+      "gate": false,
+      "section": "Epicenters",
+      "soft": false,
+      "requires": ["CG"],
+      "unlocks": "P02"
+    },
+    {
+      "id": "P02",
+      "module": "pattern-innovator",
+      "asks": "What three provocative What-If questions challenge this industry's orthodoxy?",
+      "accepts_summary": "Exactly three What-If questions, or unknown.",
+      "gate": false,
+      "section": "Epicenters",
+      "soft": true,
+      "requires": ["P01"],
+      "unlocks": null
+    },
+    {
+      "id": "P03",
+      "module": "pattern-innovator",
+      "asks": "Which Business Model Generation pattern will you inject now: Unbundling, Long Tail, Multi-Sided Platform, FREE, Open, or none yet?",
+      "accepts_summary": "One pattern choice or explicit none, with reason.",
+      "gate": false,
+      "section": "Patterns",
+      "soft": false,
+      "requires": ["P01"],
+      "unlocks": "P04"
+    },
+    {
+      "id": "P04",
+      "module": "pattern-innovator",
+      "asks": "If that pattern were applied, which canvas blocks change and what new sticky notes appear?",
+      "accepts_summary": "Block-level deltas and sticky notes, or N/A if none chosen.",
+      "gate": false,
+      "section": "Patterns",
+      "soft": false,
+      "requires": ["P03"],
+      "unlocks": "PG"
+    },
+    {
+      "id": "PG",
+      "module": "pattern-innovator",
+      "asks": "Does pattern exploration pass its gate now?",
+      "accepts_summary": "Pass with 'pass pattern-innovator gate', reopen, or blocking unknowns.",
+      "gate": true,
+      "section": "Gate",
+      "soft": false,
+      "requires": ["P04"],
+      "unlocks": "T01"
+    },
+    {
+      "id": "T01",
+      "module": "strategy-evaluator",
+      "asks": "Which canvas block is weakest, and what are its Strengths, Weaknesses, Opportunities, and Threats on a 1-5 honesty scale?",
+      "accepts_summary": "Named block, 1-5 score, and SWOT sticky notes, or unknown.",
+      "gate": false,
+      "section": "SWOT",
+      "soft": false,
+      "requires": ["PG"],
+      "unlocks": "T02"
+    },
+    {
+      "id": "T02",
+      "module": "strategy-evaluator",
+      "asks": "For Blue Ocean value innovation, which industry factors should you Eliminate and which should you Reduce well below the standard?",
+      "accepts_summary": "Eliminate and Reduce sticky notes mapped to canvas impact, or unknown.",
+      "gate": false,
+      "section": "Blue Ocean",
+      "soft": false,
+      "requires": ["T01"],
+      "unlocks": "T03"
+    },
+    {
+      "id": "T03",
+      "module": "strategy-evaluator",
+      "asks": "Which factors should you Raise well above the standard, and which should you Create that the industry never offered?",
+      "accepts_summary": "Raise and Create sticky notes mapped to canvas impact, or unknown.",
+      "gate": false,
+      "section": "Blue Ocean",
+      "soft": false,
+      "requires": ["T02"],
+      "unlocks": "T04"
+    },
+    {
+      "id": "T04",
+      "module": "strategy-evaluator",
+      "asks": "Which environment sphere most constrains the design space now: Market, Industry, Key Trends, or Macroeconomic Forces?",
+      "accepts_summary": "Named sphere plus the binding force sticky notes, or unknown.",
+      "gate": false,
+      "section": "Environment",
+      "soft": true,
+      "requires": ["T03"],
+      "unlocks": null
+    },
+    {
+      "id": "TG",
+      "module": "strategy-evaluator",
+      "asks": "Does strategic evaluation pass its gate now?",
+      "accepts_summary": "Pass with 'pass strategy-evaluator gate', reopen, or blocking unknowns.",
+      "gate": true,
+      "section": "Gate",
+      "soft": false,
+      "requires": ["T03"],
+      "unlocks": "A01"
+    },
+    {
+      "id": "A01",
+      "module": "ambidextrous-execution-designer",
+      "asks": "If this model sits beside a core business, choose Integration, Autonomy, Separation, or N/A single model — and name the decisive trade-off.",
+      "accepts_summary": "Structure choice with conflict/similarity rationale, or N/A.",
+      "gate": false,
+      "section": "Ambidexterity",
+      "soft": false,
+      "requires": ["TG"],
+      "unlocks": "A02"
+    },
+    {
+      "id": "A02",
+      "module": "ambidextrous-execution-designer",
+      "asks": "Which design phase are you in (Mobilize, Understand, Design, Implement, Manage), and what is the single next-phase action?",
+      "accepts_summary": "Phase name plus one concrete next action, or unknown.",
+      "gate": false,
+      "section": "Design Process",
+      "soft": false,
+      "requires": ["A01"],
+      "unlocks": "A03"
+    },
+    {
+      "id": "A03",
+      "module": "ambidextrous-execution-designer",
+      "asks": "On the Galbraith Star, which of Strategy, Structure, Processes, Rewards, or People is most misaligned with this canvas?",
+      "accepts_summary": "Named star point plus misalignment sticky note, or none.",
+      "gate": false,
+      "section": "Galbraith Star",
+      "soft": true,
+      "requires": ["A02"],
+      "unlocks": null
+    },
+    {
+      "id": "AG",
+      "module": "ambidextrous-execution-designer",
+      "asks": "Does ambidextrous execution design pass its gate now?",
+      "accepts_summary": "Pass with 'pass ambidextrous-execution-designer gate', reopen, or blocking unknowns.",
+      "gate": true,
+      "section": "Gate",
+      "soft": false,
+      "requires": ["A02"],
+      "unlocks": null
+    }
+  ]
+}

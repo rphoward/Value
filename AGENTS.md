@@ -10,11 +10,13 @@ Develop and distribute a Cursor agent skill from this GitHub repo. The layered s
 |------|------|
 | `skills/value/` | Ship package for `npx skills add rphoward/Values` |
 | `skills/lean-mvp/` | Lean MVP skill (pairs with value; dev in monorepo) |
+| `skills/bmg/` | Business Model Generation skill (pairs with product-spine business phase; digest-matched to `.cursor/skills/bmg/`) |
 | `tools/prompt-suite-compile/` | Thin shims → `.cursor/skills/scripted-skill-from-doc/` |
 | `.cursor/skills/product-spine/` | Human guide for vibecode → valuable → marketable: invoke `/product-spine` to carry phase, next sibling, and claim/NotebookLM exit |
 | `skills/product-spine/` | Ship-tree mirror of product-spine (digest-matched to `.cursor/skills/product-spine/`) |
 | `.cursor/skills/value/` | Same skill for Cursor while developing this repo |
 | `.cursor/skills/lean-mvp/` | Lean MVP skill for Cursor in this repo |
+| `.cursor/skills/bmg/` | BMG skill for Cursor in this repo (canvas → patterns → strategy → ambidexterity) |
 | `.cursor/skills/story-generation-prompt/` | Evidence → story → generation prompt, INVEST-plus rubric (pairs with lean-mvp MS05) |
 | `.cursor/skills/scripted-skill-from-doc/` | Portable compile pack in standard skill layout (`scripts/`, `references/`, `assets/`) |
 | `src/value/` | Layered spoke product (retargeted at init) |
@@ -35,4 +37,4 @@ python -m unittest discover -s tests -v
 
 ## Skill authoring
 
-Follow `.cursor/rules/skill-authoring.mdc` and `.cursor/rules/skills-repo.mdc`. Write the skill under `.cursor/skills/value/`. Do not put new skill packages only under `tools/drafts/` at ship time.
+Follow `.cursor/rules/skill-authoring.mdc` and `.cursor/rules/skills-repo.mdc`. Write the skill under `.cursor/skills/<name>/`. Do not put new skill packages only under `tools/drafts/` at ship time.

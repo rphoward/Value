@@ -5,22 +5,26 @@
   (section phases
     (idea "vibecoded starting point — repo, docs, or bare concept")
     (clarity "value skill — customer profile and value map under workproduct/value-proposition/<slug>/")
+    (business "bmg skill — classic Business Model Canvas through ambidexterity under workproduct/bmg/<slug>/")
     (mvp "lean-mvp skill — underserved needs through MVP scope under workproduct/lean-mvp/<slug>/")
     (claim "story-generation-prompt — INVEST sentence and NotebookLM generation / producer paste; spine loads saved notes first, names the paths, then follows story in the same turn")
-    (return "after learning or kill-signal, spine sends human back into value or lean-mvp — siblings keep session.json; spine has no session of its own"))
+    (return "after learning or kill-signal, spine sends human back into value, bmg, or lean-mvp — siblings keep session.json; spine has no session of its own")
+    (team-reserved "later /teams for alignment, trust, speed, joy — not BMG Mobilize; no teams skill in this pass"))
 
   (section maya-happy-path
     (note "reference walk — other walks exist; catch edge cases with protocol-1 precedence")
     (step-1 "/product-spine → clarity guide-turn → open /value; done-enough profile + value-map")
+    (step-1b "optional canvas-first or business-intent → /bmg; done-enough canvas-mapper (or canvas-mapper.md on disk); bmg bounce-back names /product-spine")
     (step-2 "/product-spine → mvp guide-turn → open /lean-mvp; done-enough mvp-scope; lean bounce-back names /product-spine")
     (step-3 "/product-spine → claim → load saved notes + follow story-generation-prompt inline — not a third slash for story, not a paste homework for the human")
     (lost "any time → /product-spine again"))
 
   (section reading-sibling-state
-    (sessions "workproduct/value-proposition/<slug>/session.json and workproduct/lean-mvp/<slug>/session.json")
+    (sessions "workproduct/value-proposition/<slug>/session.json, workproduct/bmg/<slug>/session.json, and workproduct/lean-mvp/<slug>/session.json")
     (status "run sibling scripts/status.py <session> --sections read-only for progress-so-far wording; keep readiness from session.json / milestones; never --refresh, accept, init, or import from spine")
-    (status-brief "optional agent-internal position hint only — never treat as clarity-ready or mvp-ready; never quote brief or strip symbols to the human")
+    (status-brief "optional agent-internal position hint only — never treat as clarity-ready, business-ready, or mvp-ready; never quote brief or strip symbols to the human")
     (clarity-ready "profile and value-map module_outcome completed or bypassed — or both milestone files exist on disk as written notes")
+    (business-ready "canvas-mapper module_outcome completed or bypassed — or workproduct/bmg/<slug>/canvas-mapper.md on disk")
     (mvp-ready "mvp-scope module_outcome completed or bypassed")
     (forbidden "invent spine session.json; hand-edit sibling sessions"))
 
@@ -35,6 +39,11 @@
       "workproduct/lean-mvp/<slug>/customer-context.md"
       "workproduct/lean-mvp/<slug>/underserved-needs.md"
       "workproduct/lean-mvp/<slug>/mvp-scope.md")
+    (optional-bmg-same-slug
+      "workproduct/bmg/<slug>/canvas-mapper.md"
+      "workproduct/bmg/<slug>/pattern-innovator.md"
+      "workproduct/bmg/<slug>/strategy-evaluator.md"
+      "workproduct/bmg/<slug>/ambidextrous-execution-designer.md")
     (guide-turn-files-im-using
       "After Why-this-phase, add a short list titled like Files I'm using (already saved — you do not need to open these)."
       "Bullet every relative path you actually read. Skip bullets for missing files.")
@@ -54,12 +63,15 @@
 
   (section dual-session-precedence
     (claim-intent "pitch, showcase, NotebookLM, video, INVEST, shareable claim → claim phase wins; name what is skipped")
-    (both-incomplete "prefer value until clarity-ready, else lean-mvp")
+    (business-intent "BMG, canvas, business-model, canvas-first → business → /bmg; name mid–value Evolve skip when leaving Evolve early")
+    (open-bmg "bmg session not business-ready → continue /bmg unless claim or explicit clarity/mvp ask")
+    (both-incomplete "prefer value until clarity-ready, else lean-mvp; no invented business leg without intent or session")
     (both-ready "claim phase — load notes then follow story-generation-prompt")
-    (never "grill value or lean atoms from spine; never auto-accept"))
+    (never "grill value, bmg, or lean atoms from spine; never auto-accept"))
 
   (section sibling-paths
     (value ".cursor/skills/value/SKILL.md")
+    (bmg ".cursor/skills/bmg/SKILL.md")
     (lean-mvp ".cursor/skills/lean-mvp/SKILL.md")
     (story-generation-prompt ".cursor/skills/story-generation-prompt/SKILL.md")
     (note "installed packs use the same relative .cursor/skills/<name>/ layout"))
@@ -68,7 +80,7 @@
     (you-are-here "phase + slug when known + one situation sentence; when a session exists include progress so far in plain words from --sections — not a fifth beat")
     (why-this-phase "one plain sentence why this phase won")
     (files-im-using "claim only — exact paths; say already saved")
-    (this-turn "one sibling slash, or claim inline story with a first story action from those files")
+    (this-turn "one sibling slash (/value, /bmg, or /lean-mvp), or claim inline story with a first story action from those files")
     (come-back-when "done-enough + /product-spine re-entry")
     (tone "plain words a teenage vibecoder can follow — no atom codes, no curriculum jargon, no status stdout or strip symbols")
     (notebooklm "when giving video steps: Do this → 1 upload folder 2 Chat Box A 3 Video Box B — never a wall of options")
@@ -76,18 +88,23 @@
       "You are here: clarity for value-design — progress so far: profile done; still on value-map pains."
       "Why this phase: value map is not done-enough yet."
       "This turn: open /value and finish the open value-map question."
-      "Come back when: profile and value-map gates pass (or you are lost) — invoke /product-spine again."))
+      "Come back when: profile and value-map gates pass (or you are lost) — invoke /product-spine again.")
+    (example-business-fragment
+      "You are here: business for tlbmc — you asked for a classic Business Model Canvas first."
+      "Why this phase: canvas-first business-intent wins."
+      "This turn: open /bmg and map the nine blocks."
+      "Come back when: canvas-mapper gate passes (or you are lost) — invoke /product-spine again."))
 
   (check no-spine-session "product-spine has no scripts/ of its own and no session.json")
 
-  (check claim-exit "sessions complete or claim-intent must reach story-generation-prompt — not an endless value/lean loop")
+  (check claim-exit "sessions complete or claim-intent must reach story-generation-prompt — not an endless value/bmg/lean loop")
 
-  (check guide-turn-complete "every activation emits you-are-here, why-this-phase, this-turn, and come-back-when; when a session exists you-are-here carries progress so far; claim also emits files-im-using when notes exist"))
+  (check guide-turn-complete "every activation emits you-are-here, why-this-phase, this-turn, and come-back-when; when a session exists you-are-here carries progress so far; claim also emits files-im-using when notes exist")
 
   (check claim-loads-notes "claim phase with a value slug must open customer-profile.md and value-map.md when present and list those paths before drafting")
 
   (check illegal-claim-route "claim phase forbids naming story-generation-prompt without following SKILL in the same turn")
 
-  (check readiness-not-from-brief "clarity-ready and mvp-ready come from module_outcome or written milestone files, not status active module alone")
+  (check readiness-not-from-brief "clarity-ready, business-ready, and mvp-ready come from module_outcome or written milestone files, not status active module alone")
 
   (check no-circular-load "siblings may mention /product-spine for re-entry; they must not read product-spine/SKILL.md every turn"))

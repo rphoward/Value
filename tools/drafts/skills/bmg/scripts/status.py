@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""Print one-line session ledger and position."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+from _session import (
+    format_brief_status,
+    format_section_strip,
+    format_status_line,
+    load_atoms,
+    load_session,
+    recompute_ledger,
+    save_session,
+)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Show value session status.")
+    parser.add_argument("session", type=Path, help="Path to session.json")
+    parser.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Recompute ledger fields and write session.json",
+    )
+    parser.add_argument(
+        "--sections",
+        action="store_true",
+        help="Print section strip for the active module",
+    )
+    parser.add_argument(
+        "--operator",
+        action="store_true",
+        help="Full ledger telemetry for tests and debugging",
+    )
+    parser.add_argument(
+        "--brief",
+        action="store_true",
+        help="No-op alias: brief one-liner is already the default",
+    )
+    args = parser.parse_args()
+
+    if not args.session.is_file():
+        print(f"Missing session: {args.session}", file=sys.stderr)
+        return 1
+
+    session = load_session(args.session)
+    session["ledger"] = recompute_ledger(session)
+    if args.refresh:
+        save_session(args.session, session)
+    atoms = load_atoms()
+    if args.sections:
+        print(format_section_strip(session, atoms))
+    elif args.operator:
+        print(format_status_line(session))
+    else:
+        print(format_brief_status(session, atoms))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

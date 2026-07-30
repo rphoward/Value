@@ -1,0 +1,315 @@
+{
+  "system_metadata": {
+    "framework": "The Business Model Canvas",
+    "authors": [
+      "Alexander Osterwalder",
+      "Yves Pigneur"
+    ],
+    "co_creators_count": 470,
+    "version": "1.0",
+    "grounding_source": "Business Model Generation: A Handbook for Visionaries, Game Changers, and Challengers (2010)"
+  },
+  "nine_building_blocks": {
+    "CS": {
+      "name": "Customer Segments",
+      "definition": "The different groups of people or organizations an enterprise aims to reach and serve.",
+      "types": [
+        "Mass Market",
+        "Niche Market",
+        "Segmented",
+        "Diversified",
+        "Multi-Sided Platforms"
+      ]
+    },
+    "VP": {
+      "name": "Value Propositions",
+      "definition": "The bundle of products and services that create value for a specific Customer Segment.",
+      "value_drivers": [
+        "Newness",
+        "Performance",
+        "Customization",
+        "Getting the Job Done",
+        "Design",
+        "Brand/Status",
+        "Price",
+        "Cost Reduction",
+        "Risk Reduction",
+        "Accessibility",
+        "Convenience/Usability"
+      ]
+    },
+    "CH": {
+      "name": "Channels",
+      "definition": "How a company communicates with and reaches its Customer Segments to deliver a Value Proposition.",
+      "phases": [
+        "1. Awareness",
+        "2. Evaluation",
+        "3. Purchase",
+        "4. Delivery",
+        "5. After Sales"
+      ],
+      "types": [
+        "Direct Owned (Sales Force, Web)",
+        "Indirect Owned (Stores)",
+        "Indirect Partner (Wholesale, Retail)"
+      ]
+    },
+    "CR": {
+      "name": "Customer Relationships",
+      "definition": "The types of relationships a company establishes with specific Customer Segments.",
+      "categories": [
+        "Personal Assistance",
+        "Dedicated Personal Assistance",
+        "Self-Service",
+        "Automated Services",
+        "Communities",
+        "Co-Creation"
+      ]
+    },
+    "R$": {
+      "name": "Revenue Streams",
+      "definition": "The cash a company generates from each Customer Segment.",
+      "types": [
+        "Asset Sale",
+        "Usage Fee",
+        "Subscription Fees",
+        "Lending/Renting/Leasing",
+        "Licensing",
+        "Brokerage Fees",
+        "Advertising"
+      ],
+      "pricing_mechanisms": {
+        "fixed": [
+          "List Price",
+          "Product Feature Dependent",
+          "Customer Segment Dependent",
+          "Volume Dependent"
+        ],
+        "dynamic": [
+          "Negotiation (Bargaining)",
+          "Yield Management",
+          "Real-Time-Market",
+          "Auctions"
+        ]
+      }
+    },
+    "KR": {
+      "name": "Key Resources",
+      "definition": "The most important assets required to make a business model work.",
+      "categories": [
+        "Physical",
+        "Intellectual",
+        "Human",
+        "Financial"
+      ]
+    },
+    "KA": {
+      "name": "Key Activities",
+      "definition": "The most important things a company must do to make its business model work.",
+      "categories": [
+        "Production",
+        "Problem Solving",
+        "Platform/Network"
+      ]
+    },
+    "KP": {
+      "name": "Key Partnerships",
+      "definition": "The network of suppliers and partners that make the business model work.",
+      "types": [
+        "Strategic Alliances (Non-Competitors)",
+        "Coopetition (Competitors)",
+        "Joint Ventures",
+        "Buyer-Supplier Relationships"
+      ],
+      "motivations": [
+        "Optimization & Economies of Scale",
+        "Reduction of Risk & Uncertainty",
+        "Acquisition of Particular Resources & Activities"
+      ]
+    },
+    "C$": {
+      "name": "Cost Structure",
+      "definition": "All costs incurred to operate a business model.",
+      "classes": [
+        "Cost-Driven (Leanest, Max Automation)",
+        "Value-Driven (Premium, Personal Service)"
+      ],
+      "characteristics": [
+        "Fixed Costs",
+        "Variable Costs",
+        "Economies of Scale",
+        "Economies of Scope"
+      ]
+    }
+  },
+  "left_right_canvas_split": {
+    "right_brain_canvas": {
+      "focus": "Value & Emotion",
+      "blocks": [
+        "VP",
+        "CR",
+        "CH",
+        "CS",
+        "R$"
+      ]
+    },
+    "left_brain_canvas": {
+      "focus": "Logic & Efficiency",
+      "blocks": [
+        "KP",
+        "KA",
+        "KR",
+        "C$"
+      ]
+    }
+  },
+  "five_business_model_patterns": {
+    "unbundling": {
+      "core_concept": "Separating Customer Relationship Management, Product Innovation, and Infrastructure Management into distinct entities to avoid cultural and economic trade-offs.",
+      "examples": [
+        "Private Banking (Maerki Baumann vs Pictet)",
+        "Mobile Telcos (Bharti Airtel / Vodafone)"
+      ]
+    },
+    "long_tail": {
+      "core_concept": "Selling less of more by offering a vast number of niche items that sell infrequently, aggregating revenues to rival bestsellers.",
+      "triggers": [
+        "Democratization of production tools",
+        "Democratization of distribution",
+        "Falling search costs"
+      ],
+      "examples": [
+        "Lulu.com",
+        "LEGO Factory",
+        "Netflix",
+        "eBay"
+      ]
+    },
+    "multi_sided_platforms": {
+      "core_concept": "Bringing together two or more interdependent customer groups where the platform creates value by facilitating interactions and capturing network effects.",
+      "examples": [
+        "Google (AdWords/AdSense)",
+        "Nintendo Wii vs Sony/Xbox",
+        "Apple iPod -> iPhone App Store",
+        "Metro Newspaper"
+      ]
+    },
+    "free_as_a_business_model": {
+      "core_concept": "At least one customer segment continuously benefits from a free offer, financed by non-paying users or another side of the platform.",
+      "sub_patterns": {
+        "advertising": "Multi-sided platform where ad fees subsidize free content (e.g. Metro, Google).",
+        "freemium": "Free basic service with paid premium upgrade; key metric is conversion rate & cost per free user (e.g. Flickr, Skype, Red Hat).",
+        "bait_and_hook": "Cheap/free initial 'bait' creates contractual or technological lock-in for high-margin repeat 'hook' purchases (e.g. Gillette Razor & Blades, Free Mobile Phones, HP Inkjet Printers)."
+      }
+    },
+    "open_business_models": {
+      "core_concept": "Systematically collaborating with external partners to create and capture value.",
+      "directions": {
+        "outside_in": "Exploiting external ideas/IP inside the firm (e.g. Procter & Gamble Connect & Develop).",
+        "inside_out": "Monetizing idle internal ideas/IP externally (e.g. GlaxoSmithKline Patent Pools, InnoCentive)."
+      }
+    }
+  },
+  "innovation_epicenters": [
+    "Resource-Driven (Built on existing infrastructure/partnerships)",
+    "Offer-Driven (Creating new Value Propositions)",
+    "Customer-Driven (Based on customer needs/convenience)",
+    "Finance-Driven (Driven by new revenue streams or cost structures)",
+    "Multiple-Epicenter Driven (Transforming several blocks simultaneously, e.g. Hilti tool rental)"
+  ],
+  "six_design_techniques": [
+    "Customer Insights (Empathy Map: See, Hear, Think & Feel, Say & Do, Pain, Gain)",
+    "Ideation (Epicenters & 'What If...?' provocations)",
+    "Visual Thinking (Post-it notes, Drawings, Seeing Relationships, Visual Grammar)",
+    "Prototyping (Napkin Sketch -> Elaborated Canvas -> Business Case -> Field Test)",
+    "Storytelling (Employee Observer vs. Customer Perspective; Introducing the New)",
+    "Scenarios (Customer Context Scenarios vs. Future Environmental Scenarios)"
+  ],
+  "strategic_assessment_frameworks": {
+    "swot_assessment": "Evaluating Strengths, Weaknesses, Opportunities, and Threats for every single building block.",
+    "blue_ocean_four_actions": {
+      "eliminate": "Which factors that the industry takes for granted should be eliminated?",
+      "reduce": "Which factors should be reduced well below industry standards?",
+      "raise": "Which factors should be raised well above industry standards?",
+      "create": "Which factors should be created that the industry has never offered?"
+    },
+    "four_environment_spheres": {
+      "market_forces": [
+        "Market Issues",
+        "Market Segments",
+        "Needs & Demands",
+        "Switching Costs",
+        "Revenue Attractiveness"
+      ],
+      "industry_forces": [
+        "Competitors (Incumbents)",
+        "New Entrants (Insurgents)",
+        "Substitute Products/Services",
+        "Suppliers & Value Chain",
+        "Stakeholders"
+      ],
+      "key_trends": [
+        "Technology Trends",
+        "Regulatory Trends",
+        "Societal & Cultural Trends",
+        "Socioeconomic Trends"
+      ],
+      "macroeconomic_forces": [
+        "Global Market Conditions",
+        "Capital Markets",
+        "Commodities & Other Resources",
+        "Economic Infrastructure"
+      ]
+    }
+  },
+  "ambidextrous_management_framework": {
+    "trade_off_variables": [
+      "Severity of Conflict",
+      "Strategic Similarity",
+      "Risk to Core"
+    ],
+    "organizational_options": [
+      "Integration",
+      "Autonomy",
+      "Separation"
+    ],
+    "case_benchmarks": {
+      "swatch": "Autonomous brand management with centralized R&D, purchasing, and manufacturing.",
+      "nespresso": "Complete structural separation into a standalone subsidiary (Nespresso SA) to protect direct-to-consumer model from Nescaf\u00e9 retail culture.",
+      "car2go": "Phased pilot approach (Internal -> Extended -> Public City Test) before fixing final organizational structure."
+    }
+  },
+  "five_phase_design_process": [
+    "1. Mobilize",
+    "2. Understand",
+    "3. Design",
+    "4. Implement",
+    "5. Manage"
+  ],
+  "phase_module_map": {
+    "canvas-mapper": "Phase 1: Canvas-Mapper",
+    "pattern-innovator": "Phase 2: Pattern-Innovator",
+    "strategy-evaluator": "Phase 3: Strategy-Evaluator",
+    "ambidextrous-execution-designer": "Phase 4: Ambidextrous-Execution-Designer"
+  },
+  "teach_aids": {
+    "coffee_capsule_example": {
+      "purpose": "Simple offer (home espresso) fans into many canvas sticky notes. Teach the reading, then ask for this venture's equivalent.",
+      "source_screenshots": [
+        "docs/screenshots/Screenshot 2026-07-29 215723.png"
+      ],
+      "economic_canvas_samples": {
+        "Partners": ["Coffee machine manufacturers"],
+        "Activities": ["Marketing", "Production", "Logistics"],
+        "Resources": ["Distribution channels", "Patent on system", "Brand", "Production plants"],
+        "Value Proposition": ["High-end restaurant quality espresso at home"],
+        "Customer Relationship": ["Membership Club"],
+        "Channels": ["Website and mail order", "Branded boutiques", "Call center", "Retail (machine only)"],
+        "Customer Segments": ["Office market", "Households"],
+        "Costs": ["Marketing", "Manufacturing", "Distribution & Channels"],
+        "Revenues": ["Main revenues: Capsules", "Other: Machines and accessories"]
+      },
+      "teaching_move": "When a block is empty or abstract, show that block's sample sticky notes, then ask for this venture's equivalent sticky notes."
+    }
+  }
+}

@@ -2,13 +2,13 @@
 
 Cursor plan files for Value. **Living state:** `handoff/STATE.md`.
 
-Last indexed: 2026-07-26.
+Last indexed: 2026-07-29.
 
 ## Active
 
 | Plan | Role |
 |------|------|
-| [standalone_curriculum_seed](standalone_curriculum_seed_acd62279.plan.md) | Seed refs/atoms in compile.py, curriculum-synthesis runbook, promote stub fence — no pstack required |
+| [spine_bmg_teams](spine_bmg_teams_a6dbe252.plan.md) | Promote BMG + wire product-spine business→/bmg (teams reserved ≠ BMG Mobilize) |
 | [prompt-suite-to-skill/](prompt-suite-to-skill/overview.md) | Portable doc → paced scripted skill compiler + optional poteto runbook |
 | [coaching_out-of-scope](coaching_out-of-scope_3862e411.plan.md) | Isolate per-skill `_session` imports, then fill the eight lean-mvp coaching atoms with empty `kb_refs` |
 | [purge_eliot_remnants](purge_eliot_remnants_693d9a18.plan.md) | Remove dead ELIOT machinery from `.cursor/`; the `repo-layout.mdc` write gate is deferred |
@@ -19,3 +19,9 @@ Last indexed: 2026-07-26.
 | [value_skill_recovery](value_skill_recovery_9a2270ec.plan.md) | Restore Strategyzer cargo into skill references and add stdlib scripts that own session progress |
 | [value_skill_user_voice_fresh](value_skill_user_voice_fresh.plan.md) | Separate operator telemetry from user-facing coach voice |
 | [values_skill_five_upgrades](values_skill_five_upgrades_04b15844.plan.md) | Ship the five Value Design–driven skill upgrades and sync both skill trees |
+
+## Done
+
+| Plan | Role |
+|------|------|
+| [standalone_curriculum_seed](standalone_curriculum_seed_acd62279.plan.md) | Seed refs/atoms in compile.py, curriculum-synthesis runbook, promote stub fence — no pstack required (completed 2026-07-29) |

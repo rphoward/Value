@@ -12,13 +12,17 @@ SKILL_ROOT = ROOT / ".cursor" / "skills" / "product-spine"
 SKILL_MD = SKILL_ROOT / "SKILL.md"
 REFERENCES_DIR = SKILL_ROOT / "references"
 PATH_REF = REFERENCES_DIR / "path.md"
+BMG_ROOT = ROOT / ".cursor" / "skills" / "bmg"
+BMG_SHIP_ROOT = ROOT / "skills" / "bmg"
 MVP_SCOPE = ROOT / ".cursor" / "skills" / "lean-mvp" / "references" / "mvp-scope.md"
 VALUE_SKILL = ROOT / ".cursor" / "skills" / "value" / "SKILL.md"
+BMG_SKILL = BMG_ROOT / "SKILL.md"
 LEAN_SKILL = ROOT / ".cursor" / "skills" / "lean-mvp" / "SKILL.md"
 STORY_SKILL = ROOT / ".cursor" / "skills" / "story-generation-prompt" / "SKILL.md"
 
 SIBLING_SKILL_PATHS = (
     ".cursor/skills/value/SKILL.md",
+    ".cursor/skills/bmg/SKILL.md",
     ".cursor/skills/lean-mvp/SKILL.md",
     ".cursor/skills/story-generation-prompt/SKILL.md",
 )
@@ -38,7 +42,7 @@ FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---", re.DOTALL)
 TOP_LEVEL_KEY_RE = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*):", re.MULTILINE)
 PROTOCOL_HEAD_RE = re.compile(r"^\s*\((protocol-\d+)-[a-z0-9-]+", re.MULTILINE)
 LINKED_FROM_RE = re.compile(r"\(linked-from\s+([^)]*)\)")
-SKILL_PATH_RE = re.compile(r"(?:references|assets|scripts)/[^\s)]+")
+SKILL_PATH_RE = re.compile(r'(?:references|assets|scripts)/[^\s)"]+')
 
 
 def balanced_block(text: str, head: str) -> str:
@@ -64,6 +68,25 @@ def iter_skill_files(root: Path) -> list[Path]:
         and "__pycache__" not in path.parts
         and path.suffix != ".pyc"
     )
+
+
+def mirror_mismatches(cursor_root: Path, ship_root: Path) -> list[str]:
+    mismatches: list[str] = []
+    for cursor_path in iter_skill_files(cursor_root):
+        relative = cursor_path.relative_to(cursor_root)
+        ship_path = ship_root / relative
+        if not ship_path.is_file():
+            mismatches.append(f"missing ship mirror {relative.as_posix()}")
+            continue
+        if hashlib.sha256(cursor_path.read_bytes()).hexdigest() != hashlib.sha256(
+            ship_path.read_bytes()
+        ).hexdigest():
+            mismatches.append(f"digest mismatch {relative.as_posix()}")
+    for ship_path in iter_skill_files(ship_root):
+        relative = ship_path.relative_to(ship_root)
+        if not (cursor_root / relative).is_file():
+            mismatches.append(f"extra ship file {relative.as_posix()}")
+    return mismatches
 
 
 class ProductSpineSkillTests(unittest.TestCase):
@@ -138,6 +161,32 @@ class ProductSpineSkillTests(unittest.TestCase):
         self.assertIn("when-ms05-focus", text)
         self.assertTrue(STORY_SKILL.is_file())
 
+    def test_business_phase_routes_to_bmg_with_business_ready_rule(self) -> None:
+        """Guards a spine that names business without a live /bmg destination or readiness rule."""
+        path_text = PATH_REF.read_text(encoding="utf-8")
+        combined = f"{self.skill_text}\n{path_text}"
+        for needle in (
+            "/bmg",
+            "business-ready",
+            "workproduct/bmg",
+            "canvas-mapper.md",
+            ".cursor/skills/bmg/SKILL.md",
+            "business-intent",
+        ):
+            self.assertIn(needle, combined, f"missing business phase wiring: {needle}")
+        self.assertTrue(BMG_SKILL.is_file(), "promoted bmg skill missing")
+
+    def test_bmg_declared_paths_and_resume_status_command(self) -> None:
+        """Guards BMG asset drift and a resume command that omits session.json."""
+        text = BMG_SKILL.read_text(encoding="utf-8")
+        declared = SKILL_PATH_RE.findall(text)
+        missing = [path for path in declared if not (BMG_ROOT / path).is_file()]
+        self.assertEqual(missing, [])
+        self.assertIn(
+            "scripts/status.py workproduct/bmg/<project-slug>/session.json --brief",
+            text,
+        )
+
     def test_claim_phase_loads_value_notes_and_names_paths(self) -> None:
         """Guards claim dumping vibecoders into a file hunt instead of opening saved notes."""
         path_text = PATH_REF.read_text(encoding="utf-8")
@@ -186,6 +235,7 @@ class ProductSpineSkillTests(unittest.TestCase):
         path_read = "read .cursor/skills/product-spine/SKILL.md"
         for label, path in (
             ("value", VALUE_SKILL),
+            ("bmg", BMG_SKILL),
             ("lean-mvp", LEAN_SKILL),
             ("story-generation-prompt", STORY_SKILL),
         ):
@@ -205,23 +255,12 @@ class ProductSpineSkillTests(unittest.TestCase):
     def test_ship_tree_mirrors_cursor_tree(self) -> None:
         """Guards shipped skills pointing at /product-spine while the skill is missing from skills/."""
         self.assertTrue(SHIP_MIRROR_ROOT.is_dir(), "skills/product-spine/ missing")
-        cursor_files = iter_skill_files(SKILL_ROOT)
-        mismatches: list[str] = []
-        for cursor_path in cursor_files:
-            relative = cursor_path.relative_to(SKILL_ROOT)
-            ship_path = SHIP_MIRROR_ROOT / relative
-            if not ship_path.is_file():
-                mismatches.append(f"missing ship mirror {relative.as_posix()}")
-                continue
-            if hashlib.sha256(cursor_path.read_bytes()).hexdigest() != hashlib.sha256(
-                ship_path.read_bytes()
-            ).hexdigest():
-                mismatches.append(f"digest mismatch {relative.as_posix()}")
-        for ship_path in iter_skill_files(SHIP_MIRROR_ROOT):
-            relative = ship_path.relative_to(SHIP_MIRROR_ROOT)
-            if not (SKILL_ROOT / relative).is_file():
-                mismatches.append(f"extra ship file {relative.as_posix()}")
-        self.assertEqual(mismatches, [])
+        self.assertEqual(mirror_mismatches(SKILL_ROOT, SHIP_MIRROR_ROOT), [])
+
+    def test_bmg_ship_tree_mirrors_cursor_tree(self) -> None:
+        """Guards the declared BMG ship mirror from silently drifting."""
+        self.assertTrue(BMG_SHIP_ROOT.is_dir(), "skills/bmg/ missing")
+        self.assertEqual(mirror_mismatches(BMG_ROOT, BMG_SHIP_ROOT), [])
 
 
 if __name__ == "__main__":

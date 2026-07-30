@@ -1,0 +1,40 @@
+{
+  "milestones": {
+    "canvas-mapper": {
+      "Empathy": ["C01", "C02"],
+      "Customer Segments": ["C03"],
+      "Value Propositions": ["C04"],
+      "Channels": ["C05"],
+      "Customer Relationships": ["C06"],
+      "Revenue Streams": ["C07"],
+      "Key Resources": ["C08"],
+      "Key Activities": ["C09"],
+      "Key Partnerships": ["C10"],
+      "Cost Structure": ["C11"],
+      "Left-Right Audit": ["C12"],
+      "Unknowns": [],
+      "Decisions": []
+    },
+    "pattern-innovator": {
+      "Epicenters": ["P01", "P02"],
+      "Patterns": ["P03", "P04"],
+      "Unknowns": [],
+      "Decisions": []
+    },
+    "strategy-evaluator": {
+      "SWOT": ["T01"],
+      "Blue Ocean": ["T02", "T03"],
+      "Environment": ["T04"],
+      "Unknowns": [],
+      "Decisions": []
+    },
+    "ambidextrous-execution-designer": {
+      "Ambidexterity": ["A01"],
+      "Design Process": ["A02"],
+      "Galbraith Star": ["A03"],
+      "Unknowns": [],
+      "Decisions": []
+    }
+  },
+  "design_briefs": {}
+}

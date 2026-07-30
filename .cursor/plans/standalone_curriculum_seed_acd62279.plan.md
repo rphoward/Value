@@ -4,23 +4,25 @@ overview: Make scripted-skill-from-doc usable without pstack/poteto by seeding m
 todos:
   - id: phase-1-seed-refs
     content: Seed references/<module>.md from prompt_markdown in compile.py + test
-    status: pending
+    status: completed
   - id: phase-2-seed-atoms
     content: Seed hard draft atoms + milestone headings; derive express_spine; no soft-in-require-chain; audit both modes ok
-    status: pending
+    status: completed
   - id: phase-3-standalone-runbook
     content: Add curriculum-synthesis.md; drop poteto hard-require across pack prose
-    status: pending
+    status: completed
   - id: phase-4-promote-fence
     content: promote.py refuse stub-ask atoms + test
-    status: pending
+    status: completed
   - id: phase-5-verify-index
     content: pytest + selftest green; index plan in .cursor/plans/README.md
-    status: pending
+    status: completed
 isProject: false
 ---
 
 # Standalone curriculum seed for scripted-skill-from-doc
+
+**Status: done (2026-07-29).** Landed in `.cursor/skills/scripted-skill-from-doc/` (`seed_atoms`, cargo refs, `curriculum-synthesis.md`, promote stub fence, tests). Todos were stale pending; marked completed from repo evidence. Do not re-implement.
 
 ## Context
 

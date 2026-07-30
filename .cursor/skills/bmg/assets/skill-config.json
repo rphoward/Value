@@ -1,0 +1,64 @@
+{
+  "skill_slug": "bmg",
+  "workproduct_root": "workproduct/bmg",
+  "entry_atom": "C01",
+  "module_order": [
+    "canvas-mapper",
+    "pattern-innovator",
+    "strategy-evaluator",
+    "ambidextrous-execution-designer"
+  ],
+  "module_phase": {
+    "canvas-mapper": "Phase 1: Canvas-Mapper",
+    "pattern-innovator": "Phase 2: Pattern-Innovator",
+    "strategy-evaluator": "Phase 3: Strategy-Evaluator",
+    "ambidextrous-execution-designer": "Phase 4: Ambidextrous-Execution-Designer"
+  },
+  "gate_artifacts": {
+    "canvas-mapper": "canvas-mapper.md",
+    "pattern-innovator": "pattern-innovator.md",
+    "strategy-evaluator": "strategy-evaluator.md",
+    "ambidextrous-execution-designer": "ambidextrous-execution-designer.md"
+  },
+  "milestone_templates": {
+    "canvas-mapper": "canvas-mapper.template.md",
+    "pattern-innovator": "pattern-innovator.template.md",
+    "strategy-evaluator": "strategy-evaluator.template.md",
+    "ambidextrous-execution-designer": "ambidextrous-execution-designer.template.md"
+  },
+  "canonical_gate_pass": {
+    "canvas-mapper": "pass canvas-mapper gate",
+    "pattern-innovator": "pass pattern-innovator gate",
+    "strategy-evaluator": "pass strategy-evaluator gate",
+    "ambidextrous-execution-designer": "pass ambidextrous-execution-designer gate"
+  },
+  "module_brief_labels": {
+    "canvas-mapper": "Canvas Mapper",
+    "pattern-innovator": "Pattern Innovator",
+    "strategy-evaluator": "Strategy Evaluator",
+    "ambidextrous-execution-designer": "Ambidextrous Execution Designer"
+  },
+  "express_spine": {
+    "canvas-mapper": ["C03", "C04", "C07", "C11", "CG"],
+    "pattern-innovator": ["P01", "P03", "PG"],
+    "strategy-evaluator": ["T01", "T02", "T03", "TG"],
+    "ambidextrous-execution-designer": ["A01", "A02", "AG"]
+  },
+  "express_requires": {
+    "C03": [],
+    "C04": ["C03"],
+    "C07": ["C04"],
+    "C11": ["C07"],
+    "CG": ["C11"],
+    "P01": ["CG"],
+    "P03": ["P01"],
+    "PG": ["P03"],
+    "T01": ["PG"],
+    "T02": ["T01"],
+    "T03": ["T02"],
+    "TG": ["T03"],
+    "A01": ["TG"],
+    "A02": ["A01"],
+    "AG": ["A02"]
+  }
+}

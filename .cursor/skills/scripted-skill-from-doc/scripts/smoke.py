@@ -90,37 +90,53 @@ def main() -> int:
             return 1
         print(nxt.stdout)
 
-        entry_id = payload["atom_id"]
-        accept_entry = run_script(
-            scripts,
-            "accept_answer.py",
-            str(session),
-            "--atom-id",
-            entry_id,
-            "--answer",
-            "smoke seed",
-            "--kind",
-            "fact",
-        )
-        if accept_entry.returncode != 0:
-            print(accept_entry.stderr or accept_entry.stdout, file=sys.stderr)
-            return accept_entry.returncode
+        atoms_by_id = {
+            a["id"]: a
+            for a in json.loads((draft / "assets" / "atoms.json").read_text(encoding="utf-8"))[
+                "atoms"
+            ]
+        }
+        config = json.loads((draft / "assets" / "skill-config.json").read_text(encoding="utf-8"))
 
-        nxt_gate = run_script(scripts, "next_question.py", str(session))
-        if nxt_gate.returncode != 0:
-            print(nxt_gate.stderr or nxt_gate.stdout, file=sys.stderr)
-            return nxt_gate.returncode
-        gate_payload = json.loads(nxt_gate.stdout)
-        gate_id = gate_payload.get("atom_id")
+        # Walk non-gate atoms until the first module gate (expanded curricula are not stub S01→G01).
+        gate_id: str | None = None
+        for _ in range(len(atoms_by_id) + 1):
+            atom_id = payload.get("atom_id")
+            if not atom_id:
+                print(f"Unexpected next_question output: {payload}", file=sys.stderr)
+                return 1
+            atom = atoms_by_id.get(atom_id)
+            if atom is None:
+                print(f"Unknown atom_id from next_question: {atom_id}", file=sys.stderr)
+                return 1
+            if atom.get("gate"):
+                gate_id = atom_id
+                break
+            accept_entry = run_script(
+                scripts,
+                "accept_answer.py",
+                str(session),
+                "--atom-id",
+                atom_id,
+                "--answer",
+                "smoke seed",
+                "--kind",
+                "fact",
+            )
+            if accept_entry.returncode != 0:
+                print(accept_entry.stderr or accept_entry.stdout, file=sys.stderr)
+                return accept_entry.returncode
+            nxt = run_script(scripts, "next_question.py", str(session))
+            if nxt.returncode != 0:
+                print(nxt.stderr or nxt.stdout, file=sys.stderr)
+                return nxt.returncode
+            payload = json.loads(nxt.stdout)
+
         if not gate_id:
-            print(f"No gate atom after entry accept: {nxt_gate.stdout}", file=sys.stderr)
+            print("No gate atom reached after walking curriculum", file=sys.stderr)
             return 1
 
-        config = json.loads((draft / "assets" / "skill-config.json").read_text(encoding="utf-8"))
-        module = json.loads((draft / "assets" / "atoms.json").read_text(encoding="utf-8"))[
-            "atoms"
-        ]
-        gate_atom = next(a for a in module if a["id"] == gate_id)
+        gate_atom = atoms_by_id[gate_id]
         module_id = gate_atom["module"]
         pass_phrase = config["canonical_gate_pass"][module_id]
 
