@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "teams session",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project",
+    "position",
+    "ledger",
+    "answers",
+    "evidence",
+    "assumptions",
+    "decisions",
+    "unknowns",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "pacing_mode": {
+      "type": "string"
+    },
+    "project": {
+      "type": "object"
+    },
+    "position": {
+      "type": "object"
+    },
+    "ledger": {
+      "type": "object"
+    },
+    "answers": {
+      "type": "array"
+    },
+    "evidence": {
+      "type": "array"
+    },
+    "assumptions": {
+      "type": "array"
+    },
+    "decisions": {
+      "type": "array"
+    },
+    "unknowns": {
+      "type": "array"
+    },
+    "artifacts": {
+      "type": "array"
+    }
+  }
+}

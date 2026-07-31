@@ -1,0 +1,131 @@
+{
+  "system_metadata": {
+    "framework_title": "High-Impact Tools for Teams",
+    "authors": [
+      "Stefano Mastrogiacomo",
+      "Alex Osterwalder",
+      "Alan Smith"
+    ],
+    "series": "Strategyzer Series",
+    "version": "1.0.0-PROMPT-SUITE",
+    "core_domain": "Team Alignment, Psychological Safety, Project Governance, Conflict Resolution"
+  },
+  "visual_grounding_analogies": [
+    {
+      "name": "The Blindfolded Team (Walking in the Dark)",
+      "description": "Depicts team members wearing blindfolds, stumbling around a room with chairs and obstacles, asking 'Does anyone understand what we're supposed to do?'. Illustrates complete lack of common ground and mutual awareness.",
+      "risk": "Silent perception gaps where team members assume alignment, resulting in catastrophic coordination surprises, duplicated work, and project failure.",
+      "action": "Forbid jumping into execution or task breakdown until a synchronized Forward Pass is executed and all Joint Objectives & Commitments are explicitly defined."
+    },
+    {
+      "name": "The Parachute Cliff Jump (Overoptimism Trap)",
+      "description": "Depicts a team member leaping off a cliff with a parachute that breaks or fails, shouting 'I told you we were going too fast!'.",
+      "risk": "Launching projects based on unexamined optimism without systematically identifying latent risks, dependencies, and missing resources.",
+      "action": "Enforce a mandatory Backward Pass on every plan to systematically transform every identified risk and missing resource into concrete mitigation objectives or explicit commitments."
+    },
+    {
+      "name": "The Resource Avalanche (Resource Fistfight)",
+      "description": "Depicts team members wrestling on the floor surrounded by falling money and gear, screaming 'I lack resources!'.",
+      "risk": "Committing to objectives without explicit, allocated resources (time, budget, human bandwidth, tools), causing workflows to freeze and interpersonal friction to spike.",
+      "action": "Enforce explicit resource estimation and allocation per objective. If a resource cannot be guaranteed, the linked Joint Objective must be modified or removed."
+    },
+    {
+      "name": "The Superhero Leader (Micromanagement / Exhaustion Trap)",
+      "description": "Depicts an exhausted leader trying to pull, direct, and carry all team members through a door single-handedly.",
+      "risk": "Leader bottlenecking, team disengagement, lack of psychological ownership, and eventual leader burnout.",
+      "action": "Enforce 'Aligned Autonomy': Leadership sets the 'What & Why' (Mission/Objectives), while team members self-organize and define the 'How' during the Forward and Backward Passes."
+    },
+    {
+      "name": "The Prenup Paradox (Overly Punitive Contract)",
+      "description": "Depicts a couple entering a marriage agreement while obsessed with divorce penalties, breaking the cooperative atmosphere.",
+      "risk": "Over-indexing on harsh penalties in team agreements destroys trust and triggers paranoia from day one.",
+      "action": "Frame Team Contracts around shared conventions, positive behaviors, and fair decision processes rather than legalistic sanctions. Address breaches through diplomatic learning conversations."
+    }
+  ],
+  "core_metrics_and_scales": {
+    "risk_exposure_formula": {
+      "equation": "R_{exposure} = P_{likelihood} \\times I_{impact}",
+      "scale": "High (H), Medium (M), Low (L)",
+      "rule": "High-exposure risks must be prioritized during the Backward Pass and converted into actionable Joint Objectives."
+    },
+    "psychological_safety_assessment_scale": {
+      "item_count": 7,
+      "rating_range": "1 (Strongly Disagree) to 7 (Strongly Agree)",
+      "reverse_scored_items": [
+        1,
+        3,
+        5
+      ],
+      "normal_scored_items": [
+        2,
+        4,
+        6,
+        7
+      ],
+      "equation": "S_{total} = \\sum_{i \\in \\{2,4,6,7\\}} R_i + \\sum_{j \\in \\{1,3,5\\}} (8 - R_j)",
+      "scoring_threshold": {
+        "benchmark_pass": 40,
+        "range": "[7, 49]",
+        "interpretation": "Scores < 40 indicate high psychological danger, requiring immediate Team Contract interventions."
+      }
+    },
+    "alignment_index_formula": {
+      "equation": "A_{index} = \\frac{V_{green}}{V_{total}} \\times 100",
+      "zones": {
+        "green_zone": "Top 1/3 of slider (Clear, Explicit, Available, Under Control). High probability of success.",
+        "red_zone": "Bottom 2/3 of slider (Unclear, Implicit, Missing, Underestimated). High probability of failure."
+      }
+    },
+    "aligned_autonomy_formula": {
+      "equation": "\\text{Autonomy} = \\text{Authority} \\times \\text{Alignment}",
+      "rule": "Autonomy cannot exist without alignment. High alignment + high clarity = max team speed."
+    }
+  },
+  "standardized_templates": {
+    "team_alignment_map": {
+      "header": {
+        "mission": "Challenging, audacious, unique, or fun statement framed as [Goal + Benefit] or 'How might we...?'",
+        "period": "Exact timeframe, duration, or deadline (e.g., '2 weeks', 'Q3', 'By Oct 15')"
+      },
+      "columns": [
+        "Joint Objectives (What do we intend to achieve together?)",
+        "Joint Commitments (Who will do what with whom?)",
+        "Joint Resources (What resources do we need?)",
+        "Joint Risks (What can prevent us from succeeding?)"
+      ]
+    },
+    "team_contract": {
+      "sections": {
+        "in": "Accepted behaviors, team values, communication rules, meeting norms, decision-making protocols.",
+        "out": "Unacceptable behaviors (lateness, silent disagreement, public criticism, scope creep without discussion)."
+      },
+      "failure_framing_matrix": {
+        "high_volume_work": "Minimize preventable failures (process deviations).",
+        "complex_operations": "Analyze and fix complex failures (system breakdowns).",
+        "innovation_research": "Celebrate intelligent failures (hypotheses tested, fast learning)."
+      }
+    },
+    "fact_finder_compass": {
+      "traps": {
+        "incomplete_facts": "Lack of key detail -> 'Who? What? When? Where? Could you be more precise?'",
+        "assumptions": "Creative causal leaps -> 'What makes you think so? How do you know X causes Y?'",
+        "generalizations": "Universal rules ('always', 'never') -> 'Always? Never? Everyone? Are you sure?'",
+        "limitations": "Imaginary constraints ('can't', 'must') -> 'What would happen if...? What prevents us?'",
+        "judgments": "Subjective value statements ('bad', 'poor') -> 'What criteria tell you that? In what way?'"
+      }
+    },
+    "respect_card": {
+      "recognition_drivers": "Expressing gratitude, acknowledging unique talents, validating contributions.",
+      "respect_drivers": "Using indirect requests ('Would you mind...'), preserving face, giving feedback privately."
+    },
+    "nonviolent_requests_schema": {
+      "structure": "1. Observation: 'When you do [factual action]...'\n2. Feeling: 'I feel [emotion]...'\n3. Need: 'My need is [core need]...'\n4. Request: 'Would you please [concrete action]?'"
+    }
+  },
+  "phase_module_map": {
+    "tam-planner": "Phase 1: TAM-Planner",
+    "tam-assessor": "Phase 2: TAM-Assessor",
+    "team-contract-architect": "Phase 3: Team-Contract-Architect",
+    "psych-safety-conflict-resolver": "Phase 4: Psych-Safety-Conflict-Resolver"
+  }
+}

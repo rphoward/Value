@@ -1,0 +1,224 @@
+{
+  "atoms": [
+    {
+      "id": "S01",
+      "module": "tam-planner",
+      "asks": "What is this team's mission for the period ahead (Goal + Benefit), and what exact timeframe or deadline applies?",
+      "accepts_summary": "Mission as Goal + Benefit (or How might we…?) plus a concrete period, or unknown.",
+      "gate": false,
+      "section": "Mission and Period",
+      "soft": false,
+      "requires": [],
+      "unlocks": "S02"
+    },
+    {
+      "id": "S02",
+      "module": "tam-planner",
+      "asks": "List Joint Objectives as sticky notes (ten words or less each). What do you intend to achieve together?",
+      "accepts_summary": "Action-verb + output sticky notes for objectives, or unknown.",
+      "gate": false,
+      "section": "Forward Pass",
+      "soft": false,
+      "requires": ["S01"],
+      "unlocks": "S03"
+    },
+    {
+      "id": "S03",
+      "module": "tam-planner",
+      "asks": "For each objective, who commits to what with whom (Name + Role + Task, ten words or less)?",
+      "accepts_summary": "Named commitments tied to objectives; floating objectives without owners become risks.",
+      "gate": false,
+      "section": "Forward Pass",
+      "soft": false,
+      "requires": ["S02"],
+      "unlocks": "S04"
+    },
+    {
+      "id": "S04",
+      "module": "tam-planner",
+      "asks": "What Joint Resources are needed (quantity + status), and what Joint Risks could block success? Which must become new objectives in a Backward Pass?",
+      "accepts_summary": "Resources and risks as sticky notes; high-exposure risks and missing resources turned into new objectives or removed from scope.",
+      "gate": false,
+      "section": "Backward Pass",
+      "soft": false,
+      "requires": ["S03"],
+      "unlocks": "G01"
+    },
+    {
+      "id": "G01",
+      "module": "tam-planner",
+      "asks": "Review the Team Alignment Map. Pass the tam-planner gate, reopen a sticky, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass tam-planner gate', reopen with a target atom, or blocking unknowns.",
+      "unlocks": "S05",
+      "gate": true,
+      "requires": ["S04"],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S05",
+      "module": "tam-assessor",
+      "asks": "Is this a Readiness check (good start?) or Troubleshooting (still on track?), and which TAM pillar feels weakest right now: Objectives, Commitments, Resources, or Risks?",
+      "accepts_summary": "Assessment type plus primary bottleneck pillar, or unknown.",
+      "gate": false,
+      "section": "Assessment framing",
+      "soft": false,
+      "requires": ["G01"],
+      "unlocks": "S06"
+    },
+    {
+      "id": "S06",
+      "module": "tam-assessor",
+      "asks": "For Objectives and Commitments, how do votes land on Clear/Explicit (green) vs Unclear/Implicit (red), and where do members disagree by two or more zones?",
+      "accepts_summary": "Green/red counts or narrative votes plus any high-dispersion gaps, or unknown.",
+      "gate": false,
+      "section": "Reveal",
+      "soft": false,
+      "requires": ["S05"],
+      "unlocks": "S07"
+    },
+    {
+      "id": "S07",
+      "module": "tam-assessor",
+      "asks": "For Resources and Risks, what is Available vs Missing and Under Control vs Underestimated? What is the rough Alignment Index (green votes over total)?",
+      "accepts_summary": "Resource and risk zone votes plus A_index estimate or zone (green/yellow/red), or unknown.",
+      "gate": false,
+      "section": "Reveal",
+      "soft": false,
+      "requires": ["S06"],
+      "unlocks": "S08"
+    },
+    {
+      "id": "S08",
+      "module": "tam-assessor",
+      "asks": "Name one Repair action (clarify, add, remove, or reallocate) with an owner that addresses the main Red or high-dispersion pillar.",
+      "accepts_summary": "Concrete repair step with owner, or unknown.",
+      "gate": false,
+      "section": "Repair",
+      "soft": false,
+      "requires": ["S07"],
+      "unlocks": "G02"
+    },
+    {
+      "id": "G02",
+      "module": "tam-assessor",
+      "asks": "Review the assessment. Pass the tam-assessor gate, reopen a pillar, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass tam-assessor gate', reopen, or blocking unknowns.",
+      "unlocks": "S09",
+      "gate": true,
+      "requires": ["S08"],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S09",
+      "module": "team-contract-architect",
+      "asks": "Which behaviors are IN for this team (observable, camera-testable norms for meetings, disagreement, and raising resource alerts)?",
+      "accepts_summary": "IN column as observable behaviors, not abstract attitudes, or unknown.",
+      "gate": false,
+      "section": "IN behaviors",
+      "soft": false,
+      "requires": ["G02"],
+      "unlocks": "S10"
+    },
+    {
+      "id": "S10",
+      "module": "team-contract-architect",
+      "asks": "Which behaviors are OUT (phones in discussion, silent disagreement, hiding delays, public shaming)? Keep them observable.",
+      "accepts_summary": "OUT column as observable refusals, or unknown.",
+      "gate": false,
+      "section": "OUT behaviors",
+      "soft": false,
+      "requires": ["S09"],
+      "unlocks": "S11"
+    },
+    {
+      "id": "S11",
+      "module": "team-contract-architect",
+      "asks": "Is the work mostly routine high-volume, complex operations, or innovation research — and how should failure be framed (minimize preventable, fix complex, or celebrate intelligent)?",
+      "accepts_summary": "Edmondson context plus matching failure mandate, or unknown.",
+      "gate": false,
+      "section": "Failure framing",
+      "soft": false,
+      "requires": ["S10"],
+      "unlocks": "S12"
+    },
+    {
+      "id": "S12",
+      "module": "team-contract-architect",
+      "asks": "When someone breaks an IN/OUT rule, what is the three-step repair (state the contract item, listen with Fact Finder, resolve together) — without harsh prenup penalties?",
+      "accepts_summary": "Non-punitive breach protocol in three steps, or unknown.",
+      "gate": false,
+      "section": "Breach repair",
+      "soft": false,
+      "requires": ["S11"],
+      "unlocks": "G03"
+    },
+    {
+      "id": "G03",
+      "module": "team-contract-architect",
+      "asks": "Review the Team Contract. Pass the team-contract-architect gate, reopen a section, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass team-contract-architect gate', reopen, or blocking unknowns.",
+      "unlocks": "S13",
+      "gate": true,
+      "requires": ["S12"],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S13",
+      "module": "psych-safety-conflict-resolver",
+      "asks": "Paste or paraphrase the sticky conflict or ambiguous statement. Which Fact Finder trap fits: Incomplete Facts, Assumptions, Generalizations, Limitations, or Judgments?",
+      "accepts_summary": "Raw statement plus one trap label, or unknown.",
+      "gate": false,
+      "section": "Fact Finder",
+      "soft": false,
+      "requires": ["G03"],
+      "unlocks": "S14"
+    },
+    {
+      "id": "S14",
+      "module": "psych-safety-conflict-resolver",
+      "asks": "What first-order observable facts support that statement, and what neutral clarifying question would you ask next?",
+      "accepts_summary": "Physical evidence plus one open clarifying question, or unknown.",
+      "gate": false,
+      "section": "Fact Finder",
+      "soft": false,
+      "requires": ["S13"],
+      "unlocks": "S15"
+    },
+    {
+      "id": "S15",
+      "module": "psych-safety-conflict-resolver",
+      "asks": "Rewrite the attack as a Nonviolent Request: Observation, Feeling, Need, then a concrete Would you please…?",
+      "accepts_summary": "Four-part NVC request without judgment in the observation, or unknown.",
+      "gate": false,
+      "section": "Nonviolent request",
+      "soft": false,
+      "requires": ["S14"],
+      "unlocks": "S16"
+    },
+    {
+      "id": "S16",
+      "module": "psych-safety-conflict-resolver",
+      "asks": "How will you protect face: one valuing move (recognition) and one respect move (indirect ask or private framing)?",
+      "accepts_summary": "Positive-face and negative-face moves, or unknown.",
+      "gate": false,
+      "section": "Respect card",
+      "soft": false,
+      "requires": ["S15"],
+      "unlocks": "G04"
+    },
+    {
+      "id": "G04",
+      "module": "psych-safety-conflict-resolver",
+      "asks": "Review the conflict repair. Pass the psych-safety-conflict-resolver gate, reopen a step, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass psych-safety-conflict-resolver gate', reopen, or blocking unknowns.",
+      "unlocks": null,
+      "gate": true,
+      "requires": ["S16"],
+      "section": "Gate",
+      "soft": false
+    }
+  ]
+}

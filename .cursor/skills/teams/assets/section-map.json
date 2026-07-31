@@ -1,0 +1,26 @@
+{
+  "milestones": {
+    "tam-planner": {
+      "Mission and Period": ["S01"],
+      "Forward Pass": ["S02", "S03"],
+      "Backward Pass": ["S04"]
+    },
+    "tam-assessor": {
+      "Assessment framing": ["S05"],
+      "Reveal": ["S06", "S07"],
+      "Repair": ["S08"]
+    },
+    "team-contract-architect": {
+      "IN behaviors": ["S09"],
+      "OUT behaviors": ["S10"],
+      "Failure framing": ["S11"],
+      "Breach repair": ["S12"]
+    },
+    "psych-safety-conflict-resolver": {
+      "Fact Finder": ["S13", "S14"],
+      "Nonviolent request": ["S15"],
+      "Respect card": ["S16"]
+    }
+  },
+  "design_briefs": {}
+}

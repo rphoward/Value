@@ -40,3 +40,6 @@ workproduct/lean-mvp/
 
 # Local decision trails (show-me-your-work)
 .audit/
+
+# Verification runs (keep artifacts locally; do not commit)
+.verify-runs/

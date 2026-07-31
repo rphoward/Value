@@ -3,17 +3,18 @@ name: product-spine
 description: >
   Use when the user asks where to start on a vibecoded project, how to turn an
   idea into something valuable and marketable, how to resume across value /
-  bmg / lean-mvp / story-generation-prompt, wants business / BMG / canvas-first
-  routing, or wants a guide from idea through an honest pitch or NotebookLM
-  video prompt. Carries the whole journey: names the phase, the sibling to open,
-  what "done enough" means, and the claim exit. Not for Strategyzer canvas
-  grilling, Dan Olsen lean-mvp atom pacing, or drafting INVEST/NotebookLM copy
-  itself — those stay in the named sibling; this skill routes and stays with
-  the human until the path is clear.
+  bmg / teams / lean-mvp / story-generation-prompt, wants business / BMG /
+  canvas-first routing, team alignment or team-friction routing, or wants a
+  guide from idea through an honest pitch or NotebookLM video prompt. Carries
+  the whole journey: names the phase, the sibling to open, what "done enough"
+  means, and the claim exit. Not for Strategyzer canvas grilling, High-Impact
+  Teams atom pacing, Dan Olsen lean-mvp atom pacing, or drafting
+  INVEST/NotebookLM copy itself — those stay in the named sibling; this skill
+  routes and stays with the human until the path is clear.
 metadata:
   activation: explicit
   distribution: github
-  pairs_with: value, bmg, lean-mvp, story-generation-prompt
+  pairs_with: value, bmg, teams, lean-mvp, story-generation-prompt
 disable-model-invocation: true
 ---
 
@@ -26,35 +27,39 @@ disable-model-invocation: true
     (siblings
       (value .cursor/skills/value/SKILL.md)
       (bmg .cursor/skills/bmg/SKILL.md)
+      (teams .cursor/skills/teams/SKILL.md)
       (lean-mvp .cursor/skills/lean-mvp/SKILL.md)
       (story-generation-prompt .cursor/skills/story-generation-prompt/SKILL.md)))
 
   <central_idea>
   (center-of-gravity
-    (invariant "One slash entry carries the human from vibecode to valuable to marketable. Spine owns phase, next move, and done-enough. Value, bmg, and lean-mvp own session.json and grilling. Story owns INVEST and NotebookLM prompts. Spine never invents its own session — it reads sibling sessions (and may run status.py read-only). When the phase is claim, spine reads story-generation-prompt and follows it so the human is not dumped at the last door."))
+    (invariant "One slash entry carries the human from vibecode to valuable to marketable. Spine owns phase, next move, and done-enough. Value, bmg, teams, and lean-mvp own session.json and grilling. Story owns INVEST and NotebookLM prompts. Spine never invents its own session — it reads sibling sessions (and may run status.py read-only). When the phase is claim, spine reads story-generation-prompt and follows it so the human is not dumped at the last door."))
   </central_idea>
 
   (protocol-0-activation
     (on-activation
       1 "read references/path.md"
-      2 "discover project slug: look under workproduct/value-proposition/*/session.json, workproduct/bmg/*/session.json, and workproduct/lean-mvp/*/session.json; prefer a value slug when claiming; if several value slugs, ask one clarifying question (name the project in plain words)"
+      2 "discover project slug: look under workproduct/value-proposition/*/session.json, workproduct/bmg/*/session.json, workproduct/teams/*/session.json, and workproduct/lean-mvp/*/session.json; prefer a value slug when claiming; if several value slugs, ask one clarifying question (name the project in plain words)"
       3 "when a session exists, run that skill's scripts/status.py <session> --sections read-only for progress-so-far wording; keep readiness from session.json / milestone files — optional brief is agent-internal only; do not --refresh, accept, init, or import from spine"
       4 "choose phase with protocol-1; speak protocol-2 voice"
       5 "if phase is claim: run protocol-3 claim-evidence-handoff — read the slug's saved notes from disk, list every path in the guide-turn, then read .cursor/skills/story-generation-prompt/SKILL.md and follow it in this turn using those files as evidence — open with a first story action, not a pointer to another slash and not a request that the human hunt or paste the notes"
-      6 "if phase is clarity, business, or mvp: fill guide-turn This-turn with exactly /value, /bmg, or /lean-mvp plus leg purpose; stop grilling — the sibling owns atoms on the next leg"
+      6 "if phase is clarity, business, teams, or mvp: fill guide-turn This-turn with exactly /value, /bmg, /teams, or /lean-mvp plus leg purpose; stop grilling — the sibling owns atoms on the next leg"
       7 "close guide-turn Come-back-when: when that leg's done-enough is met (or you are lost), invoke /product-spine again")
-    (forbidden 'invent-spine-session-json 'accept-or-init-sibling-atoms 'grill-canvas-or-lean-atoms 'quote-status-stdout-atom-ids-to-user 'ask-human-to-find-or-paste-profile-map-or-north-star-when-those-files-exist)
+    (forbidden 'invent-spine-session-json 'accept-or-init-sibling-atoms 'grill-canvas-or-lean-or-teams-atoms 'quote-status-stdout-atom-ids-to-user 'ask-human-to-find-or-paste-profile-map-or-north-star-when-those-files-exist)
     (allowed 'read-sibling-session-json 'read-sibling-milestone-md 'run-status-py-read-only 'read-and-follow-story-skill-on-claim-phase))
 
   (protocol-1-journey
-    (shared-slug "value, bmg, and lean-mvp use the same project slug under workproduct/")
+    (shared-slug "value, bmg, teams, and lean-mvp use the same project slug under workproduct/")
     (value-session "workproduct/value-proposition/<slug>/session.json")
     (bmg-session "workproduct/bmg/<slug>/session.json")
+    (teams-session "workproduct/teams/<slug>/session.json")
     (lean-session "workproduct/lean-mvp/<slug>/session.json")
     (clarity-ready "value profile and value-map module_outcome each completed or bypassed — never infer from status.py brief active module alone")
     (business-ready "bmg canvas-mapper module_outcome completed or bypassed — or workproduct/bmg/<slug>/canvas-mapper.md on disk; never infer from status.py brief alone")
+    (teams-ready "teams tam-planner module_outcome completed or bypassed — or workproduct/teams/<slug>/tam-planner.md on disk; never infer from status.py brief alone")
     (mvp-ready "lean mvp-scope module_outcome completed or bypassed — or human explicitly skips lean and asks to claim; status brief is position hint only")
     (business-intent "human asks for business model, BMG, Business Model Canvas, Osterwalder canvas, classic business language, or canvas-first")
+    (team-friction-intent "human asks for team alignment, Team Alignment Map / TAM, joint commitments, team contract, psychological safety, conflict repair, or friction on the working team / repo crew — business-side, not product canvas")
     (claim-intent "human asks for pitch, showcase, engagement, INVEST story, NotebookLM, video overview, generation prompt, or shareable claim")
     (phases
       (clarity
@@ -62,11 +67,15 @@ disable-model-invocation: true
         "destination /value — .cursor/skills/value/SKILL.md"
         "done-enough: profile and value-map gates passed or bypassed, then return to /product-spine")
       (business
-        "business-intent, or open bmg session not yet business-ready (unless claim-intent or explicit clarity/mvp ask wins)"
+        "business-intent, or open bmg session not yet business-ready (unless claim-intent, team-friction-intent, or explicit clarity/mvp ask wins)"
         "destination /bmg — .cursor/skills/bmg/SKILL.md"
         "done-enough: canvas-mapper gate passed or bypassed (or canvas-mapper.md on disk), then return to /product-spine")
+      (teams
+        "team-friction-intent, or open teams session not yet teams-ready (unless claim-intent or explicit clarity/business/mvp ask wins)"
+        "destination /teams — .cursor/skills/teams/SKILL.md"
+        "done-enough: tam-planner gate passed or bypassed (or tam-planner.md on disk), then return to /product-spine — assessor, contract, and conflict modules stay optional later")
       (mvp
-        "clarity-ready and lean incomplete (or human asks MVP features with clarity-ready); business is not required before mvp unless an open bmg session still needs business-ready"
+        "clarity-ready and lean incomplete (or human asks MVP features with clarity-ready); business and teams are not required before mvp unless an open bmg session still needs business-ready or an open teams session still needs teams-ready and the human did not ask to skip"
         "destination /lean-mvp — .cursor/skills/lean-mvp/SKILL.md"
         "done-enough: mvp-scope gate passed or bypassed (MS05 story may use story skill inside lean), then return to /product-spine")
       (claim
@@ -74,15 +83,18 @@ disable-model-invocation: true
         "destination: protocol-3 then follow .cursor/skills/story-generation-prompt/SKILL.md now — claim turns execute story inline with saved notes; routing-only claim is forbidden"
         "done-enough: human has story sentence and, when they want video, producer paste block for NotebookLM pass 2")
       (return-after-learning
-        "after experiment results, prototype learning, or story kill-signal → reopen value, bmg, or lean-mvp for the module that must absorb learning; say which and why"))
+        "after experiment results, prototype learning, or story kill-signal → reopen value, bmg, teams, or lean-mvp for the module that must absorb learning; say which and why"))
     (precedence
-      (claim-intent-wins "if the human clearly wants pitch/video/claim, choose claim even when a value, bmg, or lean session is still open — say what they are skipping")
-      (business-intent-wins "business / BMG / canvas-first → /bmg; if mid–value Evolve, name the skip — do not auto-divert mid–Evolve unless the human asks for fuller BMG")
-      (open-bmg-not-ready "bmg session exists and not business-ready → business unless claim-intent or an explicit clarity/mvp ask wins")
-      (both-sessions-incomplete "prefer value until clarity-ready, else lean-mvp; do not invent a business leg without business-intent or a bmg session")
-      (one-session "continue that skill's open module unless claim-intent or business-intent wins")
+      (claim-intent-wins "if the human clearly wants pitch/video/claim, choose claim even when a value, bmg, teams, or lean session is still open — say what they are skipping")
+      (team-friction-intent-wins "explicit team friction / alignment / contract / psych-safety → /teams; do not invent a teams leg without that intent; do not auto-divert mid–BMG canvas into /teams unless the human names team friction")
+      (business-intent-wins "business / BMG / canvas-first → /bmg; if mid–value Evolve, name the skip — do not auto-divert mid–Evolve unless the human asks for fuller BMG; default business path finishes canvas-mapper before investing in long-form teams work")
+      (open-bmg-not-ready "bmg session exists and not business-ready → business unless claim-intent, team-friction-intent, or an explicit clarity/mvp ask wins")
+      (open-teams-not-ready "teams session exists and not teams-ready → teams unless claim-intent or an explicit clarity/business/mvp ask wins")
+      (both-sessions-incomplete "prefer value until clarity-ready, else lean-mvp; do not invent a business or teams leg without matching intent or session")
+      (one-session "continue that skill's open module unless claim-intent, team-friction-intent, or business-intent wins")
       (no-session-idea "clarity → /value")
       (no-session-business-ask "business → /bmg")
+      (no-session-teams-ask "teams → /teams")
       (no-session-mvp-ask "clarity first → /value; open lean-mvp only when human confirms skip-value and accepts re-grilling segment in lean")
       (no-session-repo-claim "claim → follow story-generation-prompt")))
 
@@ -91,14 +103,14 @@ disable-model-invocation: true
       (you-are-here "phase label + project slug when known + one plain sentence of situation; when a session exists, that sentence includes progress so far in plain words translated from --sections section names — e.g. profile done; still on value-map pains; no session means no fake progress line; claim may add at most one short readiness clause such as notes ready for pitch")
       (why-this-phase "one precedence sentence — why this phase won")
       (files-im-using "claim only: bullet the exact relative paths you opened — say you are using the notes already saved; the human does not hunt folders or paste files")
-      (this-turn "clarity/business/mvp/return: exactly one sibling slash and what happens there; claim: follow story-generation-prompt with a first story action in this turn, drafted from Files-im-using")
+      (this-turn "clarity/business/teams/mvp/return: exactly one sibling slash and what happens there; claim: follow story-generation-prompt with a first story action in this turn, drafted from Files-im-using")
       (come-back-when "done-enough for that leg + explicit /product-spine re-entry — omit only while already inside claim story work this turn"))
     (shape "short guide-turn in that order — no atom IDs, no script stdout, no section-strip symbols; keep words simple enough for a first-time vibecoder")
     (slug "say the project slug when known")
     (carry "the human should feel guided, not sorted into a queue; spine is the entrance and the re-entrance until claim work is in hand")
     (notebooklm-directions "when claim emits video/NotebookLM steps, follow story-generation-prompt Human how-to: numbered Do this — one upload folder, Chat box = Box A, Video/Studio = Box B; forbidden: long essays or two upload plans")
     (illegal-replies
-      "clarity, business, or mvp turn that names a slash without done-enough and /product-spine return cue"
+      "clarity, business, teams, or mvp turn that names a slash without done-enough and /product-spine return cue"
       "claim turn that only routes to story-generation-prompt without reading and following it"
       "claim turn with no first story action (pass-1 question or draft ask)"
       "claim turn that tells the human to find, open, or paste profile, value-map, or north-star when those files exist on disk"
@@ -106,7 +118,9 @@ disable-model-invocation: true
       "claim turn that explains NotebookLM in a long essay instead of numbered Do this + Box A + Box B"
       "lean before clarity-ready without explicit skip-value and stated re-grilling cost"
       "auto-divert mid–value Evolve into /bmg without the human asking for fuller BMG"
-      "treating status.py brief active module as clarity-ready, business-ready, or mvp-ready"
+      "auto-divert mid–BMG canvas into /teams without explicit team-friction-intent"
+      "requiring teams-ready before mvp or claim when the human never asked for teams"
+      "treating status.py brief active module as clarity-ready, business-ready, teams-ready, or mvp-ready"
       "quoting status.py stdout, --brief, or section-strip symbols to the user as the guide-turn answer"
       "any sibling init, accept, import, or --refresh from spine"))
 
@@ -127,7 +141,12 @@ disable-model-invocation: true
       "workproduct/bmg/<slug>/pattern-innovator.md"
       "workproduct/bmg/<slug>/strategy-evaluator.md"
       "workproduct/bmg/<slug>/ambidextrous-execution-designer.md")
-    (slug-mismatch "value, bmg, and lean may use different folder names; load value notes for the chosen value slug; only add lean or bmg files under that same slug, or skip those notes — do not invent a merge")
+    (optional-teams-if-present
+      "workproduct/teams/<slug>/tam-planner.md"
+      "workproduct/teams/<slug>/tam-assessor.md"
+      "workproduct/teams/<slug>/team-contract-architect.md"
+      "workproduct/teams/<slug>/psych-safety-conflict-resolver.md")
+    (slug-mismatch "value, bmg, teams, and lean may use different folder names; load value notes for the chosen value slug; only add lean, bmg, or teams files under that same slug, or skip those notes — do not invent a merge")
     (missing-profile-or-map "if neither customer-profile.md nor value-map.md exists, say so in plain words and either open /value first or draft from what the human just typed — never pretend the notes exist")
     (hand-to-story "pass the file contents into story-generation-prompt as evidence; story must not ask the human to re-paste those files")
     (see references/path.md section claim-evidence-handoff))
@@ -137,8 +156,8 @@ disable-model-invocation: true
       "clarity-ready return or any guide-turn when workproduct/value-proposition/<slug>/CONTEXT.product.md exists on disk"
       (emit "one short vernacular line: seed glossary is saved; dry-run promote with python .cursor/skills/value/scripts/promote_context.py workproduct/value-proposition/<slug>/session.json; optional AGENTS fragment at .cursor/skills/product-spine/assets/AGENTS.fragment.md or .cursor/skills/value/assets/AGENTS.fragment.md for solo Values install")
       (forbidden 'silent-root-CONTEXT-write 'invent-stack-terms))
-    (when-bmg-or-lean-without-seed
-      "bmg or lean-mvp session has progress for the slug but CONTEXT.product.md is missing"
-      (emit "gap note: canvas and lean sessions save notes under workproduct/, but no customer-language seed yet. Open /value for this same slug, answer the profile segment + one trigger atom, then pause once (or let the gate pass) to write CONTEXT.product.md. Come back to /product-spine after and we will promote those terms into root CONTEXT.md. No fake BMG or lean glossary in v1.")
-      (forbidden 'invent-CONTEXT-product-from-canvas-or-lean-alone)))
+    (when-bmg-or-lean-or-teams-without-seed
+      "bmg, teams, or lean-mvp session has progress for the slug but CONTEXT.product.md is missing"
+      (emit "gap note: canvas, teams, and lean sessions save notes under workproduct/, but no customer-language seed yet. Open /value for this same slug, answer the profile segment + one trigger atom, then pause once (or let the gate pass) to write CONTEXT.product.md. Come back to /product-spine after and we will promote those terms into root CONTEXT.md. No fake BMG, teams, or lean glossary in v1.")
+      (forbidden 'invent-CONTEXT-product-from-canvas-or-lean-or-teams-alone)))
 )

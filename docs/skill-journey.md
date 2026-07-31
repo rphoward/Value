@@ -1,6 +1,6 @@
 # From a vibecode idea to something others value
 
-Plain guide for four Cursor skills that work together: **Values**, **BMG**, **MVP** (lean-mvp), and **Product-Spine**.
+Plain guide for Cursor skills that work together: **Values**, **BMG**, **Teams**, **MVP** (lean-mvp), and **Product-Spine**.
 
 Read the word list first. The rest of this doc uses those words on purpose.
 
@@ -17,11 +17,12 @@ Read the word list first. The rest of this doc uses those words on purpose.
 | **Atom** | One coaching question in a skill. You answer; the skill moves on. |
 | **Gate** | Check at the end of a module. Pass it (or bypass it on purpose) before the next module. |
 | **Milestone** | Written notes the skill saves when a gate passes (for example `value-map.md`). |
-| **Phase** | Where Product-Spine says you are on the path: clarity, business, mvp, or claim. |
+| **Phase** | Where Product-Spine says you are on the path: clarity, business, teams, mvp, or claim. |
 | **Sibling** | A grilling skill Product-Spine points you into. Spine routes; siblings grill. |
 | **Done enough** | The finish line for that phase so you can come back to Product-Spine. |
 | **Clarity** | Phase for “who is this for, and why would they care?” Owned by Values (`/value`). |
 | **Business** | Phase for a classic Business Model Canvas and related work. Owned by BMG (`/bmg`). |
+| **Teams** | Optional business-side leg for Team Alignment Map, contracts, and psych safety. Owned by Teams (`/teams`). Not a product gate. |
 | **MVP** | Phase for a lean, shippable feature cut. Owned by lean-mvp (`/lean-mvp`). |
 | **Claim** | Phase for an honest pitch and optional NotebookLM video prompt. Product-Spine runs this with your saved notes. |
 | **Guide-turn** | What Product-Spine always says: where you are, why, what to open this turn, when to come back. |
@@ -62,6 +63,20 @@ Open this when you need classic Osterwalder language: segments, value prop, chan
 
 **Done enough for the first business return:** canvas-mapper gate passed, or `canvas-mapper.md` on disk. You can keep going into patterns and strategy later.
 
+### 2b. Team alignment value — how the crew stays together
+
+**Skill:** Teams (`/teams`)  
+**Saves under:** `workproduct/teams/<slug>/`  
+**You get:** a Team Alignment Map first (mission, objectives, commitments, resources, risks). Optional later: assessment, team contract, conflict repair.
+
+Open this when the people building the product are misaligned — not when you need a customer canvas or an MVP cut. Same slug as Values / BMG / lean-mvp.
+
+**Try saying:**
+
+> Our repo team is stepping on each other. Help us align on who owns what.
+
+**Done enough for the first teams return:** tam-planner gate passed, or `tam-planner.md` on disk. Then come back to `/product-spine`. Deeper modules stay available when you reopen `/teams`.
+
 ### 3. MVP value — the smallest useful ship
 
 **Skill:** lean-mvp (`/lean-mvp`)  
@@ -79,7 +94,7 @@ Open this when clarity is good enough and you need a feature cut that can learn 
 ### 4. Claim value — something honest you can share
 
 **Guide:** Product-Spine (`/product-spine`)  
-**Uses notes from:** Values, and optionally BMG and lean-mvp, under the same slug  
+**Uses notes from:** Values, and optionally BMG, Teams, and lean-mvp, under the same slug  
 **You get:** an INVEST-style story sentence and, when you want video, a paste block for NotebookLM.
 
 Open this when you want a Discord pitch, showcase write-up, or video prompt. Product-Spine opens your saved notes for you. You should not hunt folders or paste files back into chat.
@@ -148,6 +163,7 @@ Product-Spine does **not** grill canvas or lean atoms. It names the phase, names
 
 1. `/product-spine` → clarity → `/value` until profile + value map are done enough.  
 2. Optional: business → `/bmg` until canvas-mapper is done enough (or you asked for canvas first).  
+2b. Optional: team friction → `/teams` until tam-planner is done enough (not required before MVP).  
 3. `/product-spine` → mvp → `/lean-mvp` until mvp-scope is done enough.  
 4. `/product-spine` → claim → honest story (and NotebookLM paste if you want video).
 
@@ -164,6 +180,7 @@ Every clarity / business / mvp guide-turn ends with a return cue. Finish that le
 **Match the freeze to the skill.**  
 Showcase with no traction → Values.  
 Need a board-ready canvas → BMG.  
+Need crew alignment → Teams.  
 Need a feature cut → lean-mvp.  
 Need a pitch or video prompt → Product-Spine claim.
 

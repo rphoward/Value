@@ -3,20 +3,24 @@ description: pstack per-role model choices (overrides skill defaults)
 alwaysApply: true
 ---
 # pstack model configuration. One line per role. Delete a line to fall back to the skill default.
+# Stack: Composer = explore/code, Grok = prose/planning, GLM 5.2 = logic/backend.
+# Debugger (empirical): Kimi K3 — reproduce, run tests, vision/UI. Critic (fast static): GPT-5.6 Terra — pattern match, quick review; escalate to K3 if tests fail.
+# No Sol / Fable / Luna in this stack. Slugs must match Settings > Models / Task list.
+# `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`).
 feature, refactoring: composer-2.5
-bug-fix: gpt-5.6-sol-high
-perf-issue: composer-2.5
-hillclimb: composer-2.5
+bug-fix: kimi-k3-low
+perf-issue: kimi-k3-low
+hillclimb: kimi-k3-low
 judgment and prose: cursor-grok-4.5-high
-hardest tasks: claude-fable-5-thinking-high
+hardest tasks: glm-5.2-high
 how explorer: composer-2.5
 how explainer: cursor-grok-4.5-high
-how critics: cursor-grok-4.5-high, gpt-5.6-sol-high, composer-2.5
+how critics: gpt-5.6-terra-low, cursor-grok-4.5-high, glm-5.2-high
 why investigators: composer-2.5
 why synthesizer: cursor-grok-4.5-high
 reflect tooling: composer-2.5
 reflect judgment, divergent, synthesizer: cursor-grok-4.5-high
-arena runners: composer-2.5, cursor-grok-4.5-high, gpt-5.6-sol-high
-arena cross-judge pool: cursor-grok-4.5-high, gpt-5.6-sol-high, composer-2.5
-architect runners: composer-2.5, cursor-grok-4.5-high, gpt-5.6-sol-high
-interrogate reviewers: composer-2.5, cursor-grok-4.5-high, gpt-5.6-sol-high
+arena runners: composer-2.5, cursor-grok-4.5-high, glm-5.2-high
+arena cross-judge pool: gpt-5.6-terra-low, cursor-grok-4.5-high, glm-5.2-high
+architect runners: glm-5.2-high, cursor-grok-4.5-high, composer-2.5
+interrogate reviewers: gpt-5.6-terra-low, glm-5.2-high, cursor-grok-4.5-high

@@ -1,0 +1,83 @@
+{
+  "skill_slug": "teams",
+  "workproduct_root": "workproduct/teams",
+  "entry_atom": "S01",
+  "module_order": [
+    "tam-planner",
+    "tam-assessor",
+    "team-contract-architect",
+    "psych-safety-conflict-resolver"
+  ],
+  "module_phase": {
+    "tam-planner": "Phase 1: TAM-Planner",
+    "tam-assessor": "Phase 2: TAM-Assessor",
+    "team-contract-architect": "Phase 3: Team-Contract-Architect",
+    "psych-safety-conflict-resolver": "Phase 4: Psych-Safety-Conflict-Resolver"
+  },
+  "gate_artifacts": {
+    "tam-planner": "tam-planner.md",
+    "tam-assessor": "tam-assessor.md",
+    "team-contract-architect": "team-contract-architect.md",
+    "psych-safety-conflict-resolver": "psych-safety-conflict-resolver.md"
+  },
+  "milestone_templates": {
+    "tam-planner": "tam-planner.template.md",
+    "tam-assessor": "tam-assessor.template.md",
+    "team-contract-architect": "team-contract-architect.template.md",
+    "psych-safety-conflict-resolver": "psych-safety-conflict-resolver.template.md"
+  },
+  "canonical_gate_pass": {
+    "tam-planner": "pass tam-planner gate",
+    "tam-assessor": "pass tam-assessor gate",
+    "team-contract-architect": "pass team-contract-architect gate",
+    "psych-safety-conflict-resolver": "pass psych-safety-conflict-resolver gate"
+  },
+  "module_brief_labels": {
+    "tam-planner": "TAM Planner",
+    "tam-assessor": "TAM Assessor",
+    "team-contract-architect": "Team Contract Architect",
+    "psych-safety-conflict-resolver": "Psych Safety Conflict Resolver"
+  },
+  "express_spine": {
+    "tam-planner": [
+      "S01",
+      "G01"
+    ],
+    "tam-assessor": [
+      "S05",
+      "G02"
+    ],
+    "team-contract-architect": [
+      "S09",
+      "G03"
+    ],
+    "psych-safety-conflict-resolver": [
+      "S13",
+      "G04"
+    ]
+  },
+  "express_requires": {
+    "G01": [
+      "S01"
+    ],
+    "S01": [],
+    "G02": [
+      "S05"
+    ],
+    "S05": [
+      "G01"
+    ],
+    "G03": [
+      "S09"
+    ],
+    "S09": [
+      "G02"
+    ],
+    "G04": [
+      "S13"
+    ],
+    "S13": [
+      "G03"
+    ]
+  }
+}
