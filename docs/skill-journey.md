@@ -113,6 +113,7 @@ Pick one kind of value. Install that ship repo. Use one slash. Finish done enoug
 |--------------|---------|------|
 | Who / why | `npx skills add rphoward/Values` | `/value` |
 | Classic canvas | `npx skills add rphoward/BMG` | `/bmg` |
+| Team alignment | `npx skills add rphoward/Teams` | `/teams` |
 | Lean MVP cut | `npx skills add rphoward/MVP` | `/lean-mvp` |
 
 Habits that pay off even with one skill:
@@ -143,13 +144,13 @@ When you feel lost mid-skill, say so. Values, BMG, and lean-mvp can point you ba
 
 ## Full path: Product-Spine as the guide
 
-Install the pack when you want one entrance for the whole journey (includes Product-Spine, Values, BMG, lean-mvp, and story):
+Install the pack when you want one entrance for the whole journey (includes Product-Spine, Values, BMG, Teams, lean-mvp, and story):
 
 ```bash
 npx skills add rphoward/Product-Spine --skill '*' -a cursor -y
 ```
 
-That pack already carries BMG with the business phase. You can still install BMG alone from [rphoward/BMG](https://github.com/rphoward/BMG) if you only want the canvas skill.
+That pack already carries BMG and Teams with the business-side phases. You can still install BMG alone from [rphoward/BMG](https://github.com/rphoward/BMG) or Teams alone from [rphoward/Teams](https://github.com/rphoward/Teams).
 
 Then open:
 
@@ -207,6 +208,7 @@ One skill is enough to start. Product-Spine is for when the path has more than o
 |-----------|---------|----------------|
 | [Values](https://github.com/rphoward/Values) | `npx skills add rphoward/Values` | `/value` |
 | [BMG](https://github.com/rphoward/BMG) | `npx skills add rphoward/BMG` | `/bmg` |
+| [Teams](https://github.com/rphoward/Teams) | `npx skills add rphoward/Teams` | `/teams` |
 | [MVP](https://github.com/rphoward/MVP) | `npx skills add rphoward/MVP` | `/lean-mvp` |
 | [Product-Spine](https://github.com/rphoward/Product-Spine) | `npx skills add rphoward/Product-Spine --skill '*' -a cursor -y` | `/product-spine` (plus siblings in the pack) |
 
@@ -217,6 +219,7 @@ This monorepo ([Value](https://github.com/rphoward/Value)) is where the skills a
 ```bash
 npx skills add rphoward/Values -a cursor -y
 npx skills add rphoward/BMG -a cursor -y
+npx skills add rphoward/Teams -a cursor -y
 npx skills add rphoward/MVP -a cursor -y
 npx skills add rphoward/Product-Spine --skill '*' -a cursor -y
 ```

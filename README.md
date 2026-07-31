@@ -16,8 +16,9 @@ It defines the shared words (slug, phase, gate, done enough), then builds from o
 |------|-----------|---------|
 | Who / why (clarity) | [Values](https://github.com/rphoward/Values) | `npx skills add rphoward/Values` |
 | Business Model Canvas | [BMG](https://github.com/rphoward/BMG) | `npx skills add rphoward/BMG` |
+| Team alignment (TAM) | [Teams](https://github.com/rphoward/Teams) | `npx skills add rphoward/Teams` |
 | Lean MVP cut | [MVP](https://github.com/rphoward/MVP) | `npx skills add rphoward/MVP` |
-| Whole path guide + siblings (value, bmg, lean-mvp, story) | [Product-Spine](https://github.com/rphoward/Product-Spine) | `npx skills add rphoward/Product-Spine --skill '*' -a cursor -y` |
+| Whole path guide + siblings (value, bmg, teams, lean-mvp, story) | [Product-Spine](https://github.com/rphoward/Product-Spine) | `npx skills add rphoward/Product-Spine --skill '*' -a cursor -y` |
 
 Local vs global:
 
