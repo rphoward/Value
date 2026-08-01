@@ -17,6 +17,7 @@ AUDIT = SCRIPTS / "audit_dag.py"
 PROMOTE = SCRIPTS / "promote.py"
 LEAN_DOC = ROOT / "docs" / "lean-product-playbook-prompt-suite.md"
 VALUE_DOC = ROOT / "docs" / "value-proposition-prompt-suite (1).md"
+BRAND_DOC = ROOT / "docs" / "designing-brand-identity-prompt-suite.md"
 
 
 def run(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
@@ -42,6 +43,22 @@ class PromptSuiteCompileTests(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, proc.stderr)
         ir = json.loads(proc.stdout)
         self.assertEqual(len(ir["modules"]), 4)
+
+    def test_parse_nested_markdown_fences_keeps_inner_blocks(self) -> None:
+        """Suites nest ```yaml / ```text inside ```markdown; truncation loses cargo."""
+        if not BRAND_DOC.is_file():
+            self.skipTest("brand identity suite not present")
+        proc = run([str(COMPILE), "parse", "--source", str(BRAND_DOC)])
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        ir = json.loads(proc.stdout)
+        self.assertEqual(len(ir["modules"]), 4)
+        orch = ir["orchestrator"]["prompt_markdown"] or ""
+        self.assertIn("STATE_LEDGER", orch)
+        self.assertIn("PHASE 5", orch)
+        strategist = next(m for m in ir["modules"] if m["id"] == "brand-strategist")
+        self.assertIn("BRAND BRIEF", strategist["prompt_markdown"] or "")
+        governance = next(m for m in ir["modules"] if m["id"] == "brand-governance-coach")
+        self.assertIn("BRAND METRICS SCORECARD", governance["prompt_markdown"] or "")
 
     def test_scaffold_and_audit_and_refuses_value_slug(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

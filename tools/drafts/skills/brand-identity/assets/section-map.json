@@ -1,0 +1,36 @@
+{
+  "milestones": {
+    "brand-strategist": {
+      "Stakeholder Interview": ["S01"],
+      "Competitive White Space": ["S02"],
+      "Onliness": ["S03"],
+      "Brand Brief": ["S04"],
+      "Unknowns": [],
+      "Decisions": []
+    },
+    "identity-system-designer": {
+      "Mark Topology": ["S05"],
+      "Shape Silhouette": ["S06"],
+      "Color System": ["S07"],
+      "Typography and Trials": ["S08"],
+      "Unknowns": [],
+      "Decisions": []
+    },
+    "touchpoint-architect": {
+      "STEPPS Content Plan": ["S09"],
+      "Primary Digital Touchpoint": ["S10"],
+      "Physical and Environment": ["S11"],
+      "Unknowns": [],
+      "Decisions": []
+    },
+    "brand-governance-coach": {
+      "Cop to Concierge": ["S12"],
+      "Internal-First Launch": ["S13"],
+      "Online Brand Center": ["S14"],
+      "Prophet Metrics": ["S15"],
+      "Unknowns": [],
+      "Decisions": []
+    }
+  },
+  "design_briefs": {}
+}

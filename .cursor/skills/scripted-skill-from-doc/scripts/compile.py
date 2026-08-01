@@ -28,12 +28,45 @@ KB_HEADING_RE = re.compile(
     re.MULTILINE,
 )
 FENCE_JSON_RE = re.compile(r"```json\s*\n(.*?)```", re.DOTALL)
-FENCE_MD_RE = re.compile(r"```markdown\s*\n(.*?)```", re.DOTALL)
 HEADING3_RE = re.compile(r"^###\s+(.+)$")
 HEADING2_RE = re.compile(r"^##\s+(.+)$")
 NUMBERED_RE = re.compile(r"^\s*\d+[\.)]\s+(.+)$")
 STUB_ASK_PREFIX = "What is the first concrete fact for"
 CANDIDATE_CAP_PER_MODULE = 4
+
+
+def extract_fenced_block(text: str, lang: str) -> str | None:
+    """Return the first ```lang fence body, allowing nested ``` fences inside."""
+    lines = text.splitlines(keepends=True)
+    start_i: int | None = None
+    open_token = f"```{lang}"
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped == open_token or (
+            stripped.startswith(open_token)
+            and stripped[len(open_token) :].strip() == ""
+        ):
+            start_i = i + 1
+            break
+    if start_i is None:
+        return None
+    depth = 1
+    out: list[str] = []
+    for i in range(start_i, len(lines)):
+        stripped = lines[i].strip()
+        if stripped.startswith("```"):
+            info = stripped[3:].strip()
+            if info == "":
+                depth -= 1
+                if depth == 0:
+                    return "".join(out).rstrip("\n")
+                out.append(lines[i])
+            else:
+                depth += 1
+                out.append(lines[i])
+        else:
+            out.append(lines[i])
+    return None
 
 
 def slugify(text: str) -> str:
@@ -77,9 +110,9 @@ def parse_suite(source: Path) -> dict[str, Any]:
     if orch:
         orchestrator_name = orch.group(1)
         after = text[orch.end() :]
-        md = FENCE_MD_RE.search(after)
+        md = extract_fenced_block(after, "markdown")
         if md:
-            orchestrator_prompt = md.group(1).strip()
+            orchestrator_prompt = md.strip()
 
     modules: list[dict[str, Any]] = []
     matches = list(SUBSKILL_HEADING_RE.finditer(text))
@@ -89,9 +122,9 @@ def parse_suite(source: Path) -> dict[str, Any]:
         end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
         block = text[start:end]
         prompt = ""
-        md = FENCE_MD_RE.search(block)
+        md = extract_fenced_block(block, "markdown")
         if md:
-            prompt = md.group(1).strip()
+            prompt = md.strip()
         mid = module_id_from_name(name, i + 1)
         modules.append(
             {
