@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from .catalog import ASSETS_DIR, load_section_map, atom_provenance_label
+from .catalog import ASSETS_DIR, atom_module, load_section_map, atom_provenance_label
 from .constants import BUILD_PACK_FILES, MILESTONE_TEMPLATES
 from .runtime import (
     current_answer,
@@ -14,10 +14,6 @@ from .runtime import (
     is_hard_decision,
     unvalidated_bombs,
     upsert_artifact,
-)
-from .voice import (
-    fill_north_star_blurb,
-    fill_value_trail,
 )
 
 
@@ -62,8 +58,15 @@ def fill_section(
     return re.sub(pattern, replacement, template, count=1, flags=re.DOTALL)
 
 
-def format_unknowns(session: dict[str, Any]) -> str:
+def format_unknowns(session: dict[str, Any], module: str | None = None) -> str:
     unknowns = session.get("unknowns", [])
+    if module is not None:
+        unknowns = [
+            item
+            for item in unknowns
+            if item.get("source_atom")
+            and atom_module(item["source_atom"]) == module
+        ]
     if not unknowns:
         return "unknown"
     return "\n".join(
@@ -90,7 +93,7 @@ def fill_milestone_template(session: dict[str, Any], module: str) -> str:
     section_map = load_section_map()["milestones"].get(module, {})
     for heading, atom_ids in section_map.items():
         if heading == "Unknowns":
-            body = format_unknowns(session)
+            body = format_unknowns(session, module)
         elif heading == "Decisions":
             body = format_decisions(session, module)
         else:
@@ -209,10 +212,14 @@ def write_hard_decision_adrs(session: dict[str, Any], session_dir: Path) -> list
 
 
 def fill_build_pack_file(session: dict[str, Any], template_name: str) -> str:
-    if template_name == "north-star-blurb.template.md":
-        return fill_north_star_blurb(session)
-    if template_name == "value-trail.template.md":
-        return fill_value_trail(session)
+    if template_name in (
+        "north-star-blurb.template.md",
+        "value-trail.template.md",
+    ):
+        raise ValueError(
+            f"{template_name} is a Values build-pack artifact; "
+            "brand-identity has no north-star / value-trail emitter"
+        )
 
     template = (ASSETS_DIR / template_name).read_text(encoding="utf-8")
     section_map = load_section_map().get("ide_exports", {}).get(template_name, {})
@@ -297,6 +304,6 @@ def write_planned_files(planned: list[tuple[Path, str]]) -> list[Path]:
 
 
 def refresh_build_pack(session: dict[str, Any], session_dir: Path) -> list[Path]:
-    """Write IDE export pack files (including north-star blurb and value trail) and hard-decision ADRs."""
+    """Write IDE export pack files (when BUILD_PACK_FILES is configured) and hard-decision ADRs."""
     planned = plan_build_pack(session, session_dir)
     return write_planned_files(planned)

@@ -87,7 +87,7 @@ DECISION_FIELDS = (
     "resulting_atom",
     "resulting_status",
 )
-UNKNOWN_FIELDS = ("question", "blocking")
+UNKNOWN_FIELDS = ("question", "blocking", "source_atom")
 ARTIFACT_FIELDS = ("path", "status")
 WORKPRODUCT_ROOT = str(_CFG.get("workproduct_root") or f"workproduct/{SKILL_ROOT.name}")
 ENTRY_MODULE = MODULE_ORDER[0]

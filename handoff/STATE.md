@@ -1,6 +1,6 @@
 # Value skill — living state
 
-Last updated: 2026-07-31
+Last updated: 2026-08-01
 
 ## Shipped
 
@@ -13,6 +13,8 @@ Last updated: 2026-07-31
 - Session helper package split (`scripts/_session/`) + thermos bugfixes (gaps module filter, atomic save, ADR sync, `--stay` / `--gate-pending`, save-before-export, milestone recovery) — Value `812ab13`, Values `879b2a5`
 - Section strip required on resume / where-am-I / pause / gate (SKILL.md + session-contract) — agent-facing, not a gate lens yet
 - Prior: match board, north-star-blurb, value-trail, DAG/express/voice — see git log
+- **scripted-skill-from-doc nested-fence parse** — `extract_fenced_block` so nested ```yaml/text inside ```markdown keep suite cargo (needed for Designing Brand Identity suite)
+- **Brand-identity skill + Product-Spine weave** — promoted `/brand-identity`; spine `brand` phase + brand-intent; brand-strategist bounce; ship mirror `skills/brand-identity/`; see `handoff/BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md`
 
 ## Open gates
 
@@ -20,6 +22,7 @@ Last updated: 2026-07-31
 
 ## Closed recently
 
+- **Brand-identity promote + spine wire** — PASS; live skill + product-spine brand leg + retest; see `handoff/BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md`
 - **Prompt-suite doc shape** — PASS; reusable generator prompt + tiny dry-run parse; see `handoff/PROMPT-SUITE-DOC-SHAPE-PASSED.md` (draft: `workproduct/prompt-suite-doc-shape/GENERATOR-PROMPT.md`)
 - **Skill-pack consumer vernacular** — PASS; installed assets + promote_context.py + durable protocols; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
 
@@ -29,6 +32,8 @@ Last updated: 2026-07-31
 
 ## Local only
 
+- `tools/drafts/skills/brand-identity/` — prior draft (live copy is `.cursor/skills/brand-identity/`)
+- `docs/designing-brand-identity-prompt-suite.md` — suite source (canonical; `(1)` duplicate removed)
 - `workproduct/value-proposition/value-design/` — untracked live session (leave as-is)
 - `workproduct/value-proposition/shiftswap/` (+ lean twin if present) — Maya evidence only
 - `workproduct/value-proposition/cashclaw/` (+ lean twin) — Kai unhappy-path evidence

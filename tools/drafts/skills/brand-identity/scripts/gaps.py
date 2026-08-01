@@ -12,7 +12,7 @@ from _session import hard_gaps_by_section, load_atoms, load_session, soft_gaps_b
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Show value session gaps.")
+    parser = argparse.ArgumentParser(description="Show paced skill session gaps.")
     parser.add_argument("session", type=Path, help="Path to session.json")
     parser.add_argument(
         "--module",

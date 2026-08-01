@@ -1,0 +1,147 @@
+{
+  "system_metadata": {
+    "framework": "Universal Brand Identity Process",
+    "authors": [
+      "Alina Wheeler",
+      "Rob Meyerson"
+    ],
+    "version": "6.0",
+    "publication_year": 2024,
+    "grounding_source": "Designing Brand Identity: A Comprehensive Guide to the World of Brands and Branding (6th Edition)"
+  },
+  "cognitive_science_principles": {
+    "sequence_of_visual_perception": [
+      {
+        "step": 1,
+        "element": "Shape",
+        "cognitive_rule": "The brain acknowledges and identifies shape first. Distinctive silhouette or symbol precedes all other recognitions."
+      },
+      {
+        "step": 2,
+        "element": "Color",
+        "cognitive_rule": "Color is registered second in the visual sequence. Color acts as an immediate mnemonic device and emotional trigger."
+      },
+      {
+        "step": 3,
+        "element": "Content / Typography",
+        "cognitive_rule": "The brain decodes content, logotypes, and typography third. Language requires cognitive decoding and reading effort."
+      }
+    ],
+    "talk_deflector_rule": "Forbid long, unstructured text blocks during identity design. Present brand elements as discrete, evaluable 'sticky notes' or visual tokens (<=10 words per element)."
+  },
+  "brand_architecture_models": {
+    "monolithic_branded_house": {
+      "definition": "Single master brand overarching all offerings, divisions, and products.",
+      "examples": [
+        "Dropbox",
+        "IKEA",
+        "Virgin",
+        "Apple"
+      ],
+      "advantage": "Maximizes brand equity buildup and minimizes marketing spend per product."
+    },
+    "endorsed": {
+      "definition": "Individual sub-brands linked explicitly to a well-known master corporate brand.",
+      "examples": [
+        "Marriott (Courtyard by Marriott)",
+        "Kellogg's (Kellogg's Frosted Flakes)",
+        "HP (Hewlett Packard Enterprise)"
+      ],
+      "advantage": "Leverages master brand trust while allowing individual positioning freedom."
+    },
+    "pluralistic_house_of_brands": {
+      "definition": "Series of distinct, independent consumer brands managed by a single parent entity.",
+      "examples": [
+        "P&G (Tide, Pampers)",
+        "Unilever (Dove, Ben & Jerry's)",
+        "Target Private Labels (Cat & Jack, Goodthreads)"
+      ],
+      "advantage": "Insulates parent brand from sub-brand risks and captures contrasting market niches."
+    }
+  },
+  "brand_ideals_rubric": {
+    "vision": "Articulates an inspiring, long-term picture of what the brand aims to become.",
+    "meaning": "Establishes an authentic, emotional, and social connection with stakeholders.",
+    "authenticity": "Seth Godin rule: 'Doing what you promise, not being who you are.' Congruence between promise and action.",
+    "coherence": "Clarity, simplicity, and uniform quality across every digital, physical, and verbal touchpoint.",
+    "flexibility": "Jeff Bezos rule: 'Stubborn on vision, flexible on details.' Adapts to new media and markets seamlessly.",
+    "commitment": "Sustained internal and external investment to uphold brand promises (e.g. Dove Real Beauty Pledge).",
+    "value": "Builds intangible economic equity, supporting customer loyalty and price premiums.",
+    "differentiation": "Marty Neumeier rule: 'When everybody zigs, zag.' Ownership of a unique word or position in the customer's mind.",
+    "longevity": "Balances timeless foundational equity with timely, culturally relevant expressions."
+  },
+  "mark_topologies": {
+    "wordmark": "Custom-designed typographic rendering of the brand name (e.g. Coca-Cola, Google, Braun).",
+    "letterform_mark": "Single or multiple stylized letters representing the name (e.g. Tesla 'T', Lexus 'L', Netflix 'N').",
+    "pictorial_mark": "Recognizable literal image symbolizing the brand (e.g. Apple, Twitter bird, Target bullseye).",
+    "abstract_mark": "Conceptual visual form expressing a complex brand idea without literal depiction (e.g. Nike Swoosh, Chase octagon).",
+    "emblem": "Mark where logotype and symbol are inextricably framed together in a badge/seal (e.g. Starbucks, BMW, Burger King).",
+    "dynamic_mark": "Flexible mark that transforms shape, color, or texture across applications while maintaining coherence (e.g. Mellon Foundation, OCAD)."
+  },
+  "audit_frameworks": {
+    "marketing_audit": [
+      "Markets served",
+      "Archival materials",
+      "Sales collateral",
+      "Packaging",
+      "Environmental presence",
+      "Digital footprint"
+    ],
+    "competitive_audit": [
+      "Direct & indirect competitors",
+      "Category positionings",
+      "Visual landscape matrix (shapes/colors)",
+      "Verbal tropes",
+      "White space opportunities"
+    ],
+    "verbal_audit": [
+      "Voice & tone attributes",
+      "Nomenclature hierarchy",
+      "Taglines",
+      "Key messages",
+      "Elevator pitches",
+      "Readability/clarity"
+    ],
+    "ip_audit": [
+      "Trademark clearances",
+      "Domain registrations",
+      "Class filings",
+      "Geographic protections",
+      "Usage compliance"
+    ]
+  },
+  "jonah_berger_stepps": {
+    "social_currency": "People share things that make them look smart, cool, or in-the-know.",
+    "triggers": "Top-of-mind means tip-of-tongue. Linking content to everyday environmental cues.",
+    "emotion": "When we care, we share. High-arousal positive or negative emotional resonance.",
+    "public": "Built to show, built to grow. Making invisible behaviors visible.",
+    "practical_value": "News you can use. High utility information that helps others.",
+    "stories": "Narrative vessels that carry the core brand message along for the ride."
+  },
+  "prophet_metrics_triad": {
+    "perception_metrics": [
+      "Brand awareness",
+      "Brand salience",
+      "Perceived quality",
+      "Brand attribute association"
+    ],
+    "performance_metrics": [
+      "Customer acquisition rate",
+      "Customer retention / churn",
+      "Share of wallet",
+      "Net Promoter Score (NPS)"
+    ],
+    "financial_metrics": [
+      "Market share",
+      "Price premium elasticity",
+      "Customer Lifetime Value (CLV)",
+      "Brand valuation on balance sheet"
+    ]
+  },
+  "phase_module_map": {
+    "brand-strategist": "Phase 1: Brand-Strategist",
+    "identity-system-designer": "Phase 2: Identity-System-Designer",
+    "touchpoint-architect": "Phase 3: Touchpoint-Architect",
+    "brand-governance-coach": "Phase 4: Brand-Governance-Coach"
+  }
+}

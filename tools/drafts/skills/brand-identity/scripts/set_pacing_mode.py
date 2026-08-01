@@ -11,7 +11,7 @@ from _session import PACING_MODES, load_session, recompute_ledger, save_session,
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Set value session pacing mode.")
+    parser = argparse.ArgumentParser(description="Set paced skill session pacing mode.")
     parser.add_argument("session", type=Path, help="Path to session.json")
     parser.add_argument(
         "--mode",

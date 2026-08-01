@@ -1,0 +1,213 @@
+{
+  "atoms": [
+    {
+      "id": "S01",
+      "module": "brand-strategist",
+      "asks": "Using Drucker's five questions or Collins' Hedgehog triad, what is this brand's business, customer, and economic engine (sticky notes, ten words or less)?",
+      "accepts_summary": "Drucker or Hedgehog sticky notes covering business, customer, and engine, or unknown.",
+      "gate": false,
+      "section": "Stakeholder Interview",
+      "soft": false,
+      "requires": [],
+      "unlocks": "S02"
+    },
+    {
+      "id": "S02",
+      "module": "brand-strategist",
+      "asks": "On a 2-axis perceptual map of category competitors, where is the marketing or visual white space this brand can own?",
+      "accepts_summary": "Axes, competitor sticky notes, and named white space, or unknown.",
+      "gate": false,
+      "section": "Competitive White Space",
+      "soft": false,
+      "requires": ["S01"],
+      "unlocks": "S03"
+    },
+    {
+      "id": "S03",
+      "module": "brand-strategist",
+      "asks": "Complete Neumeier's Onliness statement: Our brand is the ONLY [Category] that [Point of Difference] for [Target Customer] in [Geographic Market] during [Macro/Cultural Trend].",
+      "accepts_summary": "Filled Onliness formula with agreement, or unknown.",
+      "gate": false,
+      "section": "Onliness",
+      "soft": false,
+      "requires": ["S02"],
+      "unlocks": "S04"
+    },
+    {
+      "id": "S04",
+      "module": "brand-strategist",
+      "asks": "Synthesize the 1-page Brand Brief: purpose, audience, value proposition, five attributes, Onliness, essence, top competitors, and proof points.",
+      "accepts_summary": "Brand Brief fields filled or labeled unknown; sticky notes ten words or less where visual.",
+      "gate": false,
+      "section": "Brand Brief",
+      "soft": false,
+      "requires": ["S03"],
+      "unlocks": "G01"
+    },
+    {
+      "id": "G01",
+      "module": "brand-strategist",
+      "asks": "Review the Brand Brief. Pass the brand-strategist gate, reopen a section, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass brand-strategist gate', reopen, or blocking unknowns.",
+      "unlocks": "S05",
+      "gate": true,
+      "requires": ["S04"],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S05",
+      "module": "identity-system-designer",
+      "asks": "Which mark topology fits this brand architecture: Wordmark, Letterform, Pictorial, Abstract, Emblem, or Dynamic?",
+      "accepts_summary": "One topology choice with brief why, or unknown.",
+      "gate": false,
+      "section": "Mark Topology",
+      "soft": false,
+      "requires": ["G01"],
+      "unlocks": "S06"
+    },
+    {
+      "id": "S06",
+      "module": "identity-system-designer",
+      "asks": "Does the mark pass the 1-color black silhouette test at favicon and billboard scale with clear counterforms?",
+      "accepts_summary": "Pass/fail on silhouette plus scale notes, or unknown. Do not proceed to color until Shape passes.",
+      "gate": false,
+      "section": "Shape Silhouette",
+      "soft": false,
+      "requires": ["S05"],
+      "unlocks": "S07"
+    },
+    {
+      "id": "S07",
+      "module": "identity-system-designer",
+      "asks": "What are Primary, Secondary, and Accent colors with specs, and do they clear competitive sameness plus WCAG contrast?",
+      "accepts_summary": "Color roles with PANTONE/CMYK/RGB/HEX where known, differentiation and contrast notes, or unknown.",
+      "gate": false,
+      "section": "Color System",
+      "soft": false,
+      "requires": ["S06"],
+      "unlocks": "S08"
+    },
+    {
+      "id": "S08",
+      "module": "identity-system-designer",
+      "asks": "Name display, headline, body, and mono faces, then where will you trial the system (most visible and most challenging applications)?",
+      "accepts_summary": "Type hierarchy plus two trial applications, or unknown.",
+      "gate": false,
+      "section": "Typography and Trials",
+      "soft": false,
+      "requires": ["S07"],
+      "unlocks": "G02"
+    },
+    {
+      "id": "G02",
+      "module": "identity-system-designer",
+      "asks": "Review the identity system. Pass the identity-system-designer gate, reopen a step, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass identity-system-designer gate', reopen, or blocking unknowns.",
+      "unlocks": "S09",
+      "gate": true,
+      "requires": ["S08"],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S09",
+      "module": "touchpoint-architect",
+      "asks": "Which STEPPS levers drive this brand's content plan: Social Currency, Triggers, Emotion, Public, Practical Value, Stories?",
+      "accepts_summary": "Chosen STEPPS levers with one sticky note each (ten words or less), or unknown.",
+      "gate": false,
+      "section": "STEPPS Content Plan",
+      "soft": false,
+      "requires": ["G02"],
+      "unlocks": "S10"
+    },
+    {
+      "id": "S10",
+      "module": "touchpoint-architect",
+      "asks": "What is the primary digital touchpoint (site or app), and what first real user task will you usability-test without rescuing?",
+      "accepts_summary": "Named primary digital surface plus one unrescued test task, or unknown.",
+      "gate": false,
+      "section": "Primary Digital Touchpoint",
+      "soft": false,
+      "requires": ["S09"],
+      "unlocks": "S11"
+    },
+    {
+      "id": "S11",
+      "module": "touchpoint-architect",
+      "asks": "Which physical touchpoint comes first — collateral, packaging shelf, stationery, or branded environment/wayfinding — and what one rule unifies it?",
+      "accepts_summary": "Primary physical channel plus one unifying rule sticky note, or unknown.",
+      "gate": false,
+      "section": "Physical and Environment",
+      "soft": false,
+      "requires": ["S10"],
+      "unlocks": "G03"
+    },
+    {
+      "id": "G03",
+      "module": "touchpoint-architect",
+      "asks": "Review the touchpoint plan. Pass the touchpoint-architect gate, reopen a channel, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass touchpoint-architect gate', reopen, or blocking unknowns.",
+      "unlocks": "S12",
+      "gate": true,
+      "requires": ["S11"],
+      "section": "Gate",
+      "soft": false
+    },
+    {
+      "id": "S12",
+      "module": "brand-governance-coach",
+      "asks": "Will brand governance run as Cop (static PDF policing) or Concierge (Online Brand Center enablement), and what shifts first?",
+      "accepts_summary": "Cop vs Concierge choice plus first enablement move, or unknown.",
+      "gate": false,
+      "section": "Cop to Concierge",
+      "soft": false,
+      "requires": ["G03"],
+      "unlocks": "S13"
+    },
+    {
+      "id": "S13",
+      "module": "brand-governance-coach",
+      "asks": "How will you launch internally first — ambassador kits, culture book, or eLearning — before any external rollout?",
+      "accepts_summary": "Internal-first vehicle and sequence, or unknown.",
+      "gate": false,
+      "section": "Internal-First Launch",
+      "soft": false,
+      "requires": ["S12"],
+      "unlocks": "S14"
+    },
+    {
+      "id": "S14",
+      "module": "brand-governance-coach",
+      "asks": "Which Online Brand Center sections ship first among Strategy & Story, Core Identity, Color & Typography, Asset Libraries, Application Templates, and Support & Approvals?",
+      "accepts_summary": "Ordered BEAM/DAM section priorities, or unknown.",
+      "gate": false,
+      "section": "Online Brand Center",
+      "soft": false,
+      "requires": ["S13"],
+      "unlocks": "S15"
+    },
+    {
+      "id": "S15",
+      "module": "brand-governance-coach",
+      "asks": "From Prophet's triad, pick one Perception, one Performance, and one Financial metric for the brand scorecard.",
+      "accepts_summary": "Three named metrics across mindshare, marketplace, and balance sheet, or unknown.",
+      "gate": false,
+      "section": "Prophet Metrics",
+      "soft": false,
+      "requires": ["S14"],
+      "unlocks": "G04"
+    },
+    {
+      "id": "G04",
+      "module": "brand-governance-coach",
+      "asks": "Review brand governance. Pass the brand-governance-coach gate, reopen a section, or record blocking unknowns.",
+      "accepts_summary": "Pass with 'pass brand-governance-coach gate', reopen, or blocking unknowns.",
+      "unlocks": null,
+      "gate": true,
+      "requires": ["S15"],
+      "section": "Gate",
+      "soft": false
+    }
+  ]
+}

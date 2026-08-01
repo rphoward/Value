@@ -1,6 +1,6 @@
 # From a vibecode idea to something others value
 
-Plain guide for Cursor skills that work together: **Values**, **BMG**, **Teams**, **MVP** (lean-mvp), and **Product-Spine**.
+Plain guide for Cursor skills that work together: **Values**, **BMG**, **Teams**, **Brand Identity**, **MVP** (lean-mvp), and **Product-Spine**.
 
 Read the word list first. The rest of this doc uses those words on purpose.
 
@@ -17,12 +17,13 @@ Read the word list first. The rest of this doc uses those words on purpose.
 | **Atom** | One coaching question in a skill. You answer; the skill moves on. |
 | **Gate** | Check at the end of a module. Pass it (or bypass it on purpose) before the next module. |
 | **Milestone** | Written notes the skill saves when a gate passes (for example `value-map.md`). |
-| **Phase** | Where Product-Spine says you are on the path: clarity, business, teams, mvp, or claim. |
+| **Phase** | Where Product-Spine says you are on the path: clarity, business, teams, brand, mvp, or claim. |
 | **Sibling** | A grilling skill Product-Spine points you into. Spine routes; siblings grill. |
 | **Done enough** | The finish line for that phase so you can come back to Product-Spine. |
 | **Clarity** | Phase for “who is this for, and why would they care?” Owned by Values (`/value`). |
 | **Business** | Phase for a classic Business Model Canvas and related work. Owned by BMG (`/bmg`). |
 | **Teams** | Optional business-side leg for Team Alignment Map, contracts, and psych safety. Owned by Teams (`/teams`). Not a product gate. |
+| **Brand** | Optional leg for Brand Brief, mark direction, touchpoints, and brand governance. Owned by Brand Identity (`/brand-identity`). Not a product gate. |
 | **MVP** | Phase for a lean, shippable feature cut. Owned by lean-mvp (`/lean-mvp`). |
 | **Claim** | Phase for an honest pitch and optional NotebookLM video prompt. Product-Spine runs this with your saved notes. |
 | **Guide-turn** | What Product-Spine always says: where you are, why, what to open this turn, when to come back. |
@@ -77,6 +78,20 @@ Open this when the people building the product are misaligned — not when you n
 
 **Done enough for the first teams return:** tam-planner gate passed, or `tam-planner.md` on disk. Then come back to `/product-spine`. Deeper modules stay available when you reopen `/teams`.
 
+### 2c. Brand identity value — how the mark holds together
+
+**Skill:** Brand Identity (`/brand-identity`)  
+**Saves under:** `workproduct/brand-identity/<slug>/`  
+**You get:** a Brand Brief first (positioning, personality, architecture). Optional later: identity system, touchpoints, brand governance.
+
+Open this when you need logo / visual identity / brand guidelines work — not when you need a customer canvas, team alignment, or an MVP cut. Same slug as Values / BMG / Teams / lean-mvp.
+
+**Try saying:**
+
+> Help me write a brand brief and mark direction for my scheduling app.
+
+**Done enough for the first brand return:** brand-strategist gate passed, or `brand-strategist.md` on disk. Then come back to `/product-spine`. Deeper modules stay available when you reopen `/brand-identity`.
+
 ### 3. MVP value — the smallest useful ship
 
 **Skill:** lean-mvp (`/lean-mvp`)  
@@ -94,7 +109,7 @@ Open this when clarity is good enough and you need a feature cut that can learn 
 ### 4. Claim value — something honest you can share
 
 **Guide:** Product-Spine (`/product-spine`)  
-**Uses notes from:** Values, and optionally BMG, Teams, and lean-mvp, under the same slug  
+**Uses notes from:** Values, and optionally BMG, Teams, Brand Identity, and lean-mvp, under the same slug  
 **You get:** an INVEST-style story sentence and, when you want video, a paste block for NotebookLM.
 
 Open this when you want a Discord pitch, showcase write-up, or video prompt. Product-Spine opens your saved notes for you. You should not hunt folders or paste files back into chat.
@@ -114,6 +129,7 @@ Pick one kind of value. Install that ship repo. Use one slash. Finish done enoug
 | Who / why | `npx skills add rphoward/Values` | `/value` |
 | Classic canvas | `npx skills add rphoward/BMG` | `/bmg` |
 | Team alignment | `npx skills add rphoward/Teams` | `/teams` |
+| Brand brief / identity | (monorepo `.cursor/skills/brand-identity/` for now) | `/brand-identity` |
 | Lean MVP cut | `npx skills add rphoward/MVP` | `/lean-mvp` |
 
 Habits that pay off even with one skill:
@@ -138,19 +154,19 @@ Common pairs:
 
 Rule: **same slug.** Different folder names under `workproduct/` are fine; the project name in each folder should match.
 
-When you feel lost mid-skill, say so. Values, BMG, and lean-mvp can point you back to `/product-spine` after a major gate (or when you ask what is next).
+When you feel lost mid-skill, say so. Values, BMG, Teams, Brand Identity, and lean-mvp can point you back to `/product-spine` after a major gate (or when you ask what is next).
 
 ---
 
 ## Full path: Product-Spine as the guide
 
-Install the pack when you want one entrance for the whole journey (includes Product-Spine, Values, BMG, Teams, lean-mvp, and story):
+Install the pack when you want one entrance for the whole journey (includes Product-Spine, Values, BMG, Teams, lean-mvp, and story; Brand Identity is live in this monorepo and may join the pack later):
 
 ```bash
 npx skills add rphoward/Product-Spine --skill '*' -a cursor -y
 ```
 
-That pack already carries BMG and Teams with the business-side phases. You can still install BMG alone from [rphoward/BMG](https://github.com/rphoward/BMG) or Teams alone from [rphoward/Teams](https://github.com/rphoward/Teams).
+That pack already carries BMG and Teams with the business-side phases. You can still install BMG alone from [rphoward/BMG](https://github.com/rphoward/BMG) or Teams alone from [rphoward/Teams](https://github.com/rphoward/Teams). Brand Identity ships from this repo’s `.cursor/skills/brand-identity/` until a separate pack exists.
 
 Then open:
 
@@ -165,6 +181,7 @@ Product-Spine does **not** grill canvas or lean atoms. It names the phase, names
 1. `/product-spine` → clarity → `/value` until profile + value map are done enough.  
 2. Optional: business → `/bmg` until canvas-mapper is done enough (or you asked for canvas first).  
 2b. Optional: team friction → `/teams` until tam-planner is done enough (not required before MVP).  
+2c. Optional: brand intent → `/brand-identity` until brand-strategist is done enough (not required before MVP).  
 3. `/product-spine` → mvp → `/lean-mvp` until mvp-scope is done enough.  
 4. `/product-spine` → claim → honest story (and NotebookLM paste if you want video).
 
@@ -182,6 +199,7 @@ Every clarity / business / mvp guide-turn ends with a return cue. Finish that le
 Showcase with no traction → Values.  
 Need a board-ready canvas → BMG.  
 Need crew alignment → Teams.  
+Need a brand brief / mark → Brand Identity.  
 Need a feature cut → lean-mvp.  
 Need a pitch or video prompt → Product-Spine claim.
 
@@ -209,6 +227,7 @@ One skill is enough to start. Product-Spine is for when the path has more than o
 | [Values](https://github.com/rphoward/Values) | `npx skills add rphoward/Values` | `/value` |
 | [BMG](https://github.com/rphoward/BMG) | `npx skills add rphoward/BMG` | `/bmg` |
 | [Teams](https://github.com/rphoward/Teams) | `npx skills add rphoward/Teams` | `/teams` |
+| Brand Identity (monorepo) | live under `.cursor/skills/brand-identity/` | `/brand-identity` |
 | [MVP](https://github.com/rphoward/MVP) | `npx skills add rphoward/MVP` | `/lean-mvp` |
 | [Product-Spine](https://github.com/rphoward/Product-Spine) | `npx skills add rphoward/Product-Spine --skill '*' -a cursor -y` | `/product-spine` (plus siblings in the pack) |
 

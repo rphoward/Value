@@ -1,0 +1,83 @@
+{
+  "skill_slug": "brand-identity",
+  "workproduct_root": "workproduct/brand-identity",
+  "entry_atom": "S01",
+  "module_order": [
+    "brand-strategist",
+    "identity-system-designer",
+    "touchpoint-architect",
+    "brand-governance-coach"
+  ],
+  "module_phase": {
+    "brand-strategist": "Phase 1: Brand-Strategist",
+    "identity-system-designer": "Phase 2: Identity-System-Designer",
+    "touchpoint-architect": "Phase 3: Touchpoint-Architect",
+    "brand-governance-coach": "Phase 4: Brand-Governance-Coach"
+  },
+  "gate_artifacts": {
+    "brand-strategist": "brand-strategist.md",
+    "identity-system-designer": "identity-system-designer.md",
+    "touchpoint-architect": "touchpoint-architect.md",
+    "brand-governance-coach": "brand-governance-coach.md"
+  },
+  "milestone_templates": {
+    "brand-strategist": "brand-strategist.template.md",
+    "identity-system-designer": "identity-system-designer.template.md",
+    "touchpoint-architect": "touchpoint-architect.template.md",
+    "brand-governance-coach": "brand-governance-coach.template.md"
+  },
+  "canonical_gate_pass": {
+    "brand-strategist": "pass brand-strategist gate",
+    "identity-system-designer": "pass identity-system-designer gate",
+    "touchpoint-architect": "pass touchpoint-architect gate",
+    "brand-governance-coach": "pass brand-governance-coach gate"
+  },
+  "module_brief_labels": {
+    "brand-strategist": "Brand Strategist",
+    "identity-system-designer": "Identity System Designer",
+    "touchpoint-architect": "Touchpoint Architect",
+    "brand-governance-coach": "Brand Governance Coach"
+  },
+  "express_spine": {
+    "brand-strategist": [
+      "S04",
+      "G01"
+    ],
+    "identity-system-designer": [
+      "S06",
+      "G02"
+    ],
+    "touchpoint-architect": [
+      "S10",
+      "G03"
+    ],
+    "brand-governance-coach": [
+      "S12",
+      "G04"
+    ]
+  },
+  "express_requires": {
+    "S04": [],
+    "G01": [
+      "S04"
+    ],
+    "S06": [
+      "G01"
+    ],
+    "G02": [
+      "S06"
+    ],
+    "S10": [
+      "G02"
+    ],
+    "G03": [
+      "S10"
+    ],
+    "S12": [
+      "G03"
+    ],
+    "G04": [
+      "S12"
+    ]
+  }
+}

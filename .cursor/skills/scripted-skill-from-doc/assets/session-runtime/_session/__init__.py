@@ -1,4 +1,4 @@
-"""Shared session helpers for the value skill scripts (stdlib only)."""
+"""Shared session helpers for paced skill scripts (stdlib only)."""
 
 from __future__ import annotations
 
@@ -125,16 +125,10 @@ from .runtime import (
     validation_milestone,
 )
 from .voice import (
-    answer_text,
-    compose_outward_pitch,
-    fill_north_star_blurb,
-    fill_value_trail,
-    format_value_trail_crumb_body,
     match_board_for_atom,
     pitch_clause,
     split_sticky_items,
     sticky_label,
-    value_trail_crumb_visible,
 )
 
 __all__ = [
@@ -170,7 +164,6 @@ __all__ = [
     "advance_position_after_accept",
     "all_modules_ready",
     "answer_matches_canonical_gate_pass",
-    "answer_text",
     "answers_for_module",
     "answered_atom_ids",
     "append_session_records",
@@ -184,7 +177,6 @@ __all__ = [
     "can_accept_atom",
     "canonical_gate_pass_text",
     "completion_pct",
-    "compose_outward_pitch",
     "current_answer",
     "default_session",
     "default_workproduct_root",
@@ -196,9 +188,7 @@ __all__ = [
     "fill_build_pack_file",
     "fill_design_brief",
     "fill_milestone_template",
-    "fill_north_star_blurb",
     "fill_section",
-    "fill_value_trail",
     "format_answer_block",
     "format_answer_block_for_atoms",
     "format_blocking_unknowns",
@@ -210,7 +200,6 @@ __all__ = [
     "format_section_strip",
     "format_status_line",
     "format_unknowns",
-    "format_value_trail_crumb_body",
     "gaps_by_section",
     "gate_atom_for_module",
     "gate_pending_atom",
@@ -259,7 +248,6 @@ __all__ = [
     "upsert_artifact",
     "utc_now_iso",
     "validation_milestone",
-    "value_trail_crumb_visible",
     "write_hard_decision_adrs",
     "write_planned_files",
 ]

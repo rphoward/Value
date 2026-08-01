@@ -14,15 +14,21 @@ REFERENCES_DIR = SKILL_ROOT / "references"
 PATH_REF = REFERENCES_DIR / "path.md"
 BMG_ROOT = ROOT / ".cursor" / "skills" / "bmg"
 BMG_SHIP_ROOT = ROOT / "skills" / "bmg"
+BRAND_ROOT = ROOT / ".cursor" / "skills" / "brand-identity"
+BRAND_SHIP_ROOT = ROOT / "skills" / "brand-identity"
+BRAND_SKILL = BRAND_ROOT / "SKILL.md"
 MVP_SCOPE = ROOT / ".cursor" / "skills" / "lean-mvp" / "references" / "mvp-scope.md"
 VALUE_SKILL = ROOT / ".cursor" / "skills" / "value" / "SKILL.md"
 BMG_SKILL = BMG_ROOT / "SKILL.md"
+TEAMS_SKILL = ROOT / ".cursor" / "skills" / "teams" / "SKILL.md"
 LEAN_SKILL = ROOT / ".cursor" / "skills" / "lean-mvp" / "SKILL.md"
 STORY_SKILL = ROOT / ".cursor" / "skills" / "story-generation-prompt" / "SKILL.md"
 
 SIBLING_SKILL_PATHS = (
     ".cursor/skills/value/SKILL.md",
     ".cursor/skills/bmg/SKILL.md",
+    ".cursor/skills/teams/SKILL.md",
+    ".cursor/skills/brand-identity/SKILL.md",
     ".cursor/skills/lean-mvp/SKILL.md",
     ".cursor/skills/story-generation-prompt/SKILL.md",
 )
@@ -176,6 +182,26 @@ class ProductSpineSkillTests(unittest.TestCase):
             self.assertIn(needle, combined, f"missing business phase wiring: {needle}")
         self.assertTrue(BMG_SKILL.is_file(), "promoted bmg skill missing")
 
+    def test_brand_phase_routes_to_brand_identity_with_brand_ready_rule(self) -> None:
+        """Guards a spine that names brand without a live /brand-identity destination or readiness rule."""
+        path_text = PATH_REF.read_text(encoding="utf-8")
+        combined = f"{self.skill_text}\n{path_text}"
+        for needle in (
+            "/brand-identity",
+            "brand-ready",
+            "brand-intent",
+            "workproduct/brand-identity",
+            "brand-strategist.md",
+            ".cursor/skills/brand-identity/SKILL.md",
+            "optional-brand-if-present",
+        ):
+            self.assertIn(needle, combined, f"missing brand phase wiring: {needle}")
+        self.assertTrue(BRAND_SKILL.is_file(), "promoted brand-identity skill missing")
+        self.assertIn("/product-spine", BRAND_SKILL.read_text(encoding="utf-8"))
+        self.assertNotIn(
+            "read .cursor/skills/product-spine/SKILL.md",
+            BRAND_SKILL.read_text(encoding="utf-8"),
+        )
     def test_bmg_declared_paths_and_resume_status_command(self) -> None:
         """Guards BMG asset drift and a resume command that omits session.json."""
         text = BMG_SKILL.read_text(encoding="utf-8")
@@ -236,6 +262,8 @@ class ProductSpineSkillTests(unittest.TestCase):
         for label, path in (
             ("value", VALUE_SKILL),
             ("bmg", BMG_SKILL),
+            ("teams", TEAMS_SKILL),
+            ("brand-identity", BRAND_SKILL),
             ("lean-mvp", LEAN_SKILL),
             ("story-generation-prompt", STORY_SKILL),
         ):
@@ -272,7 +300,7 @@ class ProductSpineSkillTests(unittest.TestCase):
             "promote_context.py",
             "protocol-4-vernacular",
             "AGENTS.fragment.md",
-            "when-bmg-or-lean-without-seed",
+            "when-bmg-or-lean-or-teams-or-brand-without-seed",
             "profile segment",
         ):
             self.assertIn(needle, combined, f"missing vernacular wiring: {needle}")
@@ -281,6 +309,11 @@ class ProductSpineSkillTests(unittest.TestCase):
         """Guards the declared BMG ship mirror from silently drifting."""
         self.assertTrue(BMG_SHIP_ROOT.is_dir(), "skills/bmg/ missing")
         self.assertEqual(mirror_mismatches(BMG_ROOT, BMG_SHIP_ROOT), [])
+
+    def test_brand_identity_ship_tree_mirrors_cursor_tree(self) -> None:
+        """Guards the declared brand-identity ship mirror from silently drifting."""
+        self.assertTrue(BRAND_SHIP_ROOT.is_dir(), "skills/brand-identity/ missing")
+        self.assertEqual(mirror_mismatches(BRAND_ROOT, BRAND_SHIP_ROOT), [])
 
 
 if __name__ == "__main__":

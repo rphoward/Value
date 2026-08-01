@@ -30,7 +30,7 @@ def load_records(path: Path) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Accept a value session answer.")
+    parser = argparse.ArgumentParser(description="Accept a paced skill session answer.")
     parser.add_argument("session", type=Path, help="Path to session.json")
     parser.add_argument("--atom-id", required=True, help="Atom identifier")
     parser.add_argument("--answer", required=True, help="Accepted answer text")

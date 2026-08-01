@@ -65,6 +65,9 @@ def default_session(slug: str, name: str, *, pacing_mode: str = "standard") -> d
     if pacing_mode != "standard":
         session["pacing_mode"] = pacing_mode
     session["ledger"] = recompute_ledger(session)
+    if pacing_mode != "standard":
+        set_position_to_focus(session, load_atoms())
+        session["ledger"] = recompute_ledger(session)
     return session
 
 
@@ -301,11 +304,18 @@ def can_accept_atom(
             False,
             f"--stay only applies to the active atom (focus={session['position']['atom_id']})",
         )
+    atoms = load_atoms()
+    schedulable = schedulable_atom_ids(session, atoms)
     if atom_id == session["position"]["atom_id"]:
+        if atom_id not in schedulable:
+            return (
+                False,
+                f"focus atom {atom_id} is not schedulable in "
+                f"{pacing_mode(session)} pacing",
+            )
         return True, None
     if records_allow_off_position(records_payload):
         return True, None
-    atoms = load_atoms()
     if atom_id in ready_atoms(session, atoms):
         return True, None
     return False, off_position_accept_hint(session["position"]["atom_id"])
@@ -545,8 +555,7 @@ def ready_atoms(session: dict[str, Any], atoms: list[dict[str, Any]]) -> list[st
             continue
         if atom_id in answered:
             continue
-        first_atom = MODULE_ATOMS[module][0]
-        if atom_id == first_atom and not module_entry_ready(session, module):
+        if not module_entry_ready(session, module):
             continue
         requires = effective_requires(session, atom)
         if all(req in answered for req in requires):
@@ -733,8 +742,10 @@ def append_session_records(
         session.setdefault("decisions", []).append(item)
 
     for record in payload.get("unknowns", []):
-        _require_fields(record, UNKNOWN_FIELDS, "unknown")
-        session.setdefault("unknowns", []).append(dict(record))
+        item = dict(record)
+        item.setdefault("source_atom", default_source_atom)
+        _require_fields(item, UNKNOWN_FIELDS, "unknown")
+        session.setdefault("unknowns", []).append(item)
 
     for record in payload.get("artifacts", []):
         _require_fields(record, ARTIFACT_FIELDS, "artifact")

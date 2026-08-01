@@ -142,16 +142,27 @@ def derive_slug_from_name(name: str) -> str:
 
 
 def resolve_repo_root() -> Path | None:
-    """Repo root when skill lives under skills/<name> or .cursor/skills/<name>."""
-    skill = SKILL_ROOT
+    """Repo root for .cursor/skills, skills/, or tools/drafts/skills layouts."""
+    skill = SKILL_ROOT.resolve()
+    parent = skill.parent
+    grand = parent.parent
     candidates: list[Path] = []
-    if skill.parent.name == "skills" and skill.parent.parent.name == ".cursor":
-        candidates.append(skill.parent.parent.parent)
-    if skill.parent.name == "skills":
-        candidates.append(skill.parent.parent)
+    if parent.name == "skills" and grand.name == ".cursor":
+        candidates.append(grand.parent)
+    elif (
+        parent.name == "skills"
+        and grand.name == "drafts"
+        and grand.parent.name == "tools"
+    ):
+        candidates.append(grand.parent.parent)
+    elif parent.name == "skills":
+        candidates.append(grand)
     for root in candidates:
         if (root / ".git").exists() or (root / "AGENTS.md").is_file():
             return root
+    for cur in (skill, *skill.parents):
+        if (cur / ".git").exists() or (cur / "AGENTS.md").is_file():
+            return cur
     return candidates[0] if candidates else None
 
 

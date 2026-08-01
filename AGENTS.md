@@ -14,6 +14,7 @@ Develop and distribute Cursor agent skills from this GitHub repo. The layered sp
 | `skills/lean-mvp/` | Lean MVP skill (pairs with value; dev in monorepo) |
 | `skills/bmg/` | Ship package for `npx skills add rphoward/BMG` (digest-matched to `.cursor/skills/bmg/`) |
 | `skills/teams/` | Ship-tree mirror of teams (digest-matched to `.cursor/skills/teams/`) |
+| `skills/brand-identity/` | Ship-tree mirror of brand-identity (digest-matched to `.cursor/skills/brand-identity/`) |
 | `tools/prompt-suite-compile/` | Thin shims → `.cursor/skills/scripted-skill-from-doc/` |
 | `.cursor/skills/product-spine/` | Human guide for vibecode → valuable → marketable: invoke `/product-spine` to carry phase, next sibling, and claim/NotebookLM exit |
 | `skills/product-spine/` | Ship-tree mirror of product-spine (digest-matched to `.cursor/skills/product-spine/`) |
@@ -21,6 +22,7 @@ Develop and distribute Cursor agent skills from this GitHub repo. The layered sp
 | `.cursor/skills/lean-mvp/` | Lean MVP skill for Cursor in this repo |
 | `.cursor/skills/bmg/` | BMG skill for Cursor in this repo (canvas → patterns → strategy → ambidexterity) |
 | `.cursor/skills/teams/` | High-Impact Teams skill (TAM first → optional assessor/contract/conflict; bounce after tam-planner) |
+| `.cursor/skills/brand-identity/` | Designing Brand Identity paced skill (Brand Brief first → optional identity/touchpoints/governance; bounce after brand-strategist) |
 | `.cursor/skills/story-generation-prompt/` | Evidence → story → generation prompt, INVEST-plus rubric (pairs with lean-mvp MS05) |
 | `.cursor/skills/scripted-skill-from-doc/` | Portable compile pack in standard skill layout (`scripts/`, `references/`, `assets/`) |
 | `src/value/` | Layered spoke product (retargeted at init) |

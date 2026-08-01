@@ -3,6 +3,9 @@
 | File | Role |
 |------|------|
 | [STATE.md](STATE.md) | Living snapshot |
+| [BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md](BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md) | Closed — promote brand-identity + wire product-spine |
+| [BRAND-IDENTITY-PROMOTE-SPINE-OPEN.md](BRAND-IDENTITY-PROMOTE-SPINE-OPEN.md) | Prior open record (superseded by PASSED) |
+| [NEW-CHAT-PROMPT-BRAND-IDENTITY-PROMOTE-SPINE.md](NEW-CHAT-PROMPT-BRAND-IDENTITY-PROMOTE-SPINE.md) | Paste block (historical) |
 | [PROMPT-SUITE-DOC-SHAPE-PASSED.md](PROMPT-SUITE-DOC-SHAPE-PASSED.md) | Closed — reusable generator prompt for compiler-compatible suite docs |
 | [PROMPT-SUITE-DOC-SHAPE-OPEN.md](PROMPT-SUITE-DOC-SHAPE-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-PROMPT-SUITE-DOC-SHAPE.md](NEW-CHAT-PROMPT-PROMPT-SUITE-DOC-SHAPE.md) | Paste block (historical) |

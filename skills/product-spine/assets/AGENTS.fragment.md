@@ -1,6 +1,6 @@
 ## Product-Spine and Values notes
 
-This project may use Cursor skills from `rphoward/Product-Spine` (Values, BMG, teams, lean-mvp, story, product-spine).
+This project may use Cursor skills from `rphoward/Product-Spine` (Values, BMG, teams, brand-identity, lean-mvp, story, product-spine).
 
 **Session progress** lives under `workproduct/` (same project **slug** across skills). Prefer those notes over inventing a new customer story.
 
@@ -8,4 +8,4 @@ This project may use Cursor skills from `rphoward/Product-Spine` (Values, BMG, t
 
 **Product walls:** when `AGENTS.product.md` exists beside that session, honor Always / Ask first / Never there for product boundaries.
 
-**Guide entry:** `/product-spine` names the phase; siblings grill (`/value`, `/bmg`, `/teams`, `/lean-mvp`). Teams is optional business-side alignment (TAM first), not a product gate. On claim, use saved notes — do not ask the human to hunt folders.
+**Guide entry:** `/product-spine` names the phase; siblings grill (`/value`, `/bmg`, `/teams`, `/brand-identity`, `/lean-mvp`). Teams and brand-identity are optional legs (TAM / Brand Brief first), not product gates. On claim, use saved notes — do not ask the human to hunt folders.

@@ -19,7 +19,7 @@ from _session import (
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Show value session status.")
+    parser = argparse.ArgumentParser(description="Show paced skill session status.")
     parser.add_argument("session", type=Path, help="Path to session.json")
     parser.add_argument(
         "--refresh",

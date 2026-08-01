@@ -461,7 +461,12 @@ def scaffold(ir: dict[str, Any], slug: str, out_dir: Path) -> Path:
     out_dir.mkdir(parents=True)
     (out_dir / "assets").mkdir()
     (out_dir / "references").mkdir()
-    shutil.copytree(TEMPLATE_RUNTIME, out_dir / "scripts", dirs_exist_ok=True)
+    shutil.copytree(
+        TEMPLATE_RUNTIME,
+        out_dir / "scripts",
+        dirs_exist_ok=True,
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".gitkeep"),
+    )
     # drop junk
     keep = out_dir / "scripts" / ".gitkeep"
     if keep.is_file():
