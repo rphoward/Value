@@ -1,9 +1,11 @@
 # Value skill — living state
 
-Last updated: 2026-07-30
+Last updated: 2026-07-31
 
 ## Shipped
 
+- **Teams skill + Product-Spine weave** — High-Impact Tools suite normalized to prompt-suite contract; `/teams` promoted; spine `teams` phase + team-friction intent; tam-planner bounce mirrors BMG canvas-mapper (local, uncommitted as of handoff)
+- **verify-value journey map** — harness `--skill value|bmg|teams|lean-mvp`; sibling session-init features; create-verification expand (local)
 - **Consumer-repo vernacular lift** — installed `AGENTS.fragment.md` assets, `surface-promote` + `protocol-4-vernacular`, `promote_context.py`; Product-Spine `360af16`, Values `e721eb8`; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
 - **Product-spine journey guide** — phase + done-enough + claim/NotebookLM exit; guide-turn envelope + lean `/product-spine` bounce-back (UX mock PASS 2026-07-25); GitHub Product-Spine `f23e56b` base rewrite
 - **Value-map gate presentation** — Mock C inline stickies; expand Fit links or Differentiation on ask (`value-map-gate-review` in SKILL.md); see `handoff/VALUE-GATE-PRESENTATION-PASSED.md`
@@ -14,10 +16,11 @@ Last updated: 2026-07-30
 
 ## Open gates
 
-(none)
+- (none)
 
 ## Closed recently
 
+- **Prompt-suite doc shape** — PASS; reusable generator prompt + tiny dry-run parse; see `handoff/PROMPT-SUITE-DOC-SHAPE-PASSED.md` (draft: `workproduct/prompt-suite-doc-shape/GENERATOR-PROMPT.md`)
 - **Skill-pack consumer vernacular** — PASS; installed assets + promote_context.py + durable protocols; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
 
 - **Story scenario suite** — PASS (S01–S08 all pass against story-generation-prompt); see `handoff/STORY-SCENARIO-SUITE-PASSED.md`
@@ -30,3 +33,6 @@ Last updated: 2026-07-30
 - `workproduct/value-proposition/shiftswap/` (+ lean twin if present) — Maya evidence only
 - `workproduct/value-proposition/cashclaw/` (+ lean twin) — Kai unhappy-path evidence
 - `tools/drafts/story-scenario-suite/` — draft fixtures (walk PASS 2026-07-25; promote out of drafts only if desired)
+- `tools/normalize-teams-prompt-suite.py` — one-shot Teams suite reshape (superseded for new suites by GENERATOR-PROMPT)
+- `workproduct/prompt-suite-doc-shape/` — generator prompt draft + tiny-dry-run-suite.md (parse proof)
+- `.verify-runs/` — verification evidence roots (artifacts kept; not ship)
