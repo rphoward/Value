@@ -1,1 +1,6 @@
-leg	friction	severity	date
+ts	phase	decision	why	evidence	result
+2026-08-02T00:30:00Z	preconditions	pytest product_spine + maya lint green; value-design notes present; no wipe	Prove It Works before walk	tests/test_product_spine_skill.py; workproduct/value-proposition/value-design/	23 passed pre-walk baseline+s1
+2026-08-02T00:31:00Z	reentry	Simulated new-chat /product-spine only against live SKILL + value-design session	Cold restart gate vehicle; Experience First	.cursor/skills/product-spine/SKILL.md; session position business-model B01	walk started
+2026-08-02T00:32:00Z	guide-turn	you-are-here names progress so far (profile+map done; business-model Evolve open) before any hunt; four slots; This-turn /value via one-session	Open value session mid Evolve beats yank to mvp; no hunt when files exist	handoff/decision-trails/product-spine-cold-restart.tsv (this file)	PASS signals met
+2026-08-02T00:33:00Z	score	No fifth beat; no status stdout; no paste ask; no spine session.json invented	Cold-restart success protocol	customer-profile.md value-map.md north-star-blurb.md present	PASS
+2026-08-02T00:34:00Z	wiring-note	Mid-Evolve after clarity-ready has no dedicated phase label; one-session keeps /value (not mvp yank)	Document only; do not dilate cold gate into multi-leg	SKILL.md one-session vs mvp when-clause	noted; not a FAIL

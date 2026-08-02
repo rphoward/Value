@@ -1,0 +1,2 @@
+# Value map — bounce fixture
+

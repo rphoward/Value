@@ -1,0 +1,14 @@
+ts	phase	decision	why	evidence	result
+2026-08-02T00:23:00Z	frame	Exit predicate: S1-S7 done with pytest green + walk trails; historical slugs untouched; Maya lint green; no commit	Prove It Works on real artifacts; Sequence Work into Verifiable Units	handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md	open
+2026-08-02T00:23:30Z	frame	Playbooks: figure-it-out phases A-E + autonomous-run; multi-phase-plan skipped because plan already accepted	Never Block on Human for reversible execute; plan is source of truth	.cursor/plans/journey_ux_test_expansion_ff27e8a7.plan.md	framed
+2026-08-02T00:24:00Z	harness	Baseline pytest product_spine_skill 18 passed before Slice 1 edits	Prove It Works baseline	tests/test_product_spine_skill.py	18 passed
+2026-08-02T00:28:00Z	slice-1	Added dual-intent, open-session, optional-leg needles + Maya encode lint; METHOD-FAIL banner on Maya WALK-EVIDENCE	Encode Lessons in Structure; Sequence Verifiable Units	tests/test_product_spine_skill.py; tests/test_maya_happy_pass_lint.py	23 passed
+2026-08-02T00:34:00Z	slice-2	Closed value-only cold restart PASS on value-design; no wipe; four-slot progress-so-far	Experience First + Prove It Works	handoff/PRODUCT-SPINE-COLD-RESTART-PASSED.md; handoff/decision-trails/product-spine-cold-restart.tsv	PASS
+2026-08-02T00:47:00Z	slice-3	Day-two multi-leg walks PASS (brand cold, teams cold, bounce, warm)	Experience First day-two after pack growth	tools/drafts/product-spine-journey-day2/WALK-EVIDENCE.md	PASS
+2026-08-02T00:53:00Z	slice-4	First-hour empty slate + claim-exit PASS	day-one checklist	tools/drafts/product-spine-journey-first/WALK-EVIDENCE.md	PASS
+2026-08-02T00:59:00Z	slice-5	Optional brand/teams/dual + unhappy stimuli PASS	optional legs through claim	tools/drafts/product-spine-journey-optional-legs/WALK-EVIDENCE.md	PASS
+2026-08-02T01:02:00Z	slice-6	Thin teams+bmg package tests green (29 total with spine+maya)	package parity after walks	tests/test_teams_skill_package.py; tests/test_bmg_skill_package.py	29 passed
+2026-08-02T01:03:00Z	slice-7	BMG happy+unhappy walks PASS	close BMG journey hole	tools/drafts/product-spine-journey-bmg/WALK-EVIDENCE.md	PASS
+2026-08-02T01:04:00Z	appendix	Appendix Maya skipped	human did not ask; not required for EXECUTE PASS	plan appendix-maya	skipped
+2026-08-02T01:05:00Z	close	EXECUTE predicate met: S1-S7 done; historical slugs untouched; no commit	Prove It Works + Never Block on Human	handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md	PASS
+2026-08-02T01:10:00Z	review	Hardened WALK-EVIDENCE scored turns + tightened Maya METHOD-FAIL exemption after terra audit	Prove It Works + Encode Lessons	tools/drafts/product-spine-journey-*; tests/test_maya_happy_pass_lint.py	addressed

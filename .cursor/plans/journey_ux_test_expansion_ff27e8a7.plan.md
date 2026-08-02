@@ -4,41 +4,40 @@ overview: Plan-only deliverable for expanding end-user journey coverage across `
 todos:
   - id: slice-1-spine-routing
     content: "Slice 1: Minimal spine needle holes only (dual-intent, optional-leg illegal-replies, claim files-im-using, open-session precedence)"
-    status: pending
+    status: completed
   - id: slice-2-cold-restart
     content: "Slice 2: Value-only cold restart (PRODUCT-SPINE-COLD-RESTART-OPEN on value-design)"
-    status: pending
+    status: completed
   - id: slice-3-day-two-multileg
     content: "Slice 3: Day-two / warm multi-leg re-entry (open incomplete brand or teams; done-enough bounce; guided not queued)"
-    status: pending
+    status: completed
   - id: slice-4-first-hour-claim
     content: "Slice 4: First-hour no-session walk + one short claim-exit path"
-    status: pending
+    status: completed
   - id: slice-5-optional-leg-walks
     content: "Slice 5: Brand/teams/dual walks with claim reach + one unhappy stimulus each"
-    status: pending
+    status: completed
   - id: slice-6-teams-bmg-package
     content: "Slice 6: Thin teams + bmg package/digest/bounce tests (after walks)"
-    status: pending
+    status: completed
   - id: slice-7-bmg-walks
     content: "Slice 7: BMG happy + unhappy short walks (journey-bmg)"
-    status: pending
+    status: completed
   - id: appendix-maya
     content: "Appendix: Optional bounded one-atom value→lean→claim on new slug (own gate; not critical path)"
-    status: pending
+    status: cancelled
   - id: encode-maya-lint
     content: "Encode Maya: trail/WALK-EVIDENCE lint rejecting drive_* as happy PASS vehicle"
-    status: pending
+    status: completed
+
 isProject: false
 ---
 
 # Journey UX Test Expansion Plan
 
-> **Status:** ACCEPTED 2026-08-01. Plan-only gate closed: [handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md](handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md). Suite not yet built.
+> **Status:** EXECUTED 2026-08-01. Plan gate: [handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md](handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md). Execute gate: [handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md](handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md) (slices 1–7 PASS; appendix Maya skipped).
 >
-> **Execute next:** paste [handoff/NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md](handoff/NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md) in a fresh chat. Gate: [handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md](handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md).
->
-> **Critique:** [poteto-agent](31eac55b-105f-4f8e-ab98-48d885a684e7) — accept with edits (Experience First + Prove It Works). Day-two multi-leg slice applied after human ask.
+> **Critique:** [poteto-agent](31eac55b-105f-4f8e-ab98-48d885a684e7) — accept with edits (Experience First + Prove It Works). Day-two multi-leg slice applied after human ask. Execute: [poteto-agent](28f53c55-5c4d-4ae3-801b-ddf87cd6470c).
 
 **Goal:** Make vibecoder paths (guide-turn → sibling grill → bounce → claim) regressable across every sibling with a clear split: fast automated contracts vs honest persona walks.
 

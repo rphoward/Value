@@ -1,5 +1,7 @@
 # Maya / ShiftSwap happy-path walk evidence (real grilling)
 
+> **METHOD-FAIL** — compressed `drive_*_leg.py` / bulk-accept is **not a happy PASS** vehicle. Authoritative close: `handoff/PRODUCT-SPINE-MAYA-HAPPY-PATH-FAILED.md`. Keep this file as historical stimulus only; do not revive PASSED.
+
 Slug: `shiftswap`
 Mode: full grill — no gate bypasses; profile + value-map + lean through mvp-scope completed via accept scripts with Maya persona answers
 

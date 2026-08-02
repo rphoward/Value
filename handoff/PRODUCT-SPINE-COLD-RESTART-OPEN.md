@@ -4,6 +4,7 @@
     (optimization "prove-cold-restart-you-are-here-names-progress-so-far")
     (outcome OPEN)
     (opened 2026-07-25)
+    (note "SUPERSEDED 2026-08-01 by handoff/PRODUCT-SPINE-COLD-RESTART-PASSED.md — closed under Journey UX execute Slice 2")
     (paste-block handoff/NEW-CHAT-PROMPT-PRODUCT-SPINE-COLD-RESTART.md)
     (mock-slug value-design)
     (prior-ship "product-spine progress-so-far in you-are-here — voice-only re-entry"))

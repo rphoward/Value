@@ -3,9 +3,11 @@
 | File | Role |
 |------|------|
 | [STATE.md](STATE.md) | Living snapshot |
-| [JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md](JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md) | Open — execute accepted journey UX plan slices |
-| [NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md](NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md) | Paste block for execute session |
-| [JOURNEY-UX-TEST-EXPANSION-PASSED.md](JOURNEY-UX-TEST-EXPANSION-PASSED.md) | Closed — plan accepted (suite not yet built) |
+| [JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md](JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md) | Closed — execute slices 1–7 PASS |
+| [JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md](JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md) | Prior open record (superseded by PASSED) |
+| [NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md](NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md) | Paste block for execute session (historical) |
+| [decision-trails/journey-ux-test-expansion-execute.tsv](decision-trails/journey-ux-test-expansion-execute.tsv) | Execute decision trail |
+| [JOURNEY-UX-TEST-EXPANSION-PASSED.md](JOURNEY-UX-TEST-EXPANSION-PASSED.md) | Closed — plan accepted |
 | [JOURNEY-UX-TEST-EXPANSION-OPEN.md](JOURNEY-UX-TEST-EXPANSION-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION.md](NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION.md) | Paste block for plan-writing session (historical) |
 | [BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md](BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md) | Closed — promote brand-identity + wire product-spine |
@@ -19,7 +21,8 @@
 | [STORY-SCENARIO-SUITE-OPEN.md](STORY-SCENARIO-SUITE-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-STORY-SCENARIO-SUITE.md](NEW-CHAT-PROMPT-STORY-SCENARIO-SUITE.md) | Paste block for fresh session |
 | [decision-trails/story-scenario-suite.tsv](decision-trails/story-scenario-suite.tsv) | Friction log (suite walk) |
-| [PRODUCT-SPINE-COLD-RESTART-OPEN.md](PRODUCT-SPINE-COLD-RESTART-OPEN.md) | Open — cold-restart progress-so-far walk |
+| [PRODUCT-SPINE-COLD-RESTART-PASSED.md](PRODUCT-SPINE-COLD-RESTART-PASSED.md) | Closed — cold-restart progress-so-far PASS |
+| [PRODUCT-SPINE-COLD-RESTART-OPEN.md](PRODUCT-SPINE-COLD-RESTART-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-PRODUCT-SPINE-COLD-RESTART.md](NEW-CHAT-PROMPT-PRODUCT-SPINE-COLD-RESTART.md) | Paste block for cold-restart walk |
 | [decision-trails/product-spine-cold-restart.tsv](decision-trails/product-spine-cold-restart.tsv) | Friction log (cold restart) |
 | [PRODUCT-SPINE-KAI-UNHAPPY-PATH-PASSED.md](PRODUCT-SPINE-KAI-UNHAPPY-PATH-PASSED.md) | Closed — Kai unhappy path PASS (coaching stress) |

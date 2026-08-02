@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.1",
+  "project": {"slug": "journey-day2-teams", "name": "Journey Day2 Teams", "created_at": "2026-08-01T00:00:00Z", "updated_at": "2026-08-01T00:00:00Z"},
+  "position": {"module": "tam-planner", "atom_id": "T01", "status": "in_progress"},
+  "answers": [],
+  "module_outcomes": {}
+}

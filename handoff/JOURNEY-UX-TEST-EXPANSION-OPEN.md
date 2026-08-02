@@ -4,7 +4,7 @@
     (optimization "write-plan-only-for-end-user-ux-coverage-across-spine-and-siblings")
     (outcome OPEN)
     (opened 2026-08-01)
-    (note "SUPERSEDED 2026-08-01 by handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md — plan accepted; execute via JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md")
+    (note "SUPERSEDED 2026-08-01 by handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md — plan accepted; execute closed PASS at JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md")
     (paste-block handoff/NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION.md)
     (prior "Maya happy FAIL compressed walk; Kai unhappy PASS coaching stress; brand-identity + spine wire PASSED; Product-Spine pack e7a0a56 ships brand"))
 

@@ -4,6 +4,7 @@
     (optimization "execute-accepted-journey-ux-plan-slice-by-slice")
     (outcome OPEN)
     (opened 2026-08-01)
+    (note "SUPERSEDED 2026-08-01 by handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md — slices 1–7 closed PASS")
     (paste-block handoff/NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md)
     (accepted-plan .cursor/plans/journey_ux_test_expansion_ff27e8a7.plan.md)
     (prior-gate handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md))

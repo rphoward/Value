@@ -231,6 +231,54 @@ class ProductSpineSkillTests(unittest.TestCase):
         self.assertIn("notebooklm-directions", self.skill_text)
         self.assertIn("Box A", path_text + self.skill_text)
 
+    def test_dual_intent_precedence_order_is_claim_brand_teams_business(self) -> None:
+        """Guards dual-intent routing inventing the wrong sibling when two intents collide."""
+        precedence = balanced_block(self.skill_text, "(precedence")
+        ordered = (
+            "claim-intent-wins",
+            "brand-intent-wins",
+            "team-friction-intent-wins",
+            "business-intent-wins",
+        )
+        positions = []
+        for head in ordered:
+            self.assertIn(head, precedence, f"missing precedence head: {head}")
+            positions.append(precedence.index(head))
+        self.assertEqual(
+            positions,
+            sorted(positions),
+            "dual-intent precedence must be claim > brand > team-friction > business",
+        )
+
+    def test_open_session_precedence_heads_are_named(self) -> None:
+        """Guards day-two cold re-entry losing open incomplete brand/teams/bmg pulls."""
+        precedence = balanced_block(self.skill_text, "(precedence")
+        for head in (
+            "open-brand-not-ready",
+            "open-teams-not-ready",
+            "open-bmg-not-ready",
+        ):
+            self.assertIn(head, precedence, f"missing open-session precedence: {head}")
+
+    def test_optional_legs_not_required_illegal_replies(self) -> None:
+        """Guards spine blocking mvp/claim on optional teams/brand legs the human never asked for."""
+        illegal = balanced_block(self.skill_text, "(illegal-replies")
+        for needle in (
+            "requiring teams-ready before mvp or claim when the human never asked for teams",
+            "requiring brand-ready before mvp or claim when the human never asked for brand",
+            "do not invent a teams leg without that intent",
+            "do not invent a brand leg without that intent",
+        ):
+            # invent-without-intent lives in precedence; required-before lives in illegal-replies
+            if needle.startswith("requiring"):
+                self.assertIn(needle, illegal, f"missing illegal-reply: {needle}")
+            else:
+                self.assertIn(
+                    needle,
+                    self.skill_text,
+                    f"missing optional-leg invent guard: {needle}",
+                )
+
     def test_reentry_you_are_here_carries_progress_so_far(self) -> None:
         """Guards amnesiac re-entry: progress so far in you-are-here, not a fifth beat or status dump."""
         path_text = PATH_REF.read_text(encoding="utf-8")

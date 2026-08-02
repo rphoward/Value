@@ -18,12 +18,13 @@ Last updated: 2026-08-01
 
 ## Open gates
 
-- **Journey UX test expansion (EXECUTE)** — run accepted plan slices 1–7; see `handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md` + paste `handoff/NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md`
-- **Product-Spine cold restart** — still OPEN until Slice 2 of execute; see `handoff/PRODUCT-SPINE-COLD-RESTART-OPEN.md`
+- (none for journey UX execute — closed PASS)
 
 ## Closed recently
 
-- **Journey UX test expansion (plan only)** — PASS; plan accepted at `.cursor/plans/journey_ux_test_expansion_ff27e8a7.plan.md`; execute is separate gate; see `handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md`
+- **Journey UX test expansion (EXECUTE)** — PASS; slices 1–7 done; Maya lint + walks + thin package tests; see `handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md`
+- **Product-Spine cold restart** — PASS under execute Slice 2; see `handoff/PRODUCT-SPINE-COLD-RESTART-PASSED.md`
+- **Journey UX test expansion (plan only)** — PASS; plan accepted at `.cursor/plans/journey_ux_test_expansion_ff27e8a7.plan.md`; see `handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md`
 - **Brand-identity promote + spine wire** — PASS; live skill + product-spine brand leg + retest; Product-Spine pack `e7a0a56`; see `handoff/BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md`
 - **Prompt-suite doc shape** — PASS; reusable generator prompt + tiny dry-run parse; see `handoff/PROMPT-SUITE-DOC-SHAPE-PASSED.md` (draft: `workproduct/prompt-suite-doc-shape/GENERATOR-PROMPT.md`)
 - **Skill-pack consumer vernacular** — PASS; installed assets + promote_context.py + durable protocols; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
@@ -39,6 +40,8 @@ Last updated: 2026-08-01
 - `workproduct/value-proposition/value-design/` — untracked live session (leave as-is)
 - `workproduct/value-proposition/shiftswap/` (+ lean twin if present) — Maya evidence only
 - `workproduct/value-proposition/cashclaw/` (+ lean twin) — Kai unhappy-path evidence
+- `workproduct/value-proposition/journey-*` (+ brand/teams/bmg/lean twins) — journey UX execute fixtures (wipe-ok except value-design)
+- `tools/drafts/product-spine-journey-*` — journey walk evidence
 - `tools/drafts/story-scenario-suite/` — draft fixtures (walk PASS 2026-07-25; promote out of drafts only if desired)
 - `tools/normalize-teams-prompt-suite.py` — one-shot Teams suite reshape (superseded for new suites by GENERATOR-PROMPT)
 - `workproduct/prompt-suite-doc-shape/` — generator prompt draft + tiny-dry-run-suite.md (parse proof)
