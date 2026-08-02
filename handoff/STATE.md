@@ -1,11 +1,18 @@
 # Value skill — living state
 
-Last updated: 2026-08-01
+Last updated: 2026-08-02
+
+## Paused (archive)
+
+- **Repo archive** — development paused pending extensive human `/product-spine` dogfood in a **consumer repo**; see `handoff/REPO-ARCHIVE-PAUSE-OPEN.md` + paste `handoff/NEW-CHAT-PROMPT-RESUME-AFTER-HUMAN-DOGFOOD.md` on return
+- **Verified at pause** — Value `eb0fe92` pushed; Product-Spine pack `e7a0a56` pushed; Values `e721eb8` pushed; `.cursor/skills/*` ↔ `skills/*` byte-identical (all seven); `python -m pytest tests/ -q` → 179 passed
+- **Authority shift** — live chat dogfood in consumer repo supersedes simulated walk PASS for voice proof until triaged on resume
 
 ## Shipped
 
-- **Teams skill + Product-Spine weave** — High-Impact Tools suite normalized to prompt-suite contract; `/teams` promoted; spine `teams` phase + team-friction intent; tam-planner bounce mirrors BMG canvas-mapper (local, uncommitted as of handoff)
-- **verify-value journey map** — harness `--skill value|bmg|teams|lean-mvp`; sibling session-init features; create-verification expand (local)
+- **Journey UX test expansion (execute)** — slices 1–7 PASS; Maya lint + needles + thin teams/bmg package tests + walk evidence; see `handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md`
+- **Teams skill + Product-Spine weave** — High-Impact Tools suite normalized to prompt-suite contract; `/teams` promoted; spine `teams` phase + team-friction intent; tam-planner bounce mirrors BMG canvas-mapper
+- **verify-value journey map** — harness `--skill value|bmg|teams|lean-mvp`; sibling session-init features; create-verification expand
 - **Consumer-repo vernacular lift** — installed `AGENTS.fragment.md` assets, `surface-promote` + `protocol-4-vernacular`, `promote_context.py`; Product-Spine `360af16`, Values `e721eb8`; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
 - **Product-spine journey guide** — phase + done-enough + claim/NotebookLM exit; guide-turn envelope + lean `/product-spine` bounce-back (UX mock PASS 2026-07-25); GitHub Product-Spine `f23e56b` base rewrite
 - **Value-map gate presentation** — Mock C inline stickies; expand Fit links or Differentiation on ask (`value-map-gate-review` in SKILL.md); see `handoff/VALUE-GATE-PRESENTATION-PASSED.md`
@@ -18,7 +25,7 @@ Last updated: 2026-08-01
 
 ## Open gates
 
-- (none for journey UX execute — closed PASS)
+- **Repo archive pause** — human dogfood elsewhere; see `handoff/REPO-ARCHIVE-PAUSE-OPEN.md`
 
 ## Closed recently
 

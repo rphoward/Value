@@ -3,6 +3,8 @@
 | File | Role |
 |------|------|
 | [STATE.md](STATE.md) | Living snapshot |
+| [REPO-ARCHIVE-PAUSE-OPEN.md](REPO-ARCHIVE-PAUSE-OPEN.md) | Open — repo paused for human dogfood in consumer repo |
+| [NEW-CHAT-PROMPT-RESUME-AFTER-HUMAN-DOGFOOD.md](NEW-CHAT-PROMPT-RESUME-AFTER-HUMAN-DOGFOOD.md) | Paste block when returning from dogfood |
 | [JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md](JOURNEY-UX-TEST-EXPANSION-EXECUTE-PASSED.md) | Closed — execute slices 1–7 PASS |
 | [JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md](JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md](NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md) | Paste block for execute session (historical) |
