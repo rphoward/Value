@@ -14,15 +14,17 @@ Last updated: 2026-08-01
 - Section strip required on resume / where-am-I / pause / gate (SKILL.md + session-contract) — agent-facing, not a gate lens yet
 - Prior: match board, north-star-blurb, value-trail, DAG/express/voice — see git log
 - **scripted-skill-from-doc nested-fence parse** — `extract_fenced_block` so nested ```yaml/text inside ```markdown keep suite cargo (needed for Designing Brand Identity suite)
-- **Brand-identity skill + Product-Spine weave** — promoted `/brand-identity`; spine `brand` phase + brand-intent; brand-strategist bounce; ship mirror `skills/brand-identity/`; see `handoff/BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md`
+- **Brand-identity skill + Product-Spine weave** — promoted `/brand-identity`; spine `brand` phase + brand-intent; brand-strategist bounce; ship mirror `skills/brand-identity/`; Product-Spine pack `e7a0a56`; see `handoff/BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md`
 
 ## Open gates
 
-- (none)
+- **Journey UX test expansion (EXECUTE)** — run accepted plan slices 1–7; see `handoff/JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md` + paste `handoff/NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md`
+- **Product-Spine cold restart** — still OPEN until Slice 2 of execute; see `handoff/PRODUCT-SPINE-COLD-RESTART-OPEN.md`
 
 ## Closed recently
 
-- **Brand-identity promote + spine wire** — PASS; live skill + product-spine brand leg + retest; see `handoff/BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md`
+- **Journey UX test expansion (plan only)** — PASS; plan accepted at `.cursor/plans/journey_ux_test_expansion_ff27e8a7.plan.md`; execute is separate gate; see `handoff/JOURNEY-UX-TEST-EXPANSION-PASSED.md`
+- **Brand-identity promote + spine wire** — PASS; live skill + product-spine brand leg + retest; Product-Spine pack `e7a0a56`; see `handoff/BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md`
 - **Prompt-suite doc shape** — PASS; reusable generator prompt + tiny dry-run parse; see `handoff/PROMPT-SUITE-DOC-SHAPE-PASSED.md` (draft: `workproduct/prompt-suite-doc-shape/GENERATOR-PROMPT.md`)
 - **Skill-pack consumer vernacular** — PASS; installed assets + promote_context.py + durable protocols; see `handoff/SKILL-PACK-CONSUMER-VERNACULAR-PASSED.md`
 

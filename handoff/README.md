@@ -3,6 +3,11 @@
 | File | Role |
 |------|------|
 | [STATE.md](STATE.md) | Living snapshot |
+| [JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md](JOURNEY-UX-TEST-EXPANSION-EXECUTE-OPEN.md) | Open — execute accepted journey UX plan slices |
+| [NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md](NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION-EXECUTE.md) | Paste block for execute session |
+| [JOURNEY-UX-TEST-EXPANSION-PASSED.md](JOURNEY-UX-TEST-EXPANSION-PASSED.md) | Closed — plan accepted (suite not yet built) |
+| [JOURNEY-UX-TEST-EXPANSION-OPEN.md](JOURNEY-UX-TEST-EXPANSION-OPEN.md) | Prior open record (superseded by PASSED) |
+| [NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION.md](NEW-CHAT-PROMPT-JOURNEY-UX-TEST-EXPANSION.md) | Paste block for plan-writing session (historical) |
 | [BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md](BRAND-IDENTITY-PROMOTE-SPINE-PASSED.md) | Closed — promote brand-identity + wire product-spine |
 | [BRAND-IDENTITY-PROMOTE-SPINE-OPEN.md](BRAND-IDENTITY-PROMOTE-SPINE-OPEN.md) | Prior open record (superseded by PASSED) |
 | [NEW-CHAT-PROMPT-BRAND-IDENTITY-PROMOTE-SPINE.md](NEW-CHAT-PROMPT-BRAND-IDENTITY-PROMOTE-SPINE.md) | Paste block (historical) |

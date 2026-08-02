@@ -129,7 +129,7 @@ Pick one kind of value. Install that ship repo. Use one slash. Finish done enoug
 | Who / why | `npx skills add rphoward/Values` | `/value` |
 | Classic canvas | `npx skills add rphoward/BMG` | `/bmg` |
 | Team alignment | `npx skills add rphoward/Teams` | `/teams` |
-| Brand brief / identity | (monorepo `.cursor/skills/brand-identity/` for now) | `/brand-identity` |
+| Brand brief / identity | `npx skills add rphoward/Product-Spine -s brand-identity -a cursor -y` | `/brand-identity` |
 | Lean MVP cut | `npx skills add rphoward/MVP` | `/lean-mvp` |
 
 Habits that pay off even with one skill:
@@ -160,13 +160,13 @@ When you feel lost mid-skill, say so. Values, BMG, Teams, Brand Identity, and le
 
 ## Full path: Product-Spine as the guide
 
-Install the pack when you want one entrance for the whole journey (includes Product-Spine, Values, BMG, Teams, lean-mvp, and story; Brand Identity is live in this monorepo and may join the pack later):
+Install the pack when you want one entrance for the whole journey (includes Product-Spine, Values, BMG, Teams, Brand Identity, lean-mvp, and story):
 
 ```bash
 npx skills add rphoward/Product-Spine --skill '*' -a cursor -y
 ```
 
-That pack already carries BMG and Teams with the business-side phases. You can still install BMG alone from [rphoward/BMG](https://github.com/rphoward/BMG) or Teams alone from [rphoward/Teams](https://github.com/rphoward/Teams). Brand Identity ships from this repo’s `.cursor/skills/brand-identity/` until a separate pack exists.
+That pack already carries BMG, Teams, and Brand Identity with the optional business/brand phases. You can still install BMG alone from [rphoward/BMG](https://github.com/rphoward/BMG) or Teams alone from [rphoward/Teams](https://github.com/rphoward/Teams). Brand Identity has no separate solo repo yet — use the Product-Spine pack (or this monorepo’s `.cursor/skills/brand-identity/`).
 
 Then open:
 
@@ -227,7 +227,7 @@ One skill is enough to start. Product-Spine is for when the path has more than o
 | [Values](https://github.com/rphoward/Values) | `npx skills add rphoward/Values` | `/value` |
 | [BMG](https://github.com/rphoward/BMG) | `npx skills add rphoward/BMG` | `/bmg` |
 | [Teams](https://github.com/rphoward/Teams) | `npx skills add rphoward/Teams` | `/teams` |
-| Brand Identity (monorepo) | live under `.cursor/skills/brand-identity/` | `/brand-identity` |
+| Brand Identity (in Product-Spine pack) | `npx skills add rphoward/Product-Spine -s brand-identity -a cursor -y` | `/brand-identity` |
 | [MVP](https://github.com/rphoward/MVP) | `npx skills add rphoward/MVP` | `/lean-mvp` |
 | [Product-Spine](https://github.com/rphoward/Product-Spine) | `npx skills add rphoward/Product-Spine --skill '*' -a cursor -y` | `/product-spine` (plus siblings in the pack) |
 

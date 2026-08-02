@@ -8,7 +8,7 @@
 npx skills add rphoward/Product-Spine --skill '*' -a cursor -y
 ```
 
-you get five skills under `.cursor/skills/` (or `~/.cursor/skills/` if you used `-g`). They do not need the Value monorepo.
+you get seven skills under `.cursor/skills/` (or `~/.cursor/skills/` if you used `-g`). They do not need the Value monorepo.
 
 **Progress saves in your project**, not in GitHub:
 
@@ -16,9 +16,11 @@ you get five skills under `.cursor/skills/` (or `~/.cursor/skills/` if you used 
 |-------|----------------|
 | Values | `workproduct/value-proposition/<slug>/` |
 | BMG | `workproduct/bmg/<slug>/` |
+| Teams | `workproduct/teams/<slug>/` |
+| Brand Identity | `workproduct/brand-identity/<slug>/` |
 | lean-mvp | `workproduct/lean-mvp/<slug>/` |
 
-Milestones (`customer-profile.md`, `canvas-mapper.md`, `mvp-scope.md`, …) land next to `session.json`. Same **slug** across skills.
+Milestones (`customer-profile.md`, `canvas-mapper.md`, `tam-planner.md`, `brand-strategist.md`, `mvp-scope.md`, …) land next to `session.json`. Same **slug** across skills.
 
 **You need:**
 

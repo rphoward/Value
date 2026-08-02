@@ -1,8 +1,8 @@
 # Product-Spine
 
-A Cursor skill pack for taking a vibecoded idea through clarity, business model, team alignment, lean MVP scope, and an honest marketable claim.
+A Cursor skill pack for taking a vibecoded idea through clarity, business model, team alignment, brand identity, lean MVP scope, and an honest marketable claim.
 
-Six skills install together:
+Seven skills install together:
 
 | Skill | Role |
 |-------|------|
@@ -10,6 +10,7 @@ Six skills install together:
 | `value` | Customer profile and value-map coaching (`workproduct/value-proposition/`) |
 | `bmg` | Classic Business Model Canvas through ambidexterity (`workproduct/bmg/`) |
 | `teams` | Team Alignment Map first, then optional assessor/contract/conflict (`workproduct/teams/`) |
+| `brand-identity` | Brand Brief first, then optional identity system / touchpoints / governance (`workproduct/brand-identity/`) |
 | `lean-mvp` | Underserved needs through MVP scope (`workproduct/lean-mvp/`) |
 | `story-generation-prompt` | INVEST-plus story and optional NotebookLM generation prompt |
 
@@ -40,6 +41,7 @@ npx skills add rphoward/Product-Spine -l
 npx skills add rphoward/Product-Spine -s product-spine -a cursor -y
 npx skills add rphoward/Product-Spine -s bmg -a cursor -y
 npx skills add rphoward/Product-Spine -s teams -a cursor -y
+npx skills add rphoward/Product-Spine -s brand-identity -a cursor -y
 ```
 
 ## Standalone progress
@@ -49,6 +51,7 @@ Sessions and milestones save under **your project**:
 - `workproduct/value-proposition/<slug>/`
 - `workproduct/bmg/<slug>/`
 - `workproduct/teams/<slug>/`
+- `workproduct/brand-identity/<slug>/`
 - `workproduct/lean-mvp/<slug>/`
 
 Use the same **slug** across skills. You need Python 3 on the PATH for session scripts.
@@ -64,10 +67,11 @@ Or open a sibling when you know the phase:
 - `/value` — who is this for, and why would they care?
 - `/bmg` — classic Business Model Canvas
 - `/teams` — Team Alignment Map and optional team tools
+- `/brand-identity` — Brand Brief, mark direction, touchpoints, governance
 - `/lean-mvp` — honest MVP feature set
 - `/story-generation-prompt` — shareable claim / NotebookLM prompt (also used on claim turns)
 
-Product-Spine routes; siblings grill. Teams is optional business-side alignment, not a product gate. On claim, Product-Spine opens saved notes — you should not hunt folders.
+Product-Spine routes; siblings grill. Teams and brand-identity are optional legs (TAM / Brand Brief first), not product gates. On claim, Product-Spine opens saved notes — you should not hunt folders.
 
 ## Package layout
 
@@ -79,6 +83,7 @@ skills/product-spine/
 skills/value/
 skills/bmg/
 skills/teams/
+skills/brand-identity/
 skills/lean-mvp/
 skills/story-generation-prompt/
 README.md
@@ -92,6 +97,8 @@ README.md
 | BMG | https://github.com/rphoward/BMG |
 | Teams | https://github.com/rphoward/Teams |
 | MVP | https://github.com/rphoward/MVP |
+
+Brand Identity ships in this pack for now (no separate solo repo yet).
 
 ## License
 

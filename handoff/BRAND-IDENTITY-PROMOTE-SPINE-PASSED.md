@@ -32,4 +32,5 @@
 
   (protocol-2-next-or-none
     (next "none for this gate")
-    (optional "scoped thermos on .cursor/skills/{product-spine,brand-identity,value,bmg,teams,lean-mvp}; separate Brand Identity npx pack when human asks")))
+    (optional "scoped thermos on .cursor/skills/{product-spine,brand-identity,value,bmg,teams,lean-mvp}; Brand Identity now ships in Product-Spine pack e7a0a56")
+    (ship-pack "https://github.com/rphoward/Product-Spine @ e7a0a56 — skills/brand-identity + brand-routed product-spine"))))
